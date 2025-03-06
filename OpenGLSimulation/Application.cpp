@@ -17,16 +17,35 @@ Application::~Application()
 
 void Application::Update()
 {
+
 	glClear(GL_COLOR_BUFFER_BIT);
-	glBegin(GL_POLYGON);
+	glMatrixMode(GL_MODELVIEW); // Select model-view matrix
+	glLoadIdentity(); // Reset to identity matrix
 
-	glColor4f(1, 1, 0, 1);
+	// Apply transformations (order is reversed due to stack nature)
+	//glTranslatef(0.0f, 0.0f, -5.0f); // Move the object back
+	glRotatef(45.0f, 0.0f, 1.0f, 0.0f); // Rotate around Y-axis
+	glScalef(1.0f, 2.0f, 1.0f); // Scale the object
 
-	glVertex2f(-0.75, 0.5);
-	glVertex2f(0.75, 0.5);
-	glVertex2f(0.75, -0.5);
-	glVertex2f(-0.75, -0.5);
+	// Draw the object
+	GLfloat vertices[] = {
+	 0.0f,  1.0f, 0.0f,  // Vertex 0
+	-1.0f, -1.0f, 0.0f,  // Vertex 1
+	 1.0f, -1.0f, 0.0f,  // Vertex 2
+	 0.0f, -1.0f, 1.0f   // Vertex 3 (extra for fun)
+	};
 
-	glEnd();
+	GLubyte indices[] = {
+		0, 1, 2,  // Triangle 1
+		1, 2, 3   // Triangle 2
+	};
+
+	glEnableClientState(GL_VERTEX_ARRAY); // Enable vertex arrays
+	glVertexPointer(3, GL_FLOAT, 0, vertices); // Point to vertex data
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); // Draw indexed triangles
+
+	glDisableClientState(GL_VERTEX_ARRAY); // Cleanup
+
 	glFlush();
 }
