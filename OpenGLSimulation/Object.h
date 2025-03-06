@@ -8,5 +8,5 @@ public:
 	Object() {}
 	~Object() {}
 
-	Mesh* mesh;
+	Mesh* mesh = nullptr;
 };
