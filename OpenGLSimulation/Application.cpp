@@ -4,8 +4,8 @@ Application::Application(int argc, char* argv[])
 {
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
+	glutInitWindowSize(1280, 720);
 	glutCreateWindow("Simple OpenGL Program");
-	glutInitWindowSize(800, 800);
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutMainLoop();
 }
@@ -25,14 +25,14 @@ void Application::Update()
 	// Apply transformations (order is reversed due to stack nature)
 	//glTranslatef(0.0f, 0.0f, -5.0f); // Move the object back
 	glRotatef(45.0f, 0.0f, 1.0f, 0.0f); // Rotate around Y-axis
-	glScalef(1.0f, 2.0f, 1.0f); // Scale the object
+	glScalef(0.25f, 0.25f, 0.25f); // Scale the object
 
 	// Draw the object
 	GLfloat vertices[] = {
-	 0.0f,  1.0f, 0.0f,  // Vertex 0
-	-1.0f, -1.0f, 0.0f,  // Vertex 1
-	 1.0f, -1.0f, 0.0f,  // Vertex 2
-	 0.0f, -1.0f, 1.0f   // Vertex 3 (extra for fun)
+	 -1.0f,  1.0f, 0.0f, 1, 0, 0,  // Vertex 0
+	  1.0f,  1.0f, 0.0f, 1, 1, 0,  // Vertex 1
+	 -1.0f, -1.0f, 0.0f, 1, 0, 1,  // Vertex 2
+	  1.0f, -1.0f, 0.0f, 1, 0, 0   // Vertex 3 (extra for fun)
 	};
 
 	GLubyte indices[] = {
@@ -41,11 +41,15 @@ void Application::Update()
 	};
 
 	glEnableClientState(GL_VERTEX_ARRAY); // Enable vertex arrays
-	glVertexPointer(3, GL_FLOAT, 0, vertices); // Point to vertex data
+	glEnableClientState(GL_COLOR_ARRAY); // Enable Color arrays
+
+	glVertexPointer(3, GL_FLOAT, 6 * sizeof(GLfloat), vertices); // Point to vertex data
+	glColorPointer(3, GL_FLOAT, 6 * sizeof(GLfloat), vertices + 3); // Point to vertex data
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices); // Draw indexed triangles
 
 	glDisableClientState(GL_VERTEX_ARRAY); // Cleanup
+	glDisableClientState(GL_COLOR_ARRAY); // Cleanup
 
 	glFlush();
 }
