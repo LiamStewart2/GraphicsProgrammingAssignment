@@ -7,6 +7,7 @@
 #include "GL/freeglut.h"
 
 #include "GLUTCallbacks.h"
+#include "FileLoader.h"
 
 class Application
 {

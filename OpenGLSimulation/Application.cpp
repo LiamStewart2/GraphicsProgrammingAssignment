@@ -1,7 +1,11 @@
 #include "Application.h"
+#include <iostream>
 
 Application::Application(int argc, char* argv[])
 {
+	Mesh mesh;
+	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", mesh);
+
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
 	glutInitWindowSize(1280, 720);
@@ -23,7 +27,7 @@ void Application::Update()
 	glLoadIdentity(); // Reset to identity matrix
 
 	// Apply transformations (order is reversed due to stack nature)
-	//glTranslatef(0.0f, 0.0f, -5.0f); // Move the object back
+	glTranslatef(0.0f, 0.0f, -5.0f); // Move the object back
 	glRotatef(45.0f, 0.0f, 1.0f, 0.0f); // Rotate around Y-axis
 	glScalef(0.25f, 0.25f, 0.25f); // Scale the object
 
