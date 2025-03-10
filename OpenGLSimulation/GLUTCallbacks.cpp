@@ -21,4 +21,8 @@ namespace GLUTCallbacks
 			app->Update();
 		}
 	}
+	void Update()
+	{
+		glutPostRedisplay();
+	}
 }

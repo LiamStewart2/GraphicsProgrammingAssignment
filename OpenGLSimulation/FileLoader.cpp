@@ -33,11 +33,5 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
     }
 
     meshFile.close();
-
-    for (const auto& v : mesh.vertices)
-        std::cout << "Vertex:" << v.x << ", " << v.y << ", " << v.z << std::endl;
-    for(int i : mesh.indices)
-        std::cout << i << ", ";
-
     return 0;
 }
