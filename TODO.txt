@@ -1,0 +1,13 @@
+-Read in mesh's from disk
+-Render these objects with:
+	-face winding
+	-back face culling
+	-depth testing
+-Render 3 forms of text
+-"Very good camera movement"
+-Animation of objects without user input
+-Manipulation of objects through user input
+-Textures with the ability to change at run time
+-"excellent implementation of materials and lighting"
+-Scene storing objects with a linked list and a scene graph structure
+-good coding standards
