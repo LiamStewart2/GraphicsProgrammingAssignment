@@ -1,5 +1,4 @@
 #include "Application.h"
-#include <iostream>
 
 Application::Application(int argc, char* argv[])
 {
@@ -14,7 +13,7 @@ Application::Application(int argc, char* argv[])
 
 	//Callbacks
 	glutDisplayFunc(GLUTCallbacks::Display);
-	glutIdleFunc(GLUTCallbacks::Update);
+	glutTimerFunc(REFRESH_RATE_DELAY, GLUTCallbacks::Timer, REFRESH_RATE_DELAY);
 
 	//Mainloop
 	glutMainLoop();
@@ -25,12 +24,18 @@ Application::~Application()
 
 }
 
-void Application::Update()
+void Application::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	rot += 0.01f;
 	Renderer::RenderMesh(monkey, camera, rot);
 
 	glFlush();
+}
+
+void Application::Update()
+{
+	glutPostRedisplay();
+
+	rot += 0.1f;
 }

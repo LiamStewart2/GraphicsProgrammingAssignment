@@ -6,5 +6,5 @@ namespace GLUTCallbacks
 {
 	void Init(Application* app);
 	void Display();
-	void Update();
+	void Timer(int preferredRefresh);
 }

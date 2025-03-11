@@ -18,11 +18,12 @@ namespace GLUTCallbacks
 	{
 		if (app != nullptr)
 		{
-			app->Update();
+			app->Display();
 		}
 	}
-	void Update()
+	void Timer(int preferredRefresh)
 	{
-		glutPostRedisplay();
+		app->Update();
+		glutTimerFunc(preferredRefresh, GLUTCallbacks::Timer, preferredRefresh);
 	}
 }
