@@ -2,7 +2,8 @@
 
 Application::Application(int argc, char* argv[])
 {
-	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkey);
+	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
+	monkeyObject = Object(&monkeyMesh, Transform({0, 0, 0}, {0.3f, 0.3f, 0.3f}, {-90, 0, 0}));
 
 	GLUTCallbacks::Init(this);
 
@@ -28,7 +29,7 @@ void Application::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	Renderer::RenderMesh(monkey, camera, rot);
+	Renderer::RenderMesh(monkeyObject, camera);
 
 	glFlush();
 }
@@ -37,5 +38,5 @@ void Application::Update()
 {
 	glutPostRedisplay();
 
-	rot += 0.1f;
+	monkeyObject.transform.Rotation.y += 1;
 }

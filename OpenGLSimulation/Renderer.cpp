@@ -8,19 +8,23 @@ Renderer::~Renderer()
 {
 }
 
-void Renderer::RenderMesh(Mesh& mesh, Camera& camera, float rot)
+void Renderer::RenderMesh(Object& object, Camera& camera)
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glRotatef(-90, 1, 0, 0);
-	glRotatef(rot, 0, 0, 1);
-	glScalef(0.2f, 0.2f, 0.2f);
+	glTranslatef(object.transform.Position.x, object.transform.Position.y, object.transform.Position.z);
+	
+	glRotatef(object.transform.Rotation.z, 0.0f, 0.0f, 1.0f);
+	glRotatef(object.transform.Rotation.y, 0.0f, 1.0f, 0.0f);
+	glRotatef(object.transform.Rotation.x, 1.0f, 0.0f, 0.0f);
+
+	glScalef(object.transform.Scale.x, object.transform.Scale.y, object.transform.Scale.z);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, &mesh.vertices[0].x);
+	glVertexPointer(3, GL_FLOAT, 0, &object.mesh->vertices[0].x);
 
-	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, mesh.indices.data());
+	glDrawElements(GL_TRIANGLES, object.mesh->indices.size(), GL_UNSIGNED_INT, object.mesh->indices.data());
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 }

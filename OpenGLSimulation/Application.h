@@ -20,7 +20,10 @@ public:
 	void Display();
 	void Update();
 private:
-	Mesh monkey; Camera camera;
+	Mesh monkeyMesh; 
+	Object monkeyObject;
+	
+	Camera camera;
 	float rot = 0.0f;
 };
 
