@@ -16,6 +16,7 @@ void Renderer::RenderMesh(Mesh& mesh, Camera& camera, float rot)
 	glRotatef(-90, 1, 0, 0);
 	glRotatef(rot, 0, 0, 1);
 	glScalef(0.2f, 0.2f, 0.2f);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, &mesh.vertices[0].x);
 

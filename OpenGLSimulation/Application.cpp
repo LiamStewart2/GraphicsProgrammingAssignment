@@ -6,11 +6,17 @@ Application::Application(int argc, char* argv[])
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkey);
 
 	GLUTCallbacks::Init(this);
+
+	//Window Initalization
 	glutInit(&argc, argv);
 	glutInitWindowSize(1280, 720);
 	glutCreateWindow("Simple OpenGL Program");
+
+	//Callbacks
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutIdleFunc(GLUTCallbacks::Update);
+
+	//Mainloop
 	glutMainLoop();
 }
 

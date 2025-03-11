@@ -27,7 +27,8 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
             for (int i = 0; i < 3; i++)
             {
                 int index = 0; ss >> index;
-                mesh.indices.push_back(index);
+                // Subtract 1 because OBJ indices start from 1, not 0
+                mesh.indices.push_back(index - 1);
             }
         }
     }
