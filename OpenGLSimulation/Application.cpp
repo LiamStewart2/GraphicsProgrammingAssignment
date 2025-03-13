@@ -2,9 +2,18 @@
 
 Application::Application(int argc, char* argv[])
 {
-	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
-	monkeyObject = Object(&monkeyMesh, Transform({0, 0, -5}, {0.3f, 0.3f, 0.3f}, {-90, 0, 0}));
+	Init(argc, argv);
+	LoadScene();
+	MainLoop();
+}
 
+Application::~Application()
+{
+
+}
+
+void Application::Init(int argc, char* argv[])
+{
 	GLUTCallbacks::Init(this);
 
 	//Window Initalization
@@ -14,23 +23,26 @@ Application::Application(int argc, char* argv[])
 	glutCreateWindow("Simple OpenGL Program");
 
 	//GL Settings
-	//TODO TEST THESE ARE ACTUALLY ON
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CW);
+}
 
+void Application::LoadScene()
+{
+	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
+	monkeyObject = Object(&monkeyMesh, Transform({ 0, 0, -5 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }));
+}
+
+void Application::MainLoop()
+{
 	//Callbacks
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(REFRESH_RATE_DELAY, GLUTCallbacks::Timer, REFRESH_RATE_DELAY);
 
 	//Mainloop
 	glutMainLoop();
-}
-
-Application::~Application()
-{
-
 }
 
 void Application::Display()

@@ -20,6 +20,10 @@ public:
 	void Display();
 	void Update();
 private:
+	void Init(int argc, char* argv[]);
+	void LoadScene();
+	void MainLoop();
+
 	Mesh monkeyMesh; 
 	Object monkeyObject;
 	

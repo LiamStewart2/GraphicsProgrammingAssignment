@@ -10,12 +10,16 @@ Renderer::~Renderer()
 
 void Renderer::RenderMesh(Object& object, Camera& camera)
 {
+	// Set the perspective
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45.0f, (float)1280 / (float)720, 0.1f, 100.0f);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	// Apply Transformations
 
 	glTranslatef(object.transform.Position.x, object.transform.Position.y, object.transform.Position.z);
 	
@@ -24,6 +28,8 @@ void Renderer::RenderMesh(Object& object, Camera& camera)
 	glRotatef(object.transform.Rotation.x, 1.0f, 0.0f, 0.0f);
 
 	glScalef(object.transform.Scale.x, object.transform.Scale.y, object.transform.Scale.z);
+
+	// Push the mesh date to the GPU
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, &object.mesh->vertices[0].x);
