@@ -32,7 +32,7 @@ void Application::Init(int argc, char* argv[])
 void Application::LoadScene()
 {
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
-	monkeyObject = Object(&monkeyMesh, Transform({ 0, 0, -2.5 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }));
+	monkeyObject = Object(&monkeyMesh, Transform({ 0, 0, -2.5 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 }));
 }
 
 void Application::MainLoop()
@@ -65,8 +65,8 @@ void Application::Update()
 {
 	glutPostRedisplay();
 
-	//monkeyObject.transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.005f) * 0.5;
-	//monkeyObject.transform.Rotation.y += 2;
+	monkeyObject.transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.005f) * 0.5;
+	monkeyObject.transform.Rotation.y += 2;
 }
 
 void Application::HandleKeyboard(unsigned char key, int x, int y)
