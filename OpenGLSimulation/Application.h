@@ -6,6 +6,7 @@
 #include <GL/GLU.h>
 #include "GL/freeglut.h"
 
+#include "Mouse.h"
 #include "Globals.h"
 #include "GLUTCallbacks.h"
 #include "FileLoader.h"
@@ -19,6 +20,11 @@ public:
 	
 	void Display();
 	void Update();
+	
+	void HandleKeyboard(unsigned char key, int x, int y);
+	void HandleMouseButtonPressed(int button, int state, int x, int y);
+	void HandleMouseMove(int x, int y);
+
 private:
 	void Init(int argc, char* argv[]);
 	void LoadScene();

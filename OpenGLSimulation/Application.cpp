@@ -18,7 +18,7 @@ void Application::Init(int argc, char* argv[])
 
 	//Window Initalization
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(1280, 720);
 	glutCreateWindow("Simple OpenGL Program");
 
@@ -38,7 +38,13 @@ void Application::LoadScene()
 void Application::MainLoop()
 {
 	//Callbacks
+	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutMouseFunc(GLUTCallbacks::HandleMouseButtonPressed);
+	glutPassiveMotionFunc(GLUTCallbacks::HandleMouseMove);
+	glutMotionFunc(GLUTCallbacks::HandleMouseMove);
+	
 	glutDisplayFunc(GLUTCallbacks::Display);
+
 	glutTimerFunc(REFRESH_RATE_DELAY, GLUTCallbacks::Timer, REFRESH_RATE_DELAY);
 
 	//Mainloop
@@ -52,14 +58,36 @@ void Application::Display()
 	Renderer::RenderMesh(monkeyObject, camera);
 
 	glFlush();
+	glutSwapBuffers();
 }
 
 void Application::Update()
 {
 	glutPostRedisplay();
 
-	monkeyObject.transform.Rotation.y += 1;
+	monkeyObject.transform.Rotation.y += 3;
 
 	if (monkeyObject.transform.Rotation.y >= 360)
 		monkeyObject.transform.Rotation.y -= 360;
+
+	monkeyObject.transform.Rotation.z = monkeyObject.transform.Rotation.x = monkeyObject.transform.Rotation.y;
+
+
 }
+
+void Application::HandleKeyboard(unsigned char key, int x, int y)
+{
+	std::cout << key;
+}
+
+void Application::HandleMouseButtonPressed(int button, int state, int x, int y)
+{
+	Mouse::SetMouseButtonState(button, state);
+}
+
+void Application::HandleMouseMove(int x, int y)
+{
+	Mouse::SetMousePosition(x, y);
+}
+
+

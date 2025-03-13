@@ -23,7 +23,23 @@ namespace GLUTCallbacks
 	}
 	void Timer(int preferredRefresh)
 	{
+		int deltaTime = glutGet(GLUT_ELAPSED_TIME);
 		app->Update();
-		glutTimerFunc(preferredRefresh, GLUTCallbacks::Timer, preferredRefresh);
+		deltaTime = glutGet(GLUT_ELAPSED_TIME) - deltaTime;
+		glutTimerFunc(preferredRefresh - deltaTime, GLUTCallbacks::Timer, preferredRefresh);
+	}
+	void Keyboard(unsigned char key, int x, int y)
+	{
+		app->HandleKeyboard(key, x, y);
+	}
+
+	void HandleMouseButtonPressed(int button, int state, int x, int y)
+	{
+		app->HandleMouseButtonPressed(button, state, x, y);
+	}
+
+	void HandleMouseMove(int x, int y)
+	{
+		app->HandleMouseMove(x, y);
 	}
 }
