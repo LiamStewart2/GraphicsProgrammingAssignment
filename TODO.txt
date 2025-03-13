@@ -1,4 +1,4 @@
--Read in mesh's from disk
+-Read in mesh's from disk (DONE)
 -Render these objects with:
 	-face winding
 	-back face culling

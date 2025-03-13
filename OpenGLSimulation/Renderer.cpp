@@ -10,6 +10,10 @@ Renderer::~Renderer()
 
 void Renderer::RenderMesh(Object& object, Camera& camera)
 {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, (float)1280 / (float)720, 0.1f, 100.0f);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 

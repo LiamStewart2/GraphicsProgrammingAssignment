@@ -3,12 +3,13 @@
 Application::Application(int argc, char* argv[])
 {
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
-	monkeyObject = Object(&monkeyMesh, Transform({0, 0, 0}, {0.3f, 0.3f, 0.3f}, {0, 0, 0}));
+	monkeyObject = Object(&monkeyMesh, Transform({0, 0, -5}, {0.3f, 0.3f, 0.3f}, {-90, 0, 0}));
 
 	GLUTCallbacks::Init(this);
 
 	//Window Initalization
 	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(1280, 720);
 	glutCreateWindow("Simple OpenGL Program");
 
@@ -16,7 +17,7 @@ Application::Application(int argc, char* argv[])
 	//TODO TEST THESE ARE ACTUALLY ON
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	glCullFace(GL_BACK);
 	glFrontFace(GL_CW);
 
 	//Callbacks
