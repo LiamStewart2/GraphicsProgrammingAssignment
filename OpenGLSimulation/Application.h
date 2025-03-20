@@ -32,9 +32,10 @@ private:
 	void MainLoop();
 
 	Mesh monkeyMesh; 
-	Object monkeyObject;
+	std::vector<Object> objects;
 	
 	Camera camera;
-	float rot = 0.0f;
+	unsigned int objectFocusIndex = 0;
+	void SwitchObjectFocus();
 };
 

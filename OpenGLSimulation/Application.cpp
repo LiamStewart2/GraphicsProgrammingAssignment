@@ -4,7 +4,7 @@ Application::Application(int argc, char* argv[])
 {
 	Init(argc, argv);
 	LoadScene();
-	camera = Camera({0, 0, 4}, {0, 0, 0}, {0, 1, 0});
+	camera = Camera({0, 0, 8}, {0, 0, 0}, {0, 1, 0});
 	MainLoop();
 }
 
@@ -33,7 +33,8 @@ void Application::Init(int argc, char* argv[])
 void Application::LoadScene()
 {
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
-	monkeyObject = Object(&monkeyMesh, Transform({ 0, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 }));
+	objects.push_back(Object(&monkeyMesh, Transform({ 2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 })));
+	objects.push_back(Object(&monkeyMesh, Transform({ -2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 })));
 }
 
 void Application::MainLoop()
@@ -58,7 +59,8 @@ void Application::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Renderer::RenderMesh(monkeyObject, camera);
+	for(Object object : objects)
+		Renderer::RenderMesh(object, camera);
 
 	glFlush();
 	glutSwapBuffers();
@@ -67,14 +69,29 @@ void Application::Display()
 void Application::Update()
 {
 	glutPostRedisplay();
-	camera.Update(glutGet(GLUT_ELAPSED_TIME));
-	//monkeyObject.transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.004f) * 0.3;
-	//monkeyObject.transform.Rotation.y += 2;
+	
+	camera.Update();
+
+	for(int i = 0; i < objects.size(); i++)
+	{
+		objects[i].transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.004f);
+		objects[i].transform.Rotation.y += 2;
+	}
+
+	camera.SetFocus(objects[objectFocusIndex]);
+}
+
+void Application::SwitchObjectFocus()
+{
+	objectFocusIndex += 1;
+	if (objectFocusIndex >= objects.size())
+		objectFocusIndex -= objects.size();
 }
 
 void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 {
 	Keyboard::SetButtonPressedDown(key);
+	SwitchObjectFocus();
 }
 void Application::HandleKeyboardUp(unsigned char key, int x, int y)
 {

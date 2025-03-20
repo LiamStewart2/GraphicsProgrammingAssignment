@@ -2,6 +2,7 @@
 
 #include "Vector3.h"
 #include "Input.h"
+#include "Object.h"
 
 class Camera
 {
@@ -12,9 +13,9 @@ public:
 
 	Vector3f eye, center, up;
 
-	void Update(double etime);
+	void SetFocus(Object& object);
+	void Update();
 private:
-	void handleMovement(double etime);
-	void handleTurning();
+	void handleMovement();
 };
 
