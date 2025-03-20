@@ -1,35 +1,21 @@
 #include "Camera.h"
 
+
+void Camera::SetFocus(Object& object)
+{
+	target = object.transform.Position;
+}
+
 void Camera::Update(double etime)
 {
 	handleMovement(etime);
-	handleTurning();
 }
 
+// The elapsed time
 void Camera::handleMovement(double etime)
 {
-	if (Keyboard::GetButtonState('w'))
-	{
-		eye.z -= 0.01f;
-		center.z -= 0.01f;
-	}
-	if (Keyboard::GetButtonState('s'))
-	{
-		eye.z += 0.01f;
-		center.z += 0.01f;
-	}
-	if (Keyboard::GetButtonState('a'))
-	{
-		eye.x -= 0.01f;
-		center.x -= 0.01;
-	}
-	if (Keyboard::GetButtonState('d'))
-	{
-		eye.x += 0.01;
-		center.x += 0.01;
-	}
-}
+	center = center + (target - center) * smooth;
 
-void Camera::handleTurning()
-{
+	Vector3f targetPosition = target + Vector3f(cos(etime * rotationSpeed) * rotationRadius, yOffset, sin(etime * rotationSpeed) * rotationRadius);
+	eye = eye + (targetPosition - eye) * smooth;
 }
