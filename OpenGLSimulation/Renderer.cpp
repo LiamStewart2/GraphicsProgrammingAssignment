@@ -10,6 +10,11 @@ Renderer::~Renderer()
 
 void Renderer::RenderMesh(Object& object, Camera& camera)
 {
+	// Test if the Mesh is loaded
+
+	if (object.mesh == nullptr)
+		return;
+
 	// Set the perspective
 
 	glMatrixMode(GL_PROJECTION);
