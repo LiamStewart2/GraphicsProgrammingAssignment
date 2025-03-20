@@ -38,7 +38,8 @@ void Application::LoadScene()
 void Application::MainLoop()
 {
 	//Callbacks
-	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutKeyboardFunc(GLUTCallbacks::KeyboardDown);
+	glutKeyboardUpFunc(GLUTCallbacks::KeyboardUp);
 	glutMouseFunc(GLUTCallbacks::HandleMouseButtonPressed);
 	glutPassiveMotionFunc(GLUTCallbacks::HandleMouseMove);
 	glutMotionFunc(GLUTCallbacks::HandleMouseMove);
@@ -64,17 +65,18 @@ void Application::Display()
 void Application::Update()
 {
 	glutPostRedisplay();
-
-	monkeyObject.transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.005f) * 0.5;
+	if(Keyboard::GetButtonState(' '))
+		monkeyObject.transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.005f) * 0.5;
 	monkeyObject.transform.Rotation.y += 2;
 }
 
-void Application::HandleKeyboard(unsigned char key, int x, int y)
+void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 {
-	if (key == 'a')
-		monkeyObject.transform.Position.x -= 0.01;
-	if (key == 'd')
-		monkeyObject.transform.Position.x += 0.01;
+	Keyboard::SetButtonPressedDown(key);
+}
+void Application::HandleKeyboardUp(unsigned char key, int x, int y)
+{
+	Keyboard::SetButtonReleased(key);
 }
 
 void Application::HandleMouseButtonPressed(int button, int state, int x, int y)

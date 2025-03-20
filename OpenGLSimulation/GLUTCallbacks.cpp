@@ -28,9 +28,14 @@ namespace GLUTCallbacks
 		deltaTime = glutGet(GLUT_ELAPSED_TIME) - deltaTime;
 		glutTimerFunc(preferredRefresh - deltaTime, GLUTCallbacks::Timer, preferredRefresh);
 	}
-	void Keyboard(unsigned char key, int x, int y)
+
+	void KeyboardDown(unsigned char key, int x, int y)
 	{
-		app->HandleKeyboard(key, x, y);
+		app->HandleKeyboardDown(key, x, y);
+	}
+	void KeyboardUp(unsigned char key, int x, int y)
+	{
+		app->HandleKeyboardUp(key, x, y);
 	}
 
 	void HandleMouseButtonPressed(int button, int state, int x, int y)

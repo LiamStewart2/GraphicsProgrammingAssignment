@@ -6,7 +6,7 @@
 #include <GL/GLU.h>
 #include "GL/freeglut.h"
 
-#include "Mouse.h"
+#include "Input.h"
 #include "Globals.h"
 #include "GLUTCallbacks.h"
 #include "FileLoader.h"
@@ -21,7 +21,8 @@ public:
 	void Display();
 	void Update();
 	
-	void HandleKeyboard(unsigned char key, int x, int y);
+	void HandleKeyboardDown(unsigned char key, int x, int y);
+	void HandleKeyboardUp(unsigned char key, int x, int y);
 	void HandleMouseButtonPressed(int button, int state, int x, int y);
 	void HandleMouseMove(int x, int y);
 

@@ -14,3 +14,10 @@ namespace Mouse
 	Vector2i GetMousePosition();
 	bool GetMouseButtonState(int button);
 };
+
+namespace Keyboard
+{
+	void SetButtonPressedDown(unsigned char key);
+	void SetButtonReleased(unsigned char key);
+	bool GetButtonState(unsigned char key);
+};
