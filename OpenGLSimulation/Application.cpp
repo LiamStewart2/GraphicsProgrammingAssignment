@@ -4,7 +4,7 @@ Application::Application(int argc, char* argv[])
 {
 	Init(argc, argv);
 	LoadScene();
-	camera = Camera({0, 0, 1}, {0, 0, 0}, {0, 1, 0});
+	camera = Camera({0, 0, 4}, {0, 0, 0}, {0, 1, 0});
 	MainLoop();
 }
 
@@ -27,7 +27,7 @@ void Application::Init(int argc, char* argv[])
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	glFrontFace(GL_CW);
+	glFrontFace(GL_CCW);
 }
 
 void Application::LoadScene()

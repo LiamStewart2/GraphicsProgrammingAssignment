@@ -20,6 +20,24 @@ struct Vector3f
 		y /= m;
 		z /= m;
 	}
+
+	Vector3f operator+(const Vector3f& v) const
+	{
+		return Vector3f(x + v.x, y + v.y, z + v.z);
+	}
+	Vector3f operator-(const Vector3f& v) const
+	{
+		return Vector3f(x - v.x, y - v.y, z - v.z);
+	}
+	Vector3f operator*(const Vector3f& v) const
+	{
+		return Vector3f(x * v.x, y * v.y, z * v.z);
+	}
+	Vector3f operator/(const Vector3f& v) const
+	{
+		return Vector3f(x / v.x, y / v.y, z / v.z);
+	}
+
 	static float dot(Vector3f u, Vector3f v)
 	{
 		return (u.x * v.x + u.y * v.y + u.z * v.z);
