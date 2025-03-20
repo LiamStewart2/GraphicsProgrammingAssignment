@@ -12,6 +12,7 @@ public:
 	~Camera() {}
 
 	Vector3f eye, center, up;
+	Vector3f target;
 
 	void SetFocus(Object& object);
 	void Update();

@@ -3,7 +3,7 @@
 
 void Camera::SetFocus(Object& object)
 {
-	center = object.transform.Position;
+	target = object.transform.Position;
 }
 
 void Camera::Update()
@@ -13,5 +13,5 @@ void Camera::Update()
 
 void Camera::handleMovement()
 {
-	
+	center = center + (target - center) * Vector3f( 0.1f, 0.1f, 0.1f);
 }
