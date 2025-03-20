@@ -14,10 +14,15 @@ void Renderer::RenderMesh(Object& object, Camera& camera)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45.0f, (float)1280 / (float)720, 0.1f, 100.0f);
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	gluPerspective(45.0f, (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.01f, 1000.0f);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	// Set the Camera direction
+
+	gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, camera.center.x, camera.center.y, camera.center.z, camera.up.x, camera.up.y, camera.up.z);
 
 	// Apply Transformations
 

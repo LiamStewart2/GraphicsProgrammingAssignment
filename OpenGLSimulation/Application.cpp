@@ -4,6 +4,7 @@ Application::Application(int argc, char* argv[])
 {
 	Init(argc, argv);
 	LoadScene();
+	camera = Camera({0, 0, 1}, {0, 0, 0}, {0, 1, 0});
 	MainLoop();
 }
 
@@ -32,7 +33,7 @@ void Application::Init(int argc, char* argv[])
 void Application::LoadScene()
 {
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
-	monkeyObject = Object(&monkeyMesh, Transform({ 0, 0, -2.5 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 }));
+	monkeyObject = Object(&monkeyMesh, Transform({ 0, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 }));
 }
 
 void Application::MainLoop()
@@ -49,6 +50,7 @@ void Application::MainLoop()
 	glutTimerFunc(REFRESH_RATE_DELAY, GLUTCallbacks::Timer, REFRESH_RATE_DELAY);
 
 	//Mainloop
+
 	glutMainLoop();
 }
 
@@ -58,6 +60,7 @@ void Application::Display()
 
 	Renderer::RenderMesh(monkeyObject, camera);
 
+	glutWireCube(1);
 	glFlush();
 	glutSwapBuffers();
 }
@@ -65,9 +68,9 @@ void Application::Display()
 void Application::Update()
 {
 	glutPostRedisplay();
-	if(Keyboard::GetButtonState(' '))
-		monkeyObject.transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.005f) * 0.5;
-	monkeyObject.transform.Rotation.y += 2;
+	camera.Update(glutGet(GLUT_ELAPSED_TIME));
+	//monkeyObject.transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.004f) * 0.3;
+	//monkeyObject.transform.Rotation.y += 2;
 }
 
 void Application::HandleKeyboardDown(unsigned char key, int x, int y)
@@ -83,7 +86,6 @@ void Application::HandleMouseButtonPressed(int button, int state, int x, int y)
 {
 	Mouse::SetMouseButtonState(button, state);
 }
-
 void Application::HandleMouseMove(int x, int y)
 {
 	Mouse::SetMousePosition(x, y);

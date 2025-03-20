@@ -6,6 +6,7 @@
 #include <GL/GLU.h>
 #include "GL/freeglut.h"
 
+#include "Globals.h"
 #include "Object.h"
 #include "Camera.h"
 
