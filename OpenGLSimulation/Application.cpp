@@ -74,13 +74,7 @@ void Application::Update()
 {
 	glutPostRedisplay();
 	
-	camera.Update();
-
-	for(int i = 0; i < objects.size(); i++)
-	{
-		objects[i].transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.004f);
-		objects[i].transform.Rotation.y += 2;
-	}
+	camera.Update(glutGet(GLUT_ELAPSED_TIME));
 
 	camera.SetFocus(objects[objectFocusIndex]);
 }

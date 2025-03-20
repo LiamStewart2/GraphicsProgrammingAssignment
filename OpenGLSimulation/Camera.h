@@ -14,9 +14,15 @@ public:
 	Vector3f eye, center, up;
 	Vector3f target;
 
+	float rotationSpeed = 0.0005f;
+	float rotationRadius = 5;
+	float yOffset = 0.5f;
+	Vector3f smooth = Vector3f(0.1f, 0.1f, 0.1f);
+
 	void SetFocus(Object& object);
-	void Update();
+	void Update(double etime);
 private:
-	void handleMovement();
+	// The elapsed time
+	void handleMovement(double etime);
 };
 

@@ -6,12 +6,16 @@ void Camera::SetFocus(Object& object)
 	target = object.transform.Position;
 }
 
-void Camera::Update()
+void Camera::Update(double etime)
 {
-	handleMovement();
+	handleMovement(etime);
 }
 
-void Camera::handleMovement()
+// The elapsed time
+void Camera::handleMovement(double etime)
 {
-	center = center + (target - center) * Vector3f( 0.1f, 0.1f, 0.1f);
+	center = center + (target - center) * smooth;
+
+	Vector3f targetPosition = target + Vector3f(cos(etime * rotationSpeed) * rotationRadius, yOffset, sin(etime * rotationSpeed) * rotationRadius);
+	eye = eye + (targetPosition - eye) * smooth;
 }
