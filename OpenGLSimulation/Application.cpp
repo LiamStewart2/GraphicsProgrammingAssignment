@@ -60,7 +60,6 @@ void Application::Display()
 
 	Renderer::RenderMesh(monkeyObject, camera);
 
-	glutWireCube(1);
 	glFlush();
 	glutSwapBuffers();
 }
