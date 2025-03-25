@@ -57,3 +57,22 @@ void Renderer::RenderMesh(Object& object, Camera& camera, int flags)
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
+#include <iostream>
+void Renderer::RenderTextObject(TextObject& textObject)
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
+	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	const char* character;
+
+	glColor3f(textObject.color.x, textObject.color.y, textObject.color.z);
+
+	glRasterPos2f(textObject.screenX, textObject.screenY);
+	for (character = textObject.text.c_str(); *character != '\0'; character++)
+		glutBitmapCharacter(textObject.font, *character);
+	glColor3f(1, 1, 1);
+}

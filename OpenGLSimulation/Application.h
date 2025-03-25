@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include <string>
 
 #include <GL/GL.h>
 #include <GL/GLU.h>
@@ -11,6 +12,7 @@
 #include "GLUTCallbacks.h"
 #include "FileLoader.h"
 #include "Renderer.h"
+#include "TextObject.h"
 
 class Application
 {
@@ -33,9 +35,13 @@ private:
 
 	Mesh monkeyMesh; 
 	std::vector<Object> objects;
+	TextObject FPSText;
+	TextObject ObjectNameText;
 	
 	Camera camera;
 	unsigned int objectFocusIndex = 0;
 	void SwitchObjectFocus();
+
+	float frames = 0;
 };
 

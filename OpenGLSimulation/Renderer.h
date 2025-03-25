@@ -8,6 +8,7 @@
 
 #include "Globals.h"
 #include "Object.h"
+#include "TextObject.h"
 #include "Camera.h"
 
 class Renderer
@@ -17,5 +18,6 @@ public:
 	~Renderer();
 
 	static void RenderMesh(Object& object, Camera& camera, int flags);
+	static void RenderTextObject(TextObject& textObject);
 };
 
