@@ -8,7 +8,7 @@ Renderer::~Renderer()
 {
 }
 
-void Renderer::RenderMesh(Object& object, Camera& camera)
+void Renderer::RenderMesh(Object& object, Camera& camera, int flags)
 {
 	// Test if the Mesh is loaded
 
@@ -44,7 +44,16 @@ void Renderer::RenderMesh(Object& object, Camera& camera)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, 0, &object.mesh->vertices[0].x);
 
-	glDrawElements(GL_TRIANGLES, object.mesh->indices.size(), GL_UNSIGNED_INT, object.mesh->indices.data());
+	if (flags == RenderFlags::WIREFRAME)
+	{
+		glColor3f(0, 1, 0);
+		glDrawElements(GL_LINES, object.mesh->indices.size(), GL_UNSIGNED_INT, object.mesh->indices.data());
+		glColor3f(1, 1, 1);
+	}
+	else
+	{
+		glDrawElements(GL_TRIANGLES, object.mesh->indices.size(), GL_UNSIGNED_INT, object.mesh->indices.data());
+	}
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 }

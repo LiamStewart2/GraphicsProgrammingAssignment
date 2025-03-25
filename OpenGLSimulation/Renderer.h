@@ -16,6 +16,6 @@ public:
 	Renderer();
 	~Renderer();
 
-	static void RenderMesh(Object& object, Camera& camera);
+	static void RenderMesh(Object& object, Camera& camera, int flags);
 };
 
