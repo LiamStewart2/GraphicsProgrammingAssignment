@@ -57,7 +57,7 @@ void Renderer::RenderMesh(Object& object, Camera& camera, int flags)
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
-#include <iostream>
+
 void Renderer::RenderTextObject(TextObject& textObject)
 {
 	glMatrixMode(GL_PROJECTION);
