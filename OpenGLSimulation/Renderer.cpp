@@ -79,12 +79,12 @@ void Renderer::Render2DObject(Object2D& object)
 
 	//glRotatef(object.transform.Rotation.z, 0.0f, 0.0f, 1.0f);
 	//glRotatef(object.transform.Rotation.y, 0.0f, 1.0f, 0.0f);
-	glRotatef(object.transform.Rotation, 1.0f, 0.0f, 0.0f);
+	glRotatef(object.transform.Rotation, 0.0f, 0.0f, 1.0f);
 
 	glScalef(object.transform.Scale.x, object.transform.Scale.y, 1);
 
 	// Push the sprite data to the GPU
-	glColor4f(1, 0, 0, 0.5f);
+	glColor4f(object.color.r, object.color.g, object.color.b, object.color.a);
 	glBegin(GL_QUADS);
 	glVertex3f(0, 0, 0); glVertex3f(0, 1, 0); glVertex3f(1, 1, 0); glVertex3f(1, 0, 0);
 	glEnd();

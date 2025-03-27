@@ -94,6 +94,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="FileLoader.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GLUTCallbacks.h" />
