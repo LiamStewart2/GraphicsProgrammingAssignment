@@ -100,8 +100,10 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Object2D.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector2.h" />

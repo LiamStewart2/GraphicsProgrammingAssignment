@@ -8,6 +8,7 @@
 
 #include "Globals.h"
 #include "Object.h"
+#include "Object2D.h"
 #include "TextObject.h"
 #include "Camera.h"
 
@@ -17,7 +18,8 @@ public:
 	Renderer();
 	~Renderer();
 
-	static void RenderMesh(Object& object, Camera& camera, int flags);
+	static void RenderObject(Object& object, Camera& camera, int flags);
+	static void Render2DObject(Object2D& object);
 	static void RenderTextObject(TextObject& textObject);
 };
 

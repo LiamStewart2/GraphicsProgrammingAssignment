@@ -8,7 +8,7 @@ Renderer::~Renderer()
 {
 }
 
-void Renderer::RenderMesh(Object& object, Camera& camera, int flags)
+void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 {
 	// Test if the Mesh is loaded
 
@@ -56,6 +56,11 @@ void Renderer::RenderMesh(Object& object, Camera& camera, int flags)
 	}
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void Renderer::Render2DObject(Object2D& object)
+{
+
 }
 
 void Renderer::RenderTextObject(TextObject& textObject)
