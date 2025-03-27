@@ -24,10 +24,12 @@ void Application::Init(int argc, char* argv[])
 	glutCreateWindow("Simple OpenGL Program");
 
 	//GL Settings
+	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void Application::LoadScene()
@@ -42,6 +44,8 @@ void Application::LoadScene()
 
 	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, objects[0].name, Vector3f(0, 1, 0));
+
+	testImage = Object2D(nullptr, Transform2D({ 300, 300 }, { 80, 200 }, 0));
 }
 
 void Application::MainLoop()
@@ -71,8 +75,10 @@ void Application::Display()
 	Renderer::RenderObject(objects[objectFocusIndex], camera, RenderFlags::WIREFRAME);
 
 	Renderer::RenderTextObject(FPSText);
-	Renderer::RenderTextObject(ObjectNameText);
 
+	Renderer::Render2DObject(testImage);
+
+	Renderer::RenderTextObject(ObjectNameText);
 	glFlush();
 	glutSwapBuffers();
 }

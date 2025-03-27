@@ -2,6 +2,6 @@
 
 class Sprite
 {
-	Sprite();
-	~Sprite();
+	Sprite() {}
+	~Sprite() {}
 };

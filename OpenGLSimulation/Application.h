@@ -13,6 +13,7 @@
 #include "FileLoader.h"
 #include "Renderer.h"
 #include "TextObject.h"
+#include "Object2D.h";
 
 class Application
 {
@@ -33,8 +34,9 @@ private:
 	void LoadScene();
 	void MainLoop();
 
-	Mesh monkeyMesh; 
+	Mesh monkeyMesh;
 	std::vector<Object> objects;
+	Object2D testImage;
 	TextObject FPSText;
 	TextObject ObjectNameText;
 	
@@ -43,5 +45,6 @@ private:
 	void SwitchObjectFocus();
 
 	int lastFrameTime = 0;
+	
 };
 
