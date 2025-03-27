@@ -42,6 +42,6 @@ private:
 	unsigned int objectFocusIndex = 0;
 	void SwitchObjectFocus();
 
-	float frames = 0;
+	int lastFrameTime = 0;
 };
 

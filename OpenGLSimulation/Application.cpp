@@ -80,9 +80,9 @@ void Application::Display()
 void Application::Update()
 {
 	glutPostRedisplay();
-
-	frames += 1;
-	FPSText.text = std::to_string((int)floor( frames / (glutGet(GLUT_ELAPSED_TIME) / 1000)));
+	
+	FPSText.text = std::to_string((int)floor(1000 / (glutGet(GLUT_ELAPSED_TIME) - lastFrameTime)));
+	lastFrameTime = glutGet(GLUT_ELAPSED_TIME);
 
 	camera.Update(glutGet(GLUT_ELAPSED_TIME));
 
