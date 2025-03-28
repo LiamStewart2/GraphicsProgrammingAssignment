@@ -45,7 +45,7 @@ void Application::LoadScene()
 	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, objects[0].name, Vector3f(0, 1, 0));
 
-	testImage = Object2D(nullptr, Transform2D({ 500, 500 }, { 100, 100 },45));
+	testImage = Object2D(nullptr, Transform2D({ 500, 500 }, { 100, 100 },45), Color(0, 0, 1, 0.5f));
 }
 
 void Application::MainLoop()

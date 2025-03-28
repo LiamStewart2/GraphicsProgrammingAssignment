@@ -77,8 +77,6 @@ void Renderer::Render2DObject(Object2D& object)
 
 	glTranslatef(object.transform.Position.x, object.transform.Position.y, 0);
 
-	//glRotatef(object.transform.Rotation.z, 0.0f, 0.0f, 1.0f);
-	//glRotatef(object.transform.Rotation.y, 0.0f, 1.0f, 0.0f);
 	glRotatef(object.transform.Rotation, 0.0f, 0.0f, 1.0f);
 
 	glScalef(object.transform.Scale.x, object.transform.Scale.y, 1);
