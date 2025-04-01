@@ -36,7 +36,7 @@ private:
 
 	Mesh monkeyMesh;
 	std::vector<Object> objects;
-	Object2D testImage;
+
 	TextObject FPSText;
 	TextObject ObjectNameText;
 	
