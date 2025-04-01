@@ -7,9 +7,10 @@ class Object
 {
 public:
 	Object() {}
-	Object(Mesh* _mesh, Transform _transform) : mesh(_mesh), transform(_transform) {}
+	Object(Mesh* _mesh, Transform _transform, const char* _name = "object") : mesh(_mesh), transform(_transform), name(_name) {}
 	~Object() {}
 
+	const char* name = nullptr;
 	Transform transform;
 	Mesh* mesh = nullptr;
 };

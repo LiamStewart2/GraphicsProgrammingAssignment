@@ -8,7 +8,7 @@ Renderer::~Renderer()
 {
 }
 
-void Renderer::RenderMesh(Object& object, Camera& camera, int flags)
+void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 {
 	// Test if the Mesh is loaded
 
@@ -56,4 +56,59 @@ void Renderer::RenderMesh(Object& object, Camera& camera, int flags)
 	}
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void Renderer::Render2DObject(Object2D& object)
+{
+	// Set the perspective
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	// Disable OpenGL functionality
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+
+	// Transformations
+
+	glTranslatef(object.transform.Position.x, object.transform.Position.y, 0);
+
+	glRotatef(object.transform.Rotation, 0.0f, 0.0f, 1.0f);
+
+	glScalef(object.transform.Scale.x, object.transform.Scale.y, 1);
+
+	// Push the sprite data to the GPU
+	glColor4f(object.color.r, object.color.g, object.color.b, object.color.a);
+	glBegin(GL_QUADS);
+	glVertex3f(0, 0, 0); glVertex3f(0, 1, 0); glVertex3f(1, 1, 0); glVertex3f(1, 0, 0);
+	glEnd();
+	glColor4f(1, 1, 1, 1);
+
+	// Enable OpenGL functionality
+
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+}
+
+void Renderer::RenderTextObject(TextObject& textObject)
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
+	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	const char* character;
+
+	glColor3f(textObject.color.x, textObject.color.y, textObject.color.z);
+
+	glRasterPos2f(textObject.screenX, textObject.screenY);
+	for (character = textObject.text.c_str(); *character != '\0'; character++)
+		glutBitmapCharacter(textObject.font, *character);
+	glColor3f(1, 1, 1);
 }

@@ -94,14 +94,18 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="FileLoader.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GLUTCallbacks.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Object2D.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="TextObject.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
