@@ -16,5 +16,5 @@ public:
 	std::vector<Vector3f> vertexNormals;
 	std::vector<Vector2f> vertexTextureCoordinates;
 
-	std::vector<Vector3i> faces;
+	std::vector<unsigned int> faces;
 };

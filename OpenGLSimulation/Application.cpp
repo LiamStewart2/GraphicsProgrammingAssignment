@@ -36,11 +36,11 @@ void Application::LoadScene()
 {
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
 
-	objects.push_back(Object(&monkeyMesh, Transform({ 2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 }), "monkey"));
-	objects.push_back(Object(&monkeyMesh, Transform({ -2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 })));
-	objects.push_back(Object(&monkeyMesh, Transform({ -5, 1, 0 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 })));
-	objects.push_back(Object(&monkeyMesh, Transform({ 4, -1, 3 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 }), "monkey 2"));
-	objects.push_back(Object(&monkeyMesh, Transform({ 2, 4, 1 }, { 0.3f, 0.3f, 0.3f }, { -90, 0, 0 })));
+	objects.push_back(Object(&monkeyMesh, Transform({ 2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey"));
+	objects.push_back(Object(&monkeyMesh, Transform({ -2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
+	objects.push_back(Object(&monkeyMesh, Transform({ -5, 1, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
+	objects.push_back(Object(&monkeyMesh, Transform({ 4, -1, 3 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey 2"));
+	objects.push_back(Object(&monkeyMesh, Transform({ 2, 4, 1 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
 
 	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, objects[0].name, Vector3f(0, 1, 0));

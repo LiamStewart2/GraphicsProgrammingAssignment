@@ -59,7 +59,7 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
                 std::vector<int> indexes = getIntegersFromStringStream(vertexString, '/');
                 Vector3i face = { indexes[2], indexes[1], indexes[0] };
 
-                mesh.faces.push_back(face);
+                mesh.faces.push_back(indexes[2]);
             }
         }
 
