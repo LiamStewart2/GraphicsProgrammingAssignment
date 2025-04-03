@@ -15,7 +15,7 @@ public:
 	Vector3f target;
 
 	float rotationSpeed = 0.0005f;
-	float rotationRadius = 5;
+	float rotationRadius = 3;
 	float yOffset = 0.5f;
 	Vector3f smooth = Vector3f(0.1f, 0.1f, 0.1f);
 

@@ -29,6 +29,7 @@ void Application::Init(int argc, char* argv[])
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_TEXTURE_2D);
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -38,6 +39,7 @@ void Application::Init(int argc, char* argv[])
 void Application::LoadScene()
 {
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
+	FileLoader::LoadTextureFromRAW("res/Texture/Penguins.raw", 512, 512, penguinTexture);
 
 	objects.push_back(Object(&monkeyMesh, Transform({ 2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey"));
 	objects.push_back(Object(&monkeyMesh, Transform({ -2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
@@ -47,6 +49,8 @@ void Application::LoadScene()
 
 	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, objects[0].name, Vector3f(0, 1, 0));
+
+
 
 	//testImage = Object2D(nullptr, Transform2D({ 500, 500 }, { 100, 100 },45), Color(0, 0, 1, 0.5f));
 }
@@ -73,9 +77,11 @@ void Application::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	penguinTexture.BindTexture();
 	for(Object object : objects)
 		Renderer::RenderObject(object, camera, NULL);
-	Renderer::RenderObject(objects[objectFocusIndex], camera, RenderFlags::WIREFRAME);
+	penguinTexture.UnbindTexture();
+	//Renderer::RenderObject(objects[objectFocusIndex], camera, RenderFlags::WIREFRAME);
 
 	Renderer::RenderTextObject(FPSText);
 	Renderer::RenderTextObject(ObjectNameText);
@@ -92,6 +98,10 @@ void Application::Update()
 	lastFrameTime = glutGet(GLUT_ELAPSED_TIME);
 
 	camera.Update(glutGet(GLUT_ELAPSED_TIME));
+	if(Mouse::GetMouseButtonState(MouseButton::LEFT) == 0)
+		camera.rotationRadius -= 0.1f;
+	else if(Mouse::GetMouseButtonState(MouseButton::RIGHT) == 0)
+		camera.rotationRadius += 0.1f;
 
 	camera.SetFocus(objects[objectFocusIndex]);
 }

@@ -34,7 +34,10 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
 {
     std::string line; std::ifstream meshFile(filepath);
     if (!meshFile.is_open())
+    {
+        std::cerr << "Issue with OBJ file " << filepath << std::endl;
         return -1;
+    }
 
     Vector3f vertexPosition; Vector3f vertexNormal; Vector2f vertexTextureCoordinate;
 
@@ -96,5 +99,37 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
     }
 
     meshFile.close();
+    return 0;
+}
+
+
+/// LoadTextureFromRAW
+/// loads the image texture from a RAW file
+/// width and height are required as the only data in a raw file is the colour
+
+int FileLoader::LoadTextureFromRAW(const char* filepath, int width, int height, Texture& texture)
+{
+    char* tempTextureData; int filesize; std::ifstream textureFile;
+    texture.width = width; texture.height = height;
+
+    textureFile.open(filepath, std::ios::binary);
+    if (!textureFile.is_open())
+    {
+        std::cerr << "Issue with texture file " << filepath << std::endl;
+        return -1;
+    }
+
+    textureFile.seekg(0, std::ios::end);
+    filesize = (int)textureFile.tellg();
+    tempTextureData = new char[filesize];
+
+    textureFile.seekg(0, std::ios::beg);
+    textureFile.read(tempTextureData, filesize);
+    textureFile.close();
+
+    texture.BindDataToTexture(tempTextureData);
+
+    delete[] tempTextureData;
+
     return 0;
 }

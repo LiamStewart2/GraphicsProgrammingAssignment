@@ -14,6 +14,7 @@
 #include "Renderer.h"
 #include "TextObject.h"
 #include "Object2D.h";
+#include "Texture.h"
 
 class Application
 {
@@ -39,6 +40,8 @@ private:
 
 	TextObject FPSText;
 	TextObject ObjectNameText;
+
+	Texture penguinTexture;
 	
 	Camera camera;
 	unsigned int objectFocusIndex = 0;
