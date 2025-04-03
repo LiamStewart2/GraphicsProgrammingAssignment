@@ -3,20 +3,24 @@
 #include "Vector2.h"
 #include "Vector3.h"
 
-struct Vertex
-{
-public:
-	Vertex() : x(0), y(0), z(0), nx(0), ny(0), nz(0), tx(0), ty(0) {}
-	Vertex(float _x, float _y, float _z, float _nx, float _ny, float _nz, float _tx, float _ty) : x(_x), y(_y), z(_z), nx(_nx), ny(_ny), nz(_nz), tx(_tx), ty(_ty) {}
-	Vertex(Vector3f position, Vector3f normal, Vector2f textureCoordinate)
-	{
-		x = position.x; y = position.y; z = position.z;
-		nx = normal.x; ny = normal.y; nz = normal.z;
-		tx = textureCoordinate.x; ty = textureCoordinate.y;
-	}
-	~Vertex() {}
+struct Vertex {
+    Vector3f position;
+    Vector3f normal;
+    Vector2f texcoord;
 
-	float x, y, z;
-	float nx, ny, nz;
-	float tx, ty;
+    bool operator==(const Vertex& other) const 
+    {
+        return (position == other.position) && (normal == other.normal) && (texcoord == other.texcoord);
+    }
+};
+
+template<> struct std::hash<Vertex>
+{
+    size_t operator()(const Vertex& v) const
+    {
+        return hash<float>()(v.position.x) ^ hash<float>()(v.position.y) ^
+            hash<float>()(v.position.z) ^ hash<float>()(v.normal.x) ^
+            hash<float>()(v.normal.y) ^ hash<float>()(v.normal.z) ^
+            hash<float>()(v.texcoord.x) ^ hash<float>()(v.texcoord.y);
+    }
 };

@@ -21,6 +21,11 @@ struct Vector3f
 		z /= m;
 	}
 
+
+	bool operator==(const Vector3f& other) const
+	{
+		return (x == other.x) && (y == other.y) && (z == other.z);
+	}
 	Vector3f operator+(const Vector3f& v) const
 	{
 		return Vector3f(x + v.x, y + v.y, z + v.z);

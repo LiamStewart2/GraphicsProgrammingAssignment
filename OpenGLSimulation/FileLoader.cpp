@@ -33,14 +33,16 @@ std::vector<int> getIntegersFromStringStream(std::string input, const char divis
 int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
 {
     std::string line; std::ifstream meshFile(filepath);
-
     if (!meshFile.is_open())
         return -1;
 
-    Vector3f vertexPosition, vertexNormal;
-    Vector2f vertexTextureCoordinate;
+    Vector3f vertexPosition; Vector3f vertexNormal; Vector2f vertexTextureCoordinate;
 
-    int vertexPositionIndex = 0; int vertexNormalIndex = 0; int vertexTextureCoordinateIndex = 0;
+    std::vector<Vector3f> vertexPositions;
+    std::vector<Vector3f> vertexNormals;
+    std::vector<Vector2f> vertexTextureCoordinates;
+
+    std::unordered_map<Vertex, unsigned int> vertices;
 
     while (getline(meshFile, line))
     {
@@ -57,9 +59,19 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
                 std::string vertexString;
                 ss >> vertexString;
                 std::vector<int> indexes = getIntegersFromStringStream(vertexString, '/');
-                Vector3i face = { indexes[2], indexes[1], indexes[0] };
 
-                mesh.faces.push_back(indexes[2]);
+                Vertex vertex = {vertexPositions[indexes[2] - 1], vertexNormals[indexes[0] - 1], vertexTextureCoordinates[indexes[1] - 1]};
+                
+                if (vertices.count(vertex) == 0) 
+                {
+                    vertices[vertex] = mesh.vertexPositions.size();
+
+                    mesh.vertexPositions.push_back(vertex.position);
+                    mesh.vertexNormals.push_back(vertex.normal);
+                    mesh.vertexTextureCoordinates.push_back(vertex.texcoord);
+                }
+
+                mesh.faces.push_back(vertices[vertex]);
             }
         }
 
@@ -68,17 +80,17 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
             if (type == "v")
             {
                 ss >> vertexPosition.x; ss >> vertexPosition.y; ss >> vertexPosition.z;
-                mesh.vertexPositions.push_back(vertexPosition);
+                vertexPositions .push_back(vertexPosition);
             }
             else if (type == "vn")
             {
                 ss >> vertexNormal.x; ss >> vertexNormal.y; ss >> vertexNormal.z;
-                mesh.vertexNormals.push_back(vertexNormal);
+                vertexNormals.push_back(vertexNormal);
             }
             else if (type == "vt")
             {
                 ss >> vertexTextureCoordinate.x; ss >> vertexTextureCoordinate.y;
-                mesh.vertexTextureCoordinates.push_back(vertexTextureCoordinate);
+                vertexTextureCoordinates.push_back(vertexTextureCoordinate);
             }
         }
     }

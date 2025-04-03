@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <cmath>
+#include <unordered_map>
 
 #include "Mesh.h"
 

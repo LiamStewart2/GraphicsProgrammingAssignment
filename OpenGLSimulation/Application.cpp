@@ -27,9 +27,12 @@ void Application::Init(int argc, char* argv[])
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glDisable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
 void Application::LoadScene()
