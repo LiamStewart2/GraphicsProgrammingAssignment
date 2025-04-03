@@ -12,5 +12,9 @@ public:
 	Mesh() {}
 	~Mesh() {}
 
-	std::vector<Vertex> vertexBuffer;
+	std::vector<Vector3f> vertexPositions;
+	std::vector<Vector3f> vertexNormals;
+	std::vector<Vector2f> vertexTextureCoordinates;
+
+	std::vector<Vector3i> faces;
 };

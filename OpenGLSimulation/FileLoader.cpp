@@ -4,11 +4,30 @@
 /// will load a mesh from an obj file, using string streams to read each line
 /// and push the data to the mesh class
 
-int getIntFromStringStream(const char* input)
+std::vector<int> getIntegersFromStringStream(std::string input, const char division)
 {
-    int integer;
-    sscanf(input, "%d", &integer);
-    return integer;
+    std::vector<int> integers;
+
+    int value = 0; int digit = 0;
+
+    for (int i = input.size() - 1; i >= 0; i--)
+    {
+        if (input[i] != division)
+        {
+            int digitValue = (int)(input[i] - '0');
+            if (digit != 0)
+                digitValue *= std::pow(10, digit);
+            value += digitValue;
+            digit += 1;
+        }
+        else
+        {
+            integers.push_back(value);
+            value = 0; digit = 0;
+        }
+    }
+    integers.push_back(value);
+    return integers;
 }
 
 int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
@@ -17,11 +36,6 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
 
     if (!meshFile.is_open())
         return -1;
-
-    
-    std::vector<Vector3f> vertexPositions;
-    std::vector<Vector3f> vertexNormals;
-    std::vector<Vector2f> vertexTextureCoordinates;
 
     Vector3f vertexPosition, vertexNormal;
     Vector2f vertexTextureCoordinate;
@@ -38,17 +52,14 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
         {
             for (int i = 0; i < 3; i++)
             {
-                std::cout << ss.str() << std::endl;
                 // Subtract 1 because OBJ indices start from 1, not 0
                 
-                vertexPositionIndex = getIntFromStringStream(ss.getline();
-                vertexTextureCoordinateIndex = getIntFromStringStream(ss);
-                vertexNormalIndex = getIntFromStringStream(ss);
+                std::string vertexString;
+                ss >> vertexString;
+                std::vector<int> indexes = getIntegersFromStringStream(vertexString, '/');
+                Vector3i face = { indexes[2], indexes[1], indexes[0] };
 
-                //std::cout << vertexPositionIndex << std::endl << vertexTextureCoordinateIndex << std::endl << vertexNormalIndex << std::endl;
-
-                Vertex vertex = Vertex(vertexPositions[vertexPositionIndex - 1], vertexNormals[vertexNormalIndex - 1], vertexTextureCoordinates[vertexTextureCoordinateIndex - 1]);
-                mesh.vertexBuffer.push_back(vertex);
+                mesh.faces.push_back(face);
             }
         }
 
@@ -57,17 +68,17 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
             if (type == "v")
             {
                 ss >> vertexPosition.x; ss >> vertexPosition.y; ss >> vertexPosition.z;
-                vertexPositions.push_back(vertexPosition);
+                mesh.vertexPositions.push_back(vertexPosition);
             }
             else if (type == "vn")
             {
                 ss >> vertexNormal.x; ss >> vertexNormal.y; ss >> vertexNormal.z;
-                vertexNormals.push_back(vertexNormal);
+                mesh.vertexNormals.push_back(vertexNormal);
             }
             else if (type == "vt")
             {
                 ss >> vertexTextureCoordinate.x; ss >> vertexTextureCoordinate.y;
-                vertexTextureCoordinates.push_back(vertexTextureCoordinate);
+                mesh.vertexTextureCoordinates.push_back(vertexTextureCoordinate);
             }
         }
     }
