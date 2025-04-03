@@ -42,17 +42,21 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 	// Push the mesh date to the GPU
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, &object.mesh->vertices[0].x);
+	glVertexPointer(3, GL_FLOAT, sizeof(Vertex), &object.mesh->vertexBuffer[0].x);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glNormalPointer(GL_FLOAT, sizeof(Vertex), &object.mesh->vertexBuffer[0].nx);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &object.mesh->vertexBuffer[0].tx);
 
 	if (flags == RenderFlags::WIREFRAME)
 	{
 		glColor3f(0, 1, 0);
-		glDrawElements(GL_LINES, object.mesh->indices.size(), GL_UNSIGNED_INT, object.mesh->indices.data());
+		glDrawElements(GL_LINES, object.mesh->vertexBuffer.size(), GL_UNSIGNED_INT, object.mesh->vertexBuffer.data());
 		glColor3f(1, 1, 1);
 	}
 	else
 	{
-		glDrawElements(GL_TRIANGLES, object.mesh->indices.size(), GL_UNSIGNED_INT, object.mesh->indices.data());
+		glDrawElements(GL_TRIANGLES, object.mesh->vertexBuffer.size(), GL_UNSIGNED_INT, object.mesh->vertexBuffer.data());
 	}
 
 	glDisableClientState(GL_VERTEX_ARRAY);
