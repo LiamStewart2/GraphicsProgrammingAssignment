@@ -8,6 +8,7 @@
 #include <cmath>
 #include <unordered_map>
 
+#include "Vertex.h"
 #include "Mesh.h"
 #include "Texture.h"
 
