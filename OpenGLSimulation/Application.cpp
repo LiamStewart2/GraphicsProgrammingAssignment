@@ -20,7 +20,7 @@ void Application::Init(int argc, char* argv[])
 	//Window Initalization
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(1280, 720);
+	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	glutCreateWindow("Simple OpenGL Program");
 
 	//GL Settings
@@ -41,11 +41,13 @@ void Application::LoadScene()
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
 	FileLoader::LoadTextureFromRAW("res/Texture/Penguins.raw", 512, 512, penguinTexture);
 
-	objects.push_back(Object(&monkeyMesh, Transform({ 2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey"));
-	objects.push_back(Object(&monkeyMesh, Transform({ -2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
-	objects.push_back(Object(&monkeyMesh, Transform({ -5, 1, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
-	objects.push_back(Object(&monkeyMesh, Transform({ 4, -1, 3 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey 2"));
-	objects.push_back(Object(&monkeyMesh, Transform({ 2, 4, 1 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
+	penguinMaterial = Material(&penguinTexture);
+
+	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ 2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey"));
+	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ -2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
+	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ -5, 1, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
+	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ 4, -1, 3 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey 2"));
+	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ 2, 4, 1 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
 
 	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, objects[0].name, Vector3f(0, 1, 0));
@@ -77,11 +79,10 @@ void Application::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	penguinTexture.BindTexture();
 	for(Object object : objects)
 		Renderer::RenderObject(object, camera, NULL);
-	penguinTexture.UnbindTexture();
-	//Renderer::RenderObject(objects[objectFocusIndex], camera, RenderFlags::WIREFRAME);
+
+	Renderer::RenderObject(objects[objectFocusIndex], camera, RenderFlags::WIREFRAME);
 
 	Renderer::RenderTextObject(FPSText);
 	Renderer::RenderTextObject(ObjectNameText);

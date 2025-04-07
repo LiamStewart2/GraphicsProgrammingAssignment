@@ -42,7 +42,8 @@ private:
 	TextObject ObjectNameText;
 
 	Texture penguinTexture;
-	
+	Material penguinMaterial;
+
 	Camera camera;
 	unsigned int objectFocusIndex = 0;
 	void SwitchObjectFocus();

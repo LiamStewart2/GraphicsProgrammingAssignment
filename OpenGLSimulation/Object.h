@@ -2,15 +2,17 @@
 
 #include "Transform.h"
 #include "Mesh.h"
+#include "Material.h"
 
 class Object
 {
 public:
 	Object() {}
-	Object(Mesh* _mesh, Transform _transform, const char* _name = "object") : mesh(_mesh), transform(_transform), name(_name) {}
+	Object(Mesh* _mesh, Material* _material, Transform _transform, const char* _name = "object") : mesh(_mesh), material(_material), transform(_transform), name(_name) {}
 	~Object() {}
 
 	const char* name = nullptr;
 	Transform transform;
 	Mesh* mesh = nullptr;
+	Material* material = nullptr;
 };

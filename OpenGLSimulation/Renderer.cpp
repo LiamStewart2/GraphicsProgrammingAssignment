@@ -39,6 +39,10 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 
 	glScalef(object.transform.Scale.x, object.transform.Scale.y, object.transform.Scale.z);
 
+	// Bind texture
+
+	object.material->texture->BindTexture();
+
 	// Push the mesh date to the GPU
 
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -59,6 +63,11 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 		glDrawElements(GL_TRIANGLES, object.mesh->faces.size(), GL_UNSIGNED_INT, object.mesh->faces.data());
 	}
 
+	// Unbind texture
+
+	object.material->texture->UnbindTexture();
+
+	// GL Disable
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
