@@ -15,6 +15,7 @@
 #include "TextObject.h"
 #include "Object2D.h";
 #include "Texture.h"
+#include "Light.h"
 
 class Application
 {
@@ -43,6 +44,8 @@ private:
 
 	Texture penguinTexture;
 	Material penguinMaterial;
+
+	Light light;
 
 	Camera camera;
 	unsigned int objectFocusIndex = 0;

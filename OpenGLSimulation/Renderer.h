@@ -11,6 +11,7 @@
 #include "Object2D.h"
 #include "TextObject.h"
 #include "Camera.h"
+#include "Light.h"
 
 class Renderer
 {
@@ -21,5 +22,8 @@ public:
 	static void RenderObject(Object& object, Camera& camera, int flags);
 	static void Render2DObject(Object2D& object);
 	static void RenderTextObject(TextObject& textObject);
+
+	static void SetMaterial(Material* material);
+	static void SetLight(Light* light);;
 };
 

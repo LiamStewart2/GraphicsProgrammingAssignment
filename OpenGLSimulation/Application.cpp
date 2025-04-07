@@ -27,13 +27,20 @@ void Application::Init(int argc, char* argv[])
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glDisable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
+	//glEnable(GL_NORMALIZE);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glColor3f(1.0f, 1.0f, 1.0f);
+
+	// Set Light Data
+	Renderer::SetLight(&light);
 }
 
 void Application::LoadScene()
@@ -41,7 +48,6 @@ void Application::LoadScene()
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
 	FileLoader::LoadTextureFromRAW("res/Texture/Penguins.raw", 512, 512, penguinTexture);
 
-	penguinMaterial = Material(&penguinTexture);
 
 	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ 2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey"));
 	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ -2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
@@ -52,6 +58,8 @@ void Application::LoadScene()
 	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, objects[0].name, Vector3f(0, 1, 0));
 
+	light = { {1, 1, 1, 0}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1} };
+	penguinMaterial = Material(&penguinTexture, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, 1000);
 
 
 	//testImage = Object2D(nullptr, Transform2D({ 500, 500 }, { 100, 100 },45), Color(0, 0, 1, 0.5f));
