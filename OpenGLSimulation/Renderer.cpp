@@ -53,10 +53,6 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glTexCoordPointer(2, GL_FLOAT, 0, &object.mesh->vertexTextureCoordinates[0].x);
 
-
-	glutSolidSphere(1.0, 20, 20);
-
-	/*
 	if (flags == RenderFlags::WIREFRAME)
 	{
 		glColor3f(0, 1, 0);
@@ -67,7 +63,6 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 	{
 		glDrawElements(GL_TRIANGLES, object.mesh->faces.size(), GL_UNSIGNED_INT, object.mesh->faces.data());
 	}
-	*/
 
 	// Unbind texture
 
@@ -93,6 +88,11 @@ void Renderer::Render2DObject(Object2D& object)
 
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_LIGHTING);
+
+	// Enable OpenGL functionality
+
+	glEnable(GL_COLOR_MATERIAL);
 
 	// Transformations
 
@@ -113,6 +113,11 @@ void Renderer::Render2DObject(Object2D& object)
 
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+
+	// Disable OpenGL functionality
+
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 void Renderer::RenderTextObject(TextObject& textObject)
@@ -136,21 +141,34 @@ void Renderer::RenderTextObject(TextObject& textObject)
 
 void Renderer::SetMaterial(Material* material)
 {
-	glMaterialfv(GL_FRONT, GL_AMBIENT, &material->ambient.x);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, &material->diffuse.x);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, &material->specular.x);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, material->ambient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, material->diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, material->specular);
 
 	glMaterialf(GL_FRONT, GL_SHININESS, material->shininess);
+}
+
+void Renderer::ResetMaterial()
+{
+	float ambient[4] = { 0.2, 0.2, 0.2, 1.0 };
+	float diffuse[4] = { 0.8, 0.8, 0.8, 1.0 };
+	float specular[4] = { 0.0, 0.0, 0.0, 1.0 };
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+
+	glMaterialf(GL_FRONT, GL_SHININESS, 100);
 }
 
 void Renderer::SetLight(Light* light)
 {
 	glMatrixMode(GL_MODELVIEW);
 
-	glLightfv(GL_LIGHT0, GL_POSITION, &light->position.x);
+	glLightfv(GL_LIGHT0, GL_POSITION, light->position);
 
-	glLightfv(GL_LIGHT0, GL_AMBIENT, &light->ambient.x);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, &light->diffuse.x);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, &light->specular.x);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light->ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light->diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light->specular);
 
 }

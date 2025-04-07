@@ -27,9 +27,8 @@ void Application::Init(int argc, char* argv[])
 	glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
-	//glEnable(GL_NORMALIZE);
+	glEnable(GL_NORMALIZE);
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -58,8 +57,8 @@ void Application::LoadScene()
 	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, objects[0].name, Vector3f(0, 1, 0));
 
-	light = { {1, 1, 1, 0}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1} };
-	penguinMaterial = Material(&penguinTexture, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, 1000);
+	light = { {1, 0, 0, 0}, {0.2, 0.2, 0.2, 1}, {0.7, 0.7, 0.7, 1}, {0.5, 0.5, 0.5, 1} };
+	penguinMaterial = Material(&penguinTexture, {0.7, 0.1, 0.1, 1}, {0.7, 0.1, 0.1, 1}, {1, 1, 1, 1}, 100);
 
 
 	//testImage = Object2D(nullptr, Transform2D({ 500, 500 }, { 100, 100 },45), Color(0, 0, 1, 0.5f));
@@ -87,10 +86,14 @@ void Application::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
 	for(Object object : objects)
 		Renderer::RenderObject(object, camera, NULL);
 
 	Renderer::RenderObject(objects[objectFocusIndex], camera, RenderFlags::WIREFRAME);
+
+	Renderer::SetLight(&light);
+	Renderer::ResetMaterial();
 
 	Renderer::RenderTextObject(FPSText);
 	Renderer::RenderTextObject(ObjectNameText);

@@ -24,6 +24,8 @@ public:
 	static void RenderTextObject(TextObject& textObject);
 
 	static void SetMaterial(Material* material);
-	static void SetLight(Light* light);;
+	static void SetLight(Light* light);
+
+	static void ResetMaterial();
 };
 
