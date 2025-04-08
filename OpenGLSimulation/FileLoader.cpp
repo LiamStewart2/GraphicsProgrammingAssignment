@@ -64,7 +64,7 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
                 std::vector<int> indexes = getIntegersFromStringStream(vertexString, '/');
 
                 Vertex vertex = {vertexPositions[indexes[2] - 1], vertexNormals[indexes[0] - 1], vertexTextureCoordinates[indexes[1] - 1]};
-                
+
                 if (vertices.count(vertex) == 0) 
                 {
                     vertices[vertex] = mesh.vertexPositions.size();
@@ -72,10 +72,10 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
                     mesh.vertexPositions.push_back(vertex.position);
                     mesh.vertexNormals.push_back(vertex.normal);
                     mesh.vertexTextureCoordinates.push_back(vertex.texcoord);
-                }
+            }
 
                 mesh.faces.push_back(vertices[vertex]);
-            }
+        }
         }
 
         else
@@ -83,7 +83,7 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
             if (type == "v")
             {
                 ss >> vertexPosition.x; ss >> vertexPosition.y; ss >> vertexPosition.z;
-                vertexPositions .push_back(vertexPosition);
+                vertexPositions.push_back(vertexPosition);
             }
             else if (type == "vn")
             {
@@ -128,8 +128,98 @@ int FileLoader::LoadTextureFromRAW(const char* filepath, int width, int height, 
     textureFile.close();
 
     texture.BindDataToTexture(tempTextureData);
-
+    
     delete[] tempTextureData;
 
     return 0;
+}
+
+/// LoadTextureFromBMP
+/// loads the image texture from a BMP file
+
+struct BitmapFileFt
+{
+    unsigned char magic[2];
+};
+
+struct BitmapFileHeader
+{
+    uint32_t filesz;
+    uint16_t creator1;
+    uint16_t creator2;
+    uint32_t bmp_offset;
+};
+
+struct BitmapInfoHeader
+{
+    uint32_t header_sz;
+    int32_t width;
+    int32_t height;
+    uint16_t nplanes;
+    uint16_t bitspp;
+    uint32_t compress_type;
+    uint32_t bmp_bytesz;
+    int32_t hres;
+    int32_t vres;
+    uint32_t ncolors;
+    uint32_t nimpcolors;
+};
+
+struct BitmapColor
+{
+    unsigned char b, g, r;
+};
+#define _CRT_SECURE_NO_DEPRECATE
+#include <stdio.h>
+#pragma warning (disable : 4996)
+
+int FileLoader::LoadTextureFromBMP(const char* filepath, Texture& texture)
+{
+    BitmapInfoHeader bitmapInfo;
+    BitmapFileFt magic;
+    BitmapFileHeader head;
+
+    int row, col;
+
+    BitmapColor* image_buffer;
+    char* textureImageBuffer;
+
+    FILE* file; file = fopen(filepath, "rb");
+
+    if (file == NULL)
+    {
+        std::cerr << "Issue with texture file " << filepath << std::endl;
+        return -1;
+    }
+
+    fread(&magic, sizeof(BitmapFileFt), 1, file);
+    fread(&head, sizeof(BitmapFileHeader), 1, file);
+    fread(&bitmapInfo, sizeof(BitmapInfoHeader), 1, file);
+
+    if (bitmapInfo.width != bitmapInfo.height)
+    {
+        std::cerr << "Invalid texture file " << filepath << " - not square" << std::endl;
+        return -1;
+    }
+
+    image_buffer = (BitmapColor*)malloc(sizeof(BitmapColor) * bitmapInfo.width);
+    textureImageBuffer = new char[bitmapInfo.width * bitmapInfo.height * 3];
+
+    texture.width = bitmapInfo.width; texture.height = bitmapInfo.height;
+
+    for (row = 0; row < bitmapInfo.height; row++) {
+        fread(image_buffer, sizeof(BitmapColor), bitmapInfo.width, file);
+
+        for (col = 0; col < bitmapInfo.width; col++)
+        {
+            textureImageBuffer[row * bitmapInfo.width + (col * 3)] = image_buffer[col].r;
+            textureImageBuffer[row * bitmapInfo.width + (col * 3) + 1] = image_buffer[col].g;
+            textureImageBuffer[row * bitmapInfo.width + (col * 3) + 2] = image_buffer[col].b;
+           }
+    }
+
+    texture.BindDataToTexture(textureImageBuffer);
+
+    fclose(file);
+    free(image_buffer);
 }

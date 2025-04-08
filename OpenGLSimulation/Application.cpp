@@ -45,12 +45,15 @@ void Application::Init(int argc, char* argv[])
 void Application::LoadScene()
 {
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
+	FileLoader::LoadMeshFromOBJ("res/Mesh/coolCube.obj", coolCubeMesh);
+
 	FileLoader::LoadTextureFromRAW("res/Texture/Penguins.raw", 512, 512, penguinTexture);
+	FileLoader::LoadTextureFromBMP("res/Texture/stone.bmp", stoneTexture);
 
 
 	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ 2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey"));
-	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ -2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
-	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ -5, 1, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
+	objects.push_back(Object(&coolCubeMesh, &penguinMaterial, Transform({ -2, 0, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
+	objects.push_back(Object(&coolCubeMesh, &penguinMaterial, Transform({ -5, 1, 0 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
 	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ 4, -1, 3 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 }), "monkey 2"));
 	objects.push_back(Object(&monkeyMesh, &penguinMaterial, Transform({ 2, 4, 1 }, { 0.3f, 0.3f, 0.3f }, { 0, 0, 0 })));
 
@@ -58,7 +61,7 @@ void Application::LoadScene()
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, objects[0].name, Vector3f(0, 1, 0));
 
 	light = { {1, 0, 0, 0}, {0.2, 0.2, 0.2, 1}, {0.7, 0.7, 0.7, 1}, {0.5, 0.5, 0.5, 1} };
-	penguinMaterial = Material(&penguinTexture, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, 100);
+	penguinMaterial = Material(&stoneTexture, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, 100);
 
 
 	//testImage = Object2D(nullptr, Transform2D({ 500, 500 }, { 100, 100 },45), Color(0, 0, 1, 0.5f));
@@ -90,7 +93,7 @@ void Application::Display()
 	for(Object object : objects)
 		Renderer::RenderObject(object, camera, NULL);
 
-	Renderer::RenderObject(objects[objectFocusIndex], camera, RenderFlags::WIREFRAME);
+	//Renderer::RenderObject(objects[objectFocusIndex], camera, RenderFlags::WIREFRAME);
 
 	Renderer::SetLight(&light);
 	Renderer::ResetMaterial();

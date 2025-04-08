@@ -37,12 +37,16 @@ private:
 	void MainLoop();
 
 	Mesh monkeyMesh;
+	Mesh coolCubeMesh;
+
 	std::vector<Object> objects;
 
 	TextObject FPSText;
 	TextObject ObjectNameText;
 
 	Texture penguinTexture;
+	Texture stoneTexture;
+
 	Material penguinMaterial;
 
 	Light light;
