@@ -47,7 +47,7 @@ void Application::LoadScene()
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
 	FileLoader::LoadMeshFromOBJ("res/Mesh/coolCube.obj", coolCubeMesh);
 
-	FileLoader::LoadTextureFromRAW("res/Texture/Penguins.raw", 512, 512, penguinTexture);
+	FileLoader::LoadTextureFromRAW("res/Texture/stars.raw", 512, 512, penguinTexture);
 	FileLoader::LoadTextureFromBMP("res/Texture/stone.bmp", stoneTexture);
 
 
