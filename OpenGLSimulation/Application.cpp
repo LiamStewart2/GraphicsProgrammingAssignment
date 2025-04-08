@@ -62,9 +62,9 @@ void Application::LoadScene()
 	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, objects[0].name, Vector3f(0, 1, 0));
 
-	light = { {1, 0, 0, 0}, {0.3, 0.3, 0.3, 1}, {0.7, 0.7, 0.7, 1}, {0.5, 0.5, 0.5, 1} };
+	light = { {1, 1, 1, 0}, {0.3, 0.3, 0.3, 1}, {0.7, 0.7, 0.7, 1}, {0.5, 0.5, 0.5, 1} };
 	penguinMaterial = Material(&stoneTexture, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, 64);
-	woodenPlankMaterial = Material(&woodenPlankTexture, { 0.6, 0.6, 0.6, 1 }, { 0.8, 0.8, 0.8, 1 }, { 0.1, 0.1, 0.1, 1 }, 32);
+	woodenPlankMaterial = Material(&woodenPlankTexture, { 0.4, 0.3, 0.05, 1 }, { 0.8, 0.65, 0.1, 1 }, {0.8, 0.8, 0.8, 1 }, 16);
 
 
 	//testImage = Object2D(nullptr, Transform2D({ 500, 500 }, { 100, 100 },45), Color(0, 0, 1, 0.5f));
