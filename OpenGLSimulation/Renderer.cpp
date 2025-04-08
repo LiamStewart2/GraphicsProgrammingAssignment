@@ -153,9 +153,9 @@ void Renderer::RenderTextObject(TextObject& textObject)
 
 void Renderer::SetMaterial(Material* material)
 {
-	glMaterialfv(GL_FRONT, GL_AMBIENT, material->ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, material->diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, material->specular);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, &material->ambient.x);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, &material->diffuse.x);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, &material->specular.x);
 
 	glMaterialf(GL_FRONT, GL_SHININESS, material->shininess);
 }
@@ -177,10 +177,10 @@ void Renderer::SetLight(Light* light)
 {
 	glMatrixMode(GL_MODELVIEW);
 
-	glLightfv(GL_LIGHT0, GL_POSITION, light->position);
+	glLightfv(GL_LIGHT0, GL_POSITION, &light->position.x);
 
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light->ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light->diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light->specular);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, &light->ambient.x);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, &light->diffuse.x);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, &light->specular.x);
 
 }
