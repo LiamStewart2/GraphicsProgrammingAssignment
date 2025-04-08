@@ -55,9 +55,15 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 
 	if (flags == RenderFlags::WIREFRAME)
 	{
+		glDisable(GL_LIGHTING);
+		glEnable(GL_COLOR_MATERIAL);
+
 		glColor3f(0, 1, 0);
 		glDrawElements(GL_LINES, object.mesh->faces.size(), GL_UNSIGNED_INT, object.mesh->faces.data());
 		glColor3f(1, 1, 1);
+
+		glEnable(GL_LIGHTING);
+		glDisable(GL_COLOR_MATERIAL);
 	}
 	else
 	{
@@ -129,6 +135,9 @@ void Renderer::RenderTextObject(TextObject& textObject)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	glDisable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+
 	const char* character;
 
 	glColor3f(textObject.color.x, textObject.color.y, textObject.color.z);
@@ -137,6 +146,9 @@ void Renderer::RenderTextObject(TextObject& textObject)
 	for (character = textObject.text.c_str(); *character != '\0'; character++)
 		glutBitmapCharacter(textObject.font, *character);
 	glColor3f(1, 1, 1);
+
+	glEnable(GL_LIGHTING);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 void Renderer::SetMaterial(Material* material)
