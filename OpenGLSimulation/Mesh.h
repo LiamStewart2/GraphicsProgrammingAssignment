@@ -2,7 +2,8 @@
 
 #include <vector>
 
-#include "Vertex.h"
+#include "Vector2.h"
+#include "Vector3.h"
 
 class Mesh
 {
@@ -10,6 +11,9 @@ public:
 	Mesh() {}
 	~Mesh() {}
 
-	std::vector<Vertex> vertices;
-	std::vector<unsigned int> indices;
+	std::vector<Vector3f> vertexPositions;
+	std::vector<Vector3f> vertexNormals;
+	std::vector<Vector2f> vertexTextureCoordinates;
+
+	std::vector<unsigned int> faces;
 };

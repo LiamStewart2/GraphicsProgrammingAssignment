@@ -6,6 +6,11 @@ struct Vector2f
 	Vector2f() { x = 0; y = 0;}
 
 	float x, y;
+
+	bool operator==(const Vector2f& other) const
+	{
+		return (x == other.x) && (y == other.y);
+	}
 };
 
 struct Vector2i

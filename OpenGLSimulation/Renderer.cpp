@@ -39,23 +39,45 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 
 	glScalef(object.transform.Scale.x, object.transform.Scale.y, object.transform.Scale.z);
 
+	// Bind texture
+
+	object.material->texture->BindTexture();
+	Renderer::SetMaterial(object.material);
+
 	// Push the mesh date to the GPU
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, &object.mesh->vertices[0].x);
+	glVertexPointer(3, GL_FLOAT, 0, &object.mesh->vertexPositions[0].x);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glNormalPointer(GL_FLOAT, 0, &object.mesh->vertexNormals[0].x);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, &object.mesh->vertexTextureCoordinates[0].x);
 
 	if (flags == RenderFlags::WIREFRAME)
 	{
+		glDisable(GL_LIGHTING);
+		glEnable(GL_COLOR_MATERIAL);
+
 		glColor3f(0, 1, 0);
-		glDrawElements(GL_LINES, object.mesh->indices.size(), GL_UNSIGNED_INT, object.mesh->indices.data());
+		glDrawElements(GL_LINES, object.mesh->faces.size(), GL_UNSIGNED_INT, object.mesh->faces.data());
 		glColor3f(1, 1, 1);
+
+		glEnable(GL_LIGHTING);
+		glDisable(GL_COLOR_MATERIAL);
 	}
 	else
 	{
-		glDrawElements(GL_TRIANGLES, object.mesh->indices.size(), GL_UNSIGNED_INT, object.mesh->indices.data());
+		glDrawElements(GL_TRIANGLES, object.mesh->faces.size(), GL_UNSIGNED_INT, object.mesh->faces.data());
 	}
 
+	// Unbind texture
+
+	object.material->texture->UnbindTexture();
+
+	// GL Disable
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 void Renderer::Render2DObject(Object2D& object)
@@ -72,6 +94,11 @@ void Renderer::Render2DObject(Object2D& object)
 
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_LIGHTING);
+
+	// Enable OpenGL functionality
+
+	glEnable(GL_COLOR_MATERIAL);
 
 	// Transformations
 
@@ -92,6 +119,11 @@ void Renderer::Render2DObject(Object2D& object)
 
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+
+	// Disable OpenGL functionality
+
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 void Renderer::RenderTextObject(TextObject& textObject)
@@ -103,6 +135,9 @@ void Renderer::RenderTextObject(TextObject& textObject)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	glDisable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+
 	const char* character;
 
 	glColor3f(textObject.color.x, textObject.color.y, textObject.color.z);
@@ -111,4 +146,41 @@ void Renderer::RenderTextObject(TextObject& textObject)
 	for (character = textObject.text.c_str(); *character != '\0'; character++)
 		glutBitmapCharacter(textObject.font, *character);
 	glColor3f(1, 1, 1);
+
+	glEnable(GL_LIGHTING);
+	glDisable(GL_COLOR_MATERIAL);
+}
+
+void Renderer::SetMaterial(Material* material)
+{
+	glMaterialfv(GL_FRONT, GL_AMBIENT, material->ambient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, material->diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, material->specular);
+
+	glMaterialf(GL_FRONT, GL_SHININESS, material->shininess);
+}
+
+void Renderer::ResetMaterial()
+{
+	float ambient[4] = { 0.2, 0.2, 0.2, 1.0 };
+	float diffuse[4] = { 0.8, 0.8, 0.8, 1.0 };
+	float specular[4] = { 0.0, 0.0, 0.0, 1.0 };
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+
+	glMaterialf(GL_FRONT, GL_SHININESS, 100);
+}
+
+void Renderer::SetLight(Light* light)
+{
+	glMatrixMode(GL_MODELVIEW);
+
+	glLightfv(GL_LIGHT0, GL_POSITION, light->position);
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light->ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light->diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light->specular);
+
 }

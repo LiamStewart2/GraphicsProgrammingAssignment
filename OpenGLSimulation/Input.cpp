@@ -7,7 +7,7 @@ namespace Mouse
 	namespace
 	{
 		int mouse_x; int mouse_y;
-		bool mouse_buttons[3] = { 0, 0, 0 };
+		bool mouse_buttons[3] = { 1, 1, 1};
 	}
 
 	void SetMouseButtonState(int button, int new_state)
