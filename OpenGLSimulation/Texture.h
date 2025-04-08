@@ -13,6 +13,7 @@ public:
 	~Texture() {}
 
 	void BindDataToTexture(const char* textureData);
+	void BindDataToTexture(const unsigned char* textureData);
 
 	void BindTexture();
 	void UnbindTexture();

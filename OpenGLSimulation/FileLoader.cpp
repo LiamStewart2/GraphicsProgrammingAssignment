@@ -179,10 +179,7 @@ int FileLoader::LoadTextureFromBMP(const char* filepath, Texture& texture)
     BitmapFileFt magic;
     BitmapFileHeader head;
 
-    int row, col;
-
-    BitmapColor* image_buffer;
-    char* textureImageBuffer;
+    unsigned char* textureImageBuffer;
 
     FILE* file; file = fopen(filepath, "rb");
 
@@ -202,24 +199,13 @@ int FileLoader::LoadTextureFromBMP(const char* filepath, Texture& texture)
         return -1;
     }
 
-    image_buffer = (BitmapColor*)malloc(sizeof(BitmapColor) * bitmapInfo.width);
-    textureImageBuffer = new char[bitmapInfo.width * bitmapInfo.height * 3];
+    textureImageBuffer = new unsigned char[bitmapInfo.width * bitmapInfo.height * 3];
 
     texture.width = bitmapInfo.width; texture.height = bitmapInfo.height;
 
-    for (row = 0; row < bitmapInfo.height; row++) {
-        fread(image_buffer, sizeof(BitmapColor), bitmapInfo.width, file);
-
-        for (col = 0; col < bitmapInfo.width; col++)
-        {
-            textureImageBuffer[row * bitmapInfo.width + (col * 3)] = image_buffer[col].r;
-            textureImageBuffer[row * bitmapInfo.width + (col * 3) + 1] = image_buffer[col].g;
-            textureImageBuffer[row * bitmapInfo.width + (col * 3) + 2] = image_buffer[col].b;
-           }
-    }
+    fread(textureImageBuffer, 1, bitmapInfo.width * bitmapInfo.height * 3, file);
 
     texture.BindDataToTexture(textureImageBuffer);
 
     fclose(file);
-    free(image_buffer);
 }
