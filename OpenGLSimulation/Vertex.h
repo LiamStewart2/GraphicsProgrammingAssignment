@@ -13,7 +13,6 @@ struct Vertex {
         return (position == other.position) && (normal == other.normal) && (texcoord == other.texcoord);
     }
 };
-
 template<> struct std::hash<Vertex>
 {
     size_t operator()(const Vertex& v) const
