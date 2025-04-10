@@ -13,7 +13,7 @@ void Camera::Update()
 	HandleMovement();
 }
 
-// The elapsed time
+// uses the cross product to find the directions to move to
 void Camera::HandleMovement()
 {
 	Vector3f forward = (center - eye).Normalized();
@@ -33,6 +33,7 @@ void Camera::HandleMovement()
 
 }
 
+// sets the target angles for the camera
 void Camera::FaceMouse()
 {
 	tx -= (SavedMousePosition.x - Mouse::GetMousePosition().x) * mouseSensitivity;
@@ -41,6 +42,7 @@ void Camera::FaceMouse()
 	glutWarpPointer(SavedMousePosition.x, SavedMousePosition.y);
 }
 
+// Uses trigonometry to find the view direction of the camera
 void Camera::SmoothTurning()
 {
 	dx += (tx - dx) * mouseInterpolation;
@@ -51,6 +53,7 @@ void Camera::SmoothTurning()
 	center.y = eye.y + tan(dy / 180);
 }
 
+//Hides and Unhides the cursor
 void Camera::RightMouseDown(int x, int y)
 {
 	SavedMousePosition = Vector2i(x, y);
@@ -58,7 +61,6 @@ void Camera::RightMouseDown(int x, int y)
 }
 void Camera::RightMouseUp(int x, int y)
 {
-
 	glutWarpPointer(SavedMousePosition.x, SavedMousePosition.y);
 	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
 

@@ -16,7 +16,6 @@ public:
 
 	Vector3f eye, center, up;
 
-
 	Vector3f movementSpeed = Vector3f(0.1f, 0.1f, 0.1f);
 	Vector3f targetPosition;
 
