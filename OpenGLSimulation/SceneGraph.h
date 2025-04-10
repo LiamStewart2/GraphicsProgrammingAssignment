@@ -48,9 +48,9 @@ public:
 		root->SetParentNode(nullptr);
 	}
 
-	void InsertNode(SceneGraphNode* parentNode, SceneGraphNode* childNode)
+	SceneGraphNode* InsertNode(SceneGraphNode* parentNode, SceneGraphNode* childNode)
 	{
-		parentNode->InsertNode(childNode);
+		return parentNode->InsertNode(childNode);
 	}
 
 	Object* GetRootObject() { return root->GetNodeObject(); }

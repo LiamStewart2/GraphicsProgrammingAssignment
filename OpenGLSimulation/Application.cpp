@@ -77,9 +77,6 @@ void Application::Display()
 
 	Renderer::RenderScene(scene);
 
-	//Renderer::RenderObject(objects[objectFocusIndex], camera, RenderFlags::WIREFRAME);
-
-	Renderer::SetLight(&light);
 	Renderer::ResetMaterial();
 
 	Renderer::RenderTextObject(FPSText);

@@ -22,18 +22,28 @@ void Renderer::RenderScene(Scene& scene)
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 
 	RenderSceneGraphNode(scene, scene.GetSceneGraph()->GetRootNode());
+	//RenderObject(scene.GetFocusObject(), scene.GetCamera(), RenderFlags::WIREFRAME);
+
+	SetLight(scene.GetLight());
 }
 
+// Use recursion to iterate through the SceneGraph
 void Renderer::RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode)
 {
-	Renderer::RenderObject(sceneGraphNode->GetNodeObject(), scene.GetCamera(), NULL);
-
 	glPushMatrix();
+	Renderer::RenderObject(sceneGraphNode->GetNodeObject(), scene.GetCamera(), NULL);
+	
+	if (sceneGraphNode->GetNodeObject() == scene.GetFocusObject())
+	{
+		Renderer::RenderObject(sceneGraphNode->GetNodeObject(), scene.GetCamera(), RenderFlags::WIREFRAME);    
+	}
+	
+	glPushMatrix();
+
 	for (int i = 0; i < sceneGraphNode->GetNumberOfChildNodes(); i++)
 		RenderSceneGraphNode(scene, sceneGraphNode->GetChildNode(i));
 	glPopMatrix();
 }
-
 
 void Renderer::RenderObject(const Object* object, const Camera* camera, int flags)
 {
@@ -43,19 +53,21 @@ void Renderer::RenderObject(const Object* object, const Camera* camera, int flag
 		return;
 
 	// Apply Transformations
+	if(flags != RenderFlags::WIREFRAME)
+	{
+		glTranslatef(object->transform.Position.x, object->transform.Position.y, object->transform.Position.z);
 
-	glTranslatef(object->transform.Position.x, object->transform.Position.y, object->transform.Position.z);
-	
-	glRotatef(object->transform.Rotation.z, 0.0f, 0.0f, 1.0f);
-	glRotatef(object->transform.Rotation.y, 0.0f, 1.0f, 0.0f);
-	glRotatef(object->transform.Rotation.x, 1.0f, 0.0f, 0.0f);
+		glRotatef(object->transform.Rotation.z, 0.0f, 0.0f, 1.0f);
+		glRotatef(object->transform.Rotation.y, 0.0f, 1.0f, 0.0f);
+		glRotatef(object->transform.Rotation.x, 1.0f, 0.0f, 0.0f);
 
-	glScalef(object->transform.Scale.x, object->transform.Scale.y, object->transform.Scale.z);
+		glScalef(object->transform.Scale.x, object->transform.Scale.y, object->transform.Scale.z);
 
-	// Bind texture
+		// Bind texture
 
-	object->material->texture->BindTexture();
-	Renderer::SetMaterial(object->material);
+		object->material->texture->BindTexture();
+		Renderer::SetMaterial(object->material);
+	}
 
 	// Push the mesh date to the GPU
 
