@@ -8,6 +8,7 @@ Renderer::~Renderer()
 {
 }
 
+// Set the perspective matrix and initalize the model matrix
 void Renderer::RenderScene(Scene& scene)
 {
 	glMatrixMode(GL_PROJECTION);
@@ -22,7 +23,6 @@ void Renderer::RenderScene(Scene& scene)
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 
 	RenderSceneGraphNode(scene, scene.GetSceneGraph()->GetRootNode());
-	//RenderObject(scene.GetFocusObject(), scene.GetCamera(), RenderFlags::WIREFRAME);
 
 	SetLight(scene.GetLight());
 }
@@ -45,14 +45,14 @@ void Renderer::RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode
 	glPopMatrix();
 }
 
+// Render Individual Objects, will only work with scene rendering due to needing matricies loaded
 void Renderer::RenderObject(const Object* object, const Camera* camera, int flags)
 {
 	// Test if the Mesh is loaded
-
 	if (object->mesh == nullptr)
 		return;
 
-	// Apply Transformations
+	// Apply Transformations if not a wireframe
 	if(flags != RenderFlags::WIREFRAME)
 	{
 		glTranslatef(object->transform.Position.x, object->transform.Position.y, object->transform.Position.z);

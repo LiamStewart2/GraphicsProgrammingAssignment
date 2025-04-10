@@ -4,6 +4,8 @@
 
 #include "Object.h"
 
+// The scene graph node
+//stores a vector of other nodes, each storing an object
 class SceneGraphNode
 {
 public:
@@ -31,9 +33,9 @@ public:
 	void SetParentNode(SceneGraphNode* parent) {parentNode = parent;}
 
 private:
-	Object* object;
+	Object* object = nullptr;
 
-	SceneGraphNode* parentNode;
+	SceneGraphNode* parentNode = nullptr;
 	std::vector<SceneGraphNode*> nodes;
 };
 
@@ -57,5 +59,5 @@ public:
 	SceneGraphNode* GetRootNode() { return root; }
 
 private:
-	SceneGraphNode* root;
+	SceneGraphNode* root = nullptr;
 };
