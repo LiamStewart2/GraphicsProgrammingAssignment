@@ -8,15 +8,8 @@ Renderer::~Renderer()
 {
 }
 
-void Renderer::RenderObject(Object& object, Camera& camera, int flags)
+void Renderer::RenderScene(Scene& scene)
 {
-	// Test if the Mesh is loaded
-
-	if (object.mesh == nullptr)
-		return;
-
-	// Set the perspective
-
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -25,33 +18,57 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	// Set the Camera direction
+	Camera* camera = scene.GetCamera();
+	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 
-	gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z, camera.center.x, camera.center.y, camera.center.z, camera.up.x, camera.up.y, camera.up.z);
+	glPushMatrix();
+	RenderSceneGraphNode(scene, scene.GetSceneGraph()->GetRootNode());
+	
+}
+
+void Renderer::RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode)
+{
+	Renderer::RenderObject(sceneGraphNode->GetNodeObject(), scene.GetCamera(), NULL);
+
+	glPushMatrix();
+	for (int i = 0; i < sceneGraphNode->GetNumberOfChildNodes(); i++)
+		RenderSceneGraphNode(scene, sceneGraphNode->GetChildNode(i));
+	glPopMatrix();
+}
+
+
+void Renderer::RenderObject(const Object* object, const Camera* camera, int flags)
+{
+	// Test if the Mesh is loaded
+
+	if (object->mesh == nullptr)
+		return;
+
+
 
 	// Apply Transformations
 
-	glTranslatef(object.transform.Position.x, object.transform.Position.y, object.transform.Position.z);
+	glTranslatef(object->transform.Position.x, object->transform.Position.y, object->transform.Position.z);
 	
-	glRotatef(object.transform.Rotation.z, 0.0f, 0.0f, 1.0f);
-	glRotatef(object.transform.Rotation.y, 0.0f, 1.0f, 0.0f);
-	glRotatef(object.transform.Rotation.x, 1.0f, 0.0f, 0.0f);
+	glRotatef(object->transform.Rotation.z, 0.0f, 0.0f, 1.0f);
+	glRotatef(object->transform.Rotation.y, 0.0f, 1.0f, 0.0f);
+	glRotatef(object->transform.Rotation.x, 1.0f, 0.0f, 0.0f);
 
-	glScalef(object.transform.Scale.x, object.transform.Scale.y, object.transform.Scale.z);
+	glScalef(object->transform.Scale.x, object->transform.Scale.y, object->transform.Scale.z);
 
 	// Bind texture
 
-	object.material->texture->BindTexture();
-	Renderer::SetMaterial(object.material);
+	object->material->texture->BindTexture();
+	Renderer::SetMaterial(object->material);
 
 	// Push the mesh date to the GPU
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, &object.mesh->vertexPositions[0].x);
+	glVertexPointer(3, GL_FLOAT, 0, &object->mesh->vertexPositions[0].x);
 	glEnableClientState(GL_NORMAL_ARRAY);
-	glNormalPointer(GL_FLOAT, 0, &object.mesh->vertexNormals[0].x);
+	glNormalPointer(GL_FLOAT, 0, &object->mesh->vertexNormals[0].x);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, &object.mesh->vertexTextureCoordinates[0].x);
+	glTexCoordPointer(2, GL_FLOAT, 0, &object->mesh->vertexTextureCoordinates[0].x);
 
 	if (flags == RenderFlags::WIREFRAME)
 	{
@@ -59,7 +76,7 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 		glEnable(GL_COLOR_MATERIAL);
 
 		glColor3f(0, 1, 0);
-		glDrawElements(GL_LINES, object.mesh->faces.size(), GL_UNSIGNED_INT, object.mesh->faces.data());
+		glDrawElements(GL_LINES, object->mesh->faces.size(), GL_UNSIGNED_INT, object->mesh->faces.data());
 		glColor3f(1, 1, 1);
 
 		glEnable(GL_LIGHTING);
@@ -67,12 +84,12 @@ void Renderer::RenderObject(Object& object, Camera& camera, int flags)
 	}
 	else
 	{
-		glDrawElements(GL_TRIANGLES, object.mesh->faces.size(), GL_UNSIGNED_INT, object.mesh->faces.data());
+		glDrawElements(GL_TRIANGLES, object->mesh->faces.size(), GL_UNSIGNED_INT, object->mesh->faces.data());
 	}
 
 	// Unbind texture
 
-	object.material->texture->UnbindTexture();
+	object->material->texture->UnbindTexture();
 
 	// GL Disable
 	glDisableClientState(GL_VERTEX_ARRAY);

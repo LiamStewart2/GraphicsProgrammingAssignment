@@ -1,9 +1,9 @@
 #include "Camera.h"
 
 
-void Camera::SetFocus(Object& object)
+void Camera::SetFocus(const Object* object)
 {
-	target = object.transform.Position;
+	target = object->transform.Position;
 }
 
 void Camera::Update(double etime)

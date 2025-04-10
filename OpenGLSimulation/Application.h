@@ -16,6 +16,7 @@
 #include "Object2D.h";
 #include "Texture.h"
 #include "Light.h"
+#include "Scene.h"
 
 class Application
 {
@@ -35,6 +36,8 @@ private:
 	void Init(int argc, char* argv[]);
 	void LoadScene();
 	void MainLoop();
+
+	Scene scene;
 
 	Mesh monkeyMesh;
 	Mesh coolCubeMesh;

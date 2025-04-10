@@ -19,7 +19,7 @@ public:
 	float yOffset = 0.5f;
 	Vector3f smooth = Vector3f(0.1f, 0.1f, 0.1f);
 
-	void SetFocus(Object& object);
+	void SetFocus(const Object* object);
 	void Update(double etime);
 private:
 	// The elapsed time

@@ -12,6 +12,7 @@
 #include "TextObject.h"
 #include "Camera.h"
 #include "Light.h"
+#include "Scene.h"
 
 class Renderer
 {
@@ -19,7 +20,10 @@ public:
 	Renderer();
 	~Renderer();
 
-	static void RenderObject(Object& object, Camera& camera, int flags);
+	static void RenderScene(Scene& scene);
+	static void RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode);
+
+	static void RenderObject(const Object* object, const Camera* camera, int flags);
 	static void Render2DObject(Object2D& object);
 	static void RenderTextObject(TextObject& textObject);
 
