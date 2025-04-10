@@ -18,10 +18,13 @@ void Scene::InitScene()
 	stoneMaterial = Material(&stoneTexture, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, 64);
 
 	Object monkeyObject = Object(&monkeyMesh, &stoneMaterial, Transform({0, 0, 0}, {0.3f, 0.3f, 0.3f}, {0, 0, 0}));
+	Object monkeyObject2 = Object(&monkeyMesh, &stoneMaterial, Transform({2, 0, 0}, {0.3f, 0.3f, 0.3f}, {0, 0, 0}));
 
 	objects.push_back(monkeyObject);
+	objects.push_back(monkeyObject2);
 
 	sceneGraph.InsertRootNode(new SceneGraphNode(&objects[0]));
+	sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(&objects[1]));
 }
 
 void Scene::Update()
@@ -34,6 +37,9 @@ void Scene::Update()
 		camera.rotationRadius += 0.1f;
 
 	camera.SetFocus(&objects[focusObjectIndex]);
+
+	objects[0].transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001);
+	objects[1].transform.Rotation.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 180;
 }
 
 std::string Scene::ChangeFocusIndex()

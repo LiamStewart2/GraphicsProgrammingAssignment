@@ -9,10 +9,11 @@ class SceneGraphNode
 public:
 	SceneGraphNode(Object* _object) : object(_object), nodes(std::vector<SceneGraphNode*>()) {}
 
-	void InsertNode(SceneGraphNode* childNode) 
+	SceneGraphNode* InsertNode(SceneGraphNode* childNode) 
 	{ 
 		nodes.push_back(childNode); 
 		childNode->SetParentNode(this);
+		return nodes[nodes.size() - 1];
 	}
 
 	Object* GetNodeObject() { return object; }

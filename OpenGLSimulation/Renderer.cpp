@@ -21,9 +21,7 @@ void Renderer::RenderScene(Scene& scene)
 	Camera* camera = scene.GetCamera();
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 
-	glPushMatrix();
 	RenderSceneGraphNode(scene, scene.GetSceneGraph()->GetRootNode());
-	
 }
 
 void Renderer::RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode)
@@ -43,8 +41,6 @@ void Renderer::RenderObject(const Object* object, const Camera* camera, int flag
 
 	if (object->mesh == nullptr)
 		return;
-
-
 
 	// Apply Transformations
 
