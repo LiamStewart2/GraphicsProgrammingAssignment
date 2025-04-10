@@ -3,11 +3,12 @@
 
 void Camera::Update()
 {
+	SmoothTurning();
+
 	if (Mouse::GetMouseButtonState(MouseButton::RIGHT) == false)
 		FaceMouse();
 	else
 		SavedMousePosition = Mouse::GetMousePosition();
-	SmoothTurning();
 
 	HandleMovement();
 }
@@ -15,13 +16,20 @@ void Camera::Update()
 // The elapsed time
 void Camera::HandleMovement()
 {
+	Vector3f forward = (center - eye).Normalized();
+	Vector3f strafe = Vector3f::Cross(forward, up).Normalized();
+
 	if (Keyboard::GetButtonState('a'))
-		targetPosition = targetPosition - (Vector3f::Cross(center - eye, up)) * movementSpeed;
-
+		targetPosition = targetPosition - strafe * movementSpeed;
 	if (Keyboard::GetButtonState('d'))
-		targetPosition = targetPosition + (Vector3f::Cross(center - eye, up)) * movementSpeed;
+		targetPosition = targetPosition + strafe * movementSpeed;
 
-	eye = (eye - targetPosition) * Vector3f(0.1f, 0.1f, 0.1f);
+	if(Keyboard::GetButtonState('w'))
+		targetPosition = targetPosition + forward * movementSpeed;
+	if (Keyboard::GetButtonState('s'))
+		targetPosition = targetPosition - forward * movementSpeed;
+
+	eye = eye + (targetPosition - eye) * Vector3f(0.1f, 0.1f, 0.1f);
 
 }
 
