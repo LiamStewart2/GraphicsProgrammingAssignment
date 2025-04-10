@@ -1,8 +1,11 @@
 #pragma once
 
-#include "Renderer.h"
 #include "Camera.h"
 #include "Object.h"
+#include "SceneGraph.h"
+#include "FileLoader.h"
+#include "Input.h"
+#include "Light.h"
 
 class Scene
 {
@@ -10,9 +13,27 @@ public:
 	Scene();
 	~Scene();
 
-	void Render(Renderer* renderer);
+	void InitScene();
+
+	SceneGraph* GetSceneGraph() { return &sceneGraph; }
+	Camera* GetCamera() { return &camera; }
+	Light* GetLight() { return& light; }
+	Object* GetFocusObject() { return& objects[focusObjectIndex]; }
+
+	void Update();
+	std::string ChangeFocusIndex();
 
 private:
-	Camera camera;
 	std::vector<Object> objects;
+	SceneGraph sceneGraph;
+	
+	Light light;
+
+	Camera camera;
+	int focusObjectIndex;
+
+	Mesh monkeyMesh;
+	Texture stoneTexture;
+	Material stoneMaterial;
+
 };

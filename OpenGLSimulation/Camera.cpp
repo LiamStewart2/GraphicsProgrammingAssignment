@@ -1,9 +1,9 @@
 #include "Camera.h"
 
 
-void Camera::SetFocus(Object& object)
+void Camera::SetFocus(const Object* object)
 {
-	target = object.transform.Position;
+	target = object->transform.Position;
 }
 
 void Camera::Update(double etime)
@@ -15,7 +15,7 @@ void Camera::Update(double etime)
 void Camera::handleMovement(double etime)
 {
 	center = center + (target - center) * smooth;
-
+	etime = 2500;
 	Vector3f targetPosition = target + Vector3f(cos(etime * rotationSpeed) * rotationRadius, yOffset, sin(etime * rotationSpeed) * rotationRadius);
 	eye = eye + (targetPosition - eye) * smooth;
 }
