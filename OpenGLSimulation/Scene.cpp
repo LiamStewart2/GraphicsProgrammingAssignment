@@ -37,13 +37,7 @@ void Scene::InitScene()
 
 void Scene::Update()
 {
-	camera.Update(glutGet(GLUT_ELAPSED_TIME));
-
-	if (Mouse::GetMouseButtonState(MouseButton::LEFT) == 0)
-		camera.rotationRadius -= 0.1f;
-	else if (Mouse::GetMouseButtonState(MouseButton::RIGHT) == 0)
-		camera.rotationRadius += 0.1f;
-
+	camera.Update();
 
 	objects[0].transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 0.25;
 	objects[1].transform.Rotation.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 180;

@@ -116,6 +116,14 @@ void Application::HandleKeyboardUp(unsigned char key, int x, int y)
 void Application::HandleMouseButtonPressed(int button, int state, int x, int y)
 {
 	Mouse::SetMouseButtonState(button, state);
+
+	if (button == MouseButton::RIGHT)
+	{
+		if (state == 0)
+			camera.RightMouseDown(x, y);
+		else if(state == 1)
+			camera.RightMouseUp(x, y);
+	}
 }
 void Application::HandleMouseMove(int x, int y)
 {
