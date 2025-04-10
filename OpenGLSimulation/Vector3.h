@@ -20,6 +20,12 @@ struct Vector3f
 		y /= m;
 		z /= m;
 	}
+	Vector3f Normalized()
+	{
+		float m = (float)sqrt(x * x + y * y + z * z);
+		if (m <= 0.0001f) m = 1;
+		return Vector3f(x / m, y / m, z / m);
+	}
 
 
 	bool operator==(const Vector3f& other) const
