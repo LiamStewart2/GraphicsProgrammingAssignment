@@ -82,7 +82,7 @@ void Application::Display()
 
 	Renderer::RenderTextObject(FPSText);
 	Renderer::RenderTextObject(ObjectNameText);
-	Renderer::RenderTextObject(DebugText);
+	//Renderer::RenderTextObject(DebugText);
 
 
 	glFlush();
@@ -94,7 +94,6 @@ void Application::Update()
 	glutPostRedisplay();
 	
 	FPSText.text = std::to_string((int)floor(1000 / (glutGet(GLUT_ELAPSED_TIME) - lastFrameTime)));
-	DebugText.text = std::to_string(scene.GETTXTY().x) + ", " + std::to_string(scene.GETTXTY().y);
 	lastFrameTime = glutGet(GLUT_ELAPSED_TIME);
 
 	scene.Update();

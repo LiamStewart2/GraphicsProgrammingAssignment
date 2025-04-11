@@ -16,8 +16,6 @@ public:
 	Camera() { }
 	~Camera() {}
 
-	Vector2f GETTXTY() {return Vector2f(angleFromObject, angleFromObject); }
-
 	Vector3f eye, center, up;
 
 
