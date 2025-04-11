@@ -42,6 +42,16 @@ void Scene::Update()
 	objects[0].transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 0.25;
 	objects[1].transform.Rotation.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 180;
 	objects[2].transform.Rotation.z = sin(glutGet(GLUT_ELAPSED_TIME) * 0.0005) * 180;
+
+	sceneGraph.UpdateObjectWorldPositions();
+}
+
+void Scene::ToggleCameraObjectFocus()
+{
+	if(camera.IsObjectTracking() == false)
+		camera.TrackObject(&objects[focusObjectIndex]);
+	else
+		camera.TrackObject(nullptr);
 }
 
 std::string Scene::ChangeFocusIndex()
@@ -49,5 +59,9 @@ std::string Scene::ChangeFocusIndex()
 	focusObjectIndex += 1;
 	if (focusObjectIndex >= objects.size())
 		focusObjectIndex -= objects.size();
+
+	if(camera.IsObjectTracking())
+		camera.TrackObject(&objects[focusObjectIndex]);
+
 	return objects[focusObjectIndex].name;
 }

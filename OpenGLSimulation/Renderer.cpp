@@ -31,8 +31,9 @@ void Renderer::RenderScene(Scene& scene)
 void Renderer::RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode)
 {
 	glPushMatrix();
+
 	Renderer::RenderObject(sceneGraphNode->GetNodeObject(), scene.GetCamera(), NULL);
-	
+
 	if (sceneGraphNode->GetNodeObject() == scene.GetFocusObject())
 	{
 		Renderer::RenderObject(sceneGraphNode->GetNodeObject(), scene.GetCamera(), RenderFlags::WIREFRAME);    
@@ -46,7 +47,7 @@ void Renderer::RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode
 }
 
 // Render Individual Objects, will only work with scene rendering due to needing matricies loaded
-void Renderer::RenderObject(const Object* object, const Camera* camera, int flags)
+void Renderer::RenderObject(Object* object, const Camera* camera, int flags)
 {
 	// Test if the Mesh is loaded
 	if (object->mesh == nullptr)

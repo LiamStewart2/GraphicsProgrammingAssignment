@@ -13,6 +13,8 @@ public:
 	Scene();
 	~Scene();
 
+	Vector2f GETTXTY() {return camera.GETTXTY(); }
+
 	void InitScene();
 
 	SceneGraph* GetSceneGraph() { return &sceneGraph; }
@@ -21,6 +23,7 @@ public:
 	Object* GetFocusObject() { return& objects[focusObjectIndex]; }
 
 	void Update();
+	void ToggleCameraObjectFocus();
 	std::string ChangeFocusIndex();
 
 private:

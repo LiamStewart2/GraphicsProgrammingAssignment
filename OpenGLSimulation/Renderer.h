@@ -23,7 +23,7 @@ public:
 	static void RenderScene(Scene& scene);
 	static void RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode);
 
-	static void RenderObject(const Object* object, const Camera* camera, int flags);
+	static void RenderObject(Object* object, const Camera* camera, int flags);
 	static void Render2DObject(Object2D& object);
 	static void RenderTextObject(TextObject& textObject);
 
