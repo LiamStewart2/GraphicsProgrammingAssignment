@@ -107,6 +107,8 @@ void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 	Keyboard::SetButtonPressedDown(key);
 	if(key == ' ')
 		SwitchObjectFocus();
+	else if(key == 'e')
+		scene.ToggleCameraObjectFocus();
 }
 void Application::HandleKeyboardUp(unsigned char key, int x, int y)
 {

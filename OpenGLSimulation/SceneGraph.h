@@ -29,7 +29,6 @@ public:
 		return nullptr;
 	}
 
-
 	void SetParentNode(SceneGraphNode* parent) {parentNode = parent;}
 
 private:

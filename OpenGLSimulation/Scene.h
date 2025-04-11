@@ -21,6 +21,7 @@ public:
 	Object* GetFocusObject() { return& objects[focusObjectIndex]; }
 
 	void Update();
+	void ToggleCameraObjectFocus();
 	std::string ChangeFocusIndex();
 
 private:

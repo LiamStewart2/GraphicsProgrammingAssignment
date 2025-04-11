@@ -3,14 +3,39 @@
 
 void Camera::Update()
 {
-	SmoothTurning();
-
-	if (Mouse::GetMouseButtonState(MouseButton::RIGHT) == false)
-		FaceMouse();
+	if (trackedObject != nullptr)
+	{
+		HandleObjectFocus();
+	}
 	else
-		SavedMousePosition = Mouse::GetMousePosition();
+	{
+		SmoothTurning();
 
-	HandleMovement();
+	
+		if (Mouse::GetMouseButtonState(MouseButton::RIGHT) == false)
+			FaceMouse();
+		else
+			SavedMousePosition = Mouse::GetMousePosition();
+
+		HandleMovement();
+	}
+}
+
+void Camera::TrackObject(Object* object)
+{
+	trackedObject = object;
+}
+
+void Camera::HandleObjectFocus()
+{
+	int time = glutGet(GLUT_ELAPSED_TIME);
+
+	center = trackedObject->worldPosition;
+
+	targetPosition.x = center.x + (cos(time * 0.001) * distanceFromObjectFocus);
+	targetPosition.z = center.z + (sin(time * 0.001) * distanceFromObjectFocus);
+
+	eye = eye + (targetPosition - eye) * movementSpeed;
 }
 
 // uses the cross product to find the directions to move to
@@ -29,7 +54,7 @@ void Camera::HandleMovement()
 	if (Keyboard::GetButtonState('s'))
 		targetPosition = targetPosition - forward * movementSpeed;
 
-	eye = eye + (targetPosition - eye) * Vector3f(0.1f, 0.1f, 0.1f);
+	eye = eye + (targetPosition - eye) * movementSpeed;
 
 }
 

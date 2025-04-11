@@ -44,10 +44,22 @@ void Scene::Update()
 	objects[2].transform.Rotation.z = sin(glutGet(GLUT_ELAPSED_TIME) * 0.0005) * 180;
 }
 
+void Scene::ToggleCameraObjectFocus()
+{
+	if(camera.IsObjectTracking() == false)
+		camera.TrackObject(&objects[focusObjectIndex]);
+	else
+		camera.TrackObject(nullptr);
+}
+
 std::string Scene::ChangeFocusIndex()
 {
 	focusObjectIndex += 1;
 	if (focusObjectIndex >= objects.size())
 		focusObjectIndex -= objects.size();
+
+	if(camera.IsObjectTracking())
+		camera.TrackObject(&objects[focusObjectIndex]);
+
 	return objects[focusObjectIndex].name;
 }
