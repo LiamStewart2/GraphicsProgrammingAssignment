@@ -24,18 +24,25 @@ void Camera::Update()
 void Camera::TrackObject(Object* object)
 {
 	trackedObject = object;
+
+	if (trackedObject != nullptr)
+	{
+		Vector3f direction = (eye - object->worldPosition).Normalized();
+		angleFromObject = atan2(direction.z, direction.x);
+	}
 }
 
 void Camera::HandleObjectFocus()
 {
-	int time = glutGet(GLUT_ELAPSED_TIME);
+	angleFromObject += 0.01f;
+	center = center + (trackedObject->worldPosition - center) * movementSpeed;
 
-	center = trackedObject->worldPosition;
-
-	targetPosition.x = center.x + (cos(time * 0.001) * distanceFromObjectFocus);
-	targetPosition.z = center.z + (sin(time * 0.001) * distanceFromObjectFocus);
+	targetPosition.x = center.x + (cos(angleFromObject) * distanceFromObjectFocus);
+	targetPosition.z = center.z + (sin(angleFromObject) * distanceFromObjectFocus);
 
 	eye = eye + (targetPosition - eye) * movementSpeed;
+
+	FocusWorldPosition(center);
 }
 
 // uses the cross product to find the directions to move to
@@ -61,8 +68,14 @@ void Camera::HandleMovement()
 // sets the target angles for the camera
 void Camera::FaceMouse()
 {
-	tx -= (SavedMousePosition.x - Mouse::GetMousePosition().x) * mouseSensitivity;
-	ty += (SavedMousePosition.y - Mouse::GetMousePosition().y) * mouseSensitivity;
+	int deltaMouseX = -(SavedMousePosition.x - Mouse::GetMousePosition().x);
+	int deltaMouseY = (SavedMousePosition.y - Mouse::GetMousePosition().y);
+
+	float deltaDegressX = deltaMouseX * 3.14 / 180;
+	float deltaDegressY = deltaMouseY * 3.14 / 180;
+
+	targetAngleX += deltaDegressX * mouseSensitivity;
+	targetAngleY += deltaDegressY * mouseSensitivity;
 
 	glutWarpPointer(SavedMousePosition.x, SavedMousePosition.y);
 }
@@ -70,12 +83,13 @@ void Camera::FaceMouse()
 // Uses trigonometry to find the view direction of the camera
 void Camera::SmoothTurning()
 {
-	dx += (tx - dx) * mouseInterpolation;
-	dy += (ty - dy) * mouseInterpolation;
+	angleX += (targetAngleX - angleX) * mouseInterpolation;
+	angleY += (targetAngleY - angleY) * mouseInterpolation;
 
-	center.x = eye.x + cos(dx / 180);
-	center.z = eye.z + sin(dx / 180);
-	center.y = eye.y + tan(dy / 180);
+	center.x = eye.x + cos(angleX);
+	center.z = eye.z + sin(angleX);
+	center.y = eye.y + tan(angleY);
+
 }
 
 //Hides and Unhides the cursor
@@ -89,4 +103,18 @@ void Camera::RightMouseUp(int x, int y)
 	glutWarpPointer(SavedMousePosition.x, SavedMousePosition.y);
 	glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
 
+}
+
+// set the target x and y to a position in the 3d space
+void Camera::FocusWorldPosition(Vector3f position)
+{
+	Vector3f direction = (position - eye).Normalized();
+
+	targetAngleX = atan2(direction.z, direction.x);
+	targetAngleY = atan2(direction.y, sqrt(direction.x * direction.x + direction.z * direction.z));
+
+	angleX = targetAngleX;
+	angleY = targetAngleY;
+
+	targetPosition = eye;
 }

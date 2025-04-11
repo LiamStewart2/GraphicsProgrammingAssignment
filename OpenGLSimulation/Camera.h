@@ -12,19 +12,14 @@
 class Camera
 {
 public:
-	Camera(Vector3f _eye, Vector3f _center, Vector3f _up): eye(_eye), targetPosition(_eye), center(_center), up(_up) {  }
+	Camera(Vector3f _eye, Vector3f _center, Vector3f _up): eye(_eye), targetPosition(_eye), center(_center), up(_up) { FocusWorldPosition({0, 0, 0}); }
 	Camera() { }
 	~Camera() {}
 
+	Vector2f GETTXTY() {return Vector2f(angleFromObject, angleFromObject); }
+
 	Vector3f eye, center, up;
 
-	Vector3f movementSpeed = Vector3f(0.1f, 0.1f, 0.1f);
-	Vector3f targetPosition;
-
-	float mouseSensitivity = 0.5f;
-	float mouseInterpolation = 0.3f;
-
-	float distanceFromObjectFocus = 5;
 
 	void Update();
 	void TrackObject(Object* object);
@@ -33,6 +28,8 @@ public:
 
 	void RightMouseDown(int x, int y);
 	void RightMouseUp(int x, int y);
+
+	void FocusWorldPosition(Vector3f position);
 private:
 	void HandleObjectFocus();
 
@@ -42,8 +39,18 @@ private:
 	
 	Object* trackedObject = nullptr;
 
+	Vector3f movementSpeed = Vector3f(0.1f, 0.1f, 0.1f);
+	Vector3f targetPosition;
+
+	float mouseSensitivity = 0.1f;
+	float mouseInterpolation = 0.3f;
+
+	float distanceFromObjectFocus = 5;
+	float angleFromObject = 0;
+
 	Vector2i SavedMousePosition = Vector2i(0, 0);
-	float dx = 0; float dy = 0;
-	float tx = SCREEN_WIDTH / 2 - 120; float ty = SCREEN_HEIGHT / 2 + 15;
+
+	float angleX = 0; float angleY = 0;
+	float targetAngleX = 0; float targetAngleY = 0;
 };
 

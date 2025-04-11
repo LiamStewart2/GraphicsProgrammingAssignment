@@ -13,6 +13,8 @@ public:
 	Scene();
 	~Scene();
 
+	Vector2f GETTXTY() {return camera.GETTXTY(); }
+
 	void InitScene();
 
 	SceneGraph* GetSceneGraph() { return &sceneGraph; }

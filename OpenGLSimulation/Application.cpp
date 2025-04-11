@@ -47,6 +47,7 @@ void Application::LoadScene()
 
 	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, "", Vector3f(0, 1, 0));
+	DebugText = TextObject(10, 30, GLUT_BITMAP_9_BY_15, "x, y", Vector3f(0, 1, 0));
 
 	light = { {1, 1, 1, 0}, {0.3, 0.3, 0.3, 1}, {0.7, 0.7, 0.7, 1}, {0.5, 0.5, 0.5, 1} };
 
@@ -81,6 +82,7 @@ void Application::Display()
 
 	Renderer::RenderTextObject(FPSText);
 	Renderer::RenderTextObject(ObjectNameText);
+	Renderer::RenderTextObject(DebugText);
 
 
 	glFlush();
@@ -92,6 +94,7 @@ void Application::Update()
 	glutPostRedisplay();
 	
 	FPSText.text = std::to_string((int)floor(1000 / (glutGet(GLUT_ELAPSED_TIME) - lastFrameTime)));
+	DebugText.text = std::to_string(scene.GETTXTY().x) + ", " + std::to_string(scene.GETTXTY().y);
 	lastFrameTime = glutGet(GLUT_ELAPSED_TIME);
 
 	scene.Update();

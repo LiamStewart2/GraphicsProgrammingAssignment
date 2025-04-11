@@ -47,6 +47,7 @@ private:
 
 	TextObject FPSText;
 	TextObject ObjectNameText;
+	TextObject DebugText;
 
 	Texture penguinTexture;
 	Texture stoneTexture;
