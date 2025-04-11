@@ -34,12 +34,6 @@ void Renderer::RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode
 
 	Renderer::RenderObject(sceneGraphNode->GetNodeObject(), scene.GetCamera(), NULL);
 
-	GLfloat model[16];
-	glGetFloatv(GL_MODELVIEW_MATRIX, model);
-	sceneGraphNode->GetNodeObject()->worldPosition = Vector3f({ model[12], model[13], model[14]});
-
-	std::cout << sceneGraphNode->GetNodeObject()->worldPosition.x << ", " << sceneGraphNode->GetNodeObject()->worldPosition.y << ", " << sceneGraphNode->GetNodeObject()->worldPosition.z << std::endl;
-
 	if (sceneGraphNode->GetNodeObject() == scene.GetFocusObject())
 	{
 		Renderer::RenderObject(sceneGraphNode->GetNodeObject(), scene.GetCamera(), RenderFlags::WIREFRAME);    
