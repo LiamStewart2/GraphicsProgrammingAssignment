@@ -83,10 +83,14 @@ void Renderer::RenderObject(Object* object, const Camera* camera, int flags)
 	{
 		glDisable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		glColor3f(0, 1, 0);
-		glDrawElements(GL_LINES, object->mesh->faces.size(), GL_UNSIGNED_INT, object->mesh->faces.data());
+		glDrawElements(GL_TRIANGLES, object->mesh->faces.size(), GL_UNSIGNED_INT, object->mesh->faces.data());
 		glColor3f(1, 1, 1);
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		glEnable(GL_LIGHTING);
 		glDisable(GL_COLOR_MATERIAL);
