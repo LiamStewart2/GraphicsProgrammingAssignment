@@ -7,7 +7,6 @@
 #include <GL/GLU.h>
 #include "GL/freeglut.h"
 
-#include "TransformationManager.h"
 #include "Input.h"
 #include "Globals.h"
 #include "GLUTCallbacks.h"
@@ -39,7 +38,6 @@ private:
 	void MainLoop();
 
 	Scene scene;
-	TransformationManager transformationManager;
 
 	Mesh monkeyMesh;
 	Mesh coolCubeMesh;

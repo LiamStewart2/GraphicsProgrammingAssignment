@@ -84,7 +84,6 @@ void Application::Display()
 	Renderer::RenderTextObject(ObjectNameText);
 	//Renderer::RenderTextObject(DebugText);
 
-
 	glFlush();
 	glutSwapBuffers();
 }
