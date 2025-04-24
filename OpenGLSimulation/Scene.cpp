@@ -45,9 +45,10 @@ void Scene::Update()
 	objects[2].transform.Rotation.z = sin(glutGet(GLUT_ELAPSED_TIME) * 0.0005) * 180;
 	*/
 
+	camera.Update();
+
 	sceneGraph.UpdateObjectWorldPositions();
 
-	camera.Update();
 }
 
 void Scene::ToggleCameraObjectFocus()
