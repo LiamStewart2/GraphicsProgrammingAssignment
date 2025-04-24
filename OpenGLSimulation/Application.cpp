@@ -92,7 +92,7 @@ void Application::Display()
 void Application::Update()
 {
 	glutPostRedisplay();
-	
+
 	FPSText.text = std::to_string((int)floor(1000 / (glutGet(GLUT_ELAPSED_TIME) - lastFrameTime)));
 	lastFrameTime = glutGet(GLUT_ELAPSED_TIME);
 
@@ -111,6 +111,14 @@ void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 		SwitchObjectFocus();
 	else if(key == 'e')
 		scene.ToggleCameraObjectFocus();
+
+	else if(key == 'z')
+		scene.getTransformationManager()->RotateTransformAxis(-1);
+	else if(key == 'x')
+		scene.getTransformationManager()->RotateTransformAxis(1);
+
+	
+	scene.getTransformationManager()->SetTransformMode(key);
 }
 void Application::HandleKeyboardUp(unsigned char key, int x, int y)
 {

@@ -18,6 +18,7 @@ public:
 
 	Vector3f eye, center, up;
 
+	Object* getTrackedObject() { return trackedObject; }
 
 	void Update();
 	void TrackObject(Object* object);

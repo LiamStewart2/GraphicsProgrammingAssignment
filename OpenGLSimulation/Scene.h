@@ -1,5 +1,6 @@
 #pragma once
 
+#include "TransformationManager.h"
 #include "Camera.h"
 #include "Object.h"
 #include "SceneGraph.h"
@@ -24,7 +25,10 @@ public:
 	void ToggleCameraObjectFocus();
 	std::string ChangeFocusIndex();
 
+	TransformationManager* getTransformationManager() { return &transformationManager; }
+
 private:
+	TransformationManager transformationManager;
 	std::vector<Object> objects;
 	SceneGraph sceneGraph;
 	
