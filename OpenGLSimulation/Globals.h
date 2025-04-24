@@ -5,8 +5,3 @@
 
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
-
-enum RenderFlags
-{
-	WIREFRAME = 0x01
-};

@@ -14,6 +14,12 @@
 #include "Light.h"
 #include "Scene.h"
 
+
+enum RenderFlags
+{
+	WIREFRAME = 0x01
+};
+
 class Renderer
 {
 public:
