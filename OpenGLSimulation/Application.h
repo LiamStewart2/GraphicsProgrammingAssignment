@@ -44,12 +44,6 @@ private:
 
 	Scene scene;
 
-	Mesh monkeyMesh;
-	Mesh coolCubeMesh;
-	Mesh plankMesh;
-
-	std::vector<Object> objects;
-
 	TextObject FPSText;
 
 	TextObject ObjectNameText;
@@ -61,16 +55,6 @@ private:
 
 	TextObject TransformModeControls;
 
-	Texture penguinTexture;
-	Texture stoneTexture;
-	Texture woodenPlankTexture;
-
-	Material penguinMaterial;
-	Material woodenPlankMaterial;
-
-	Light light;
-
-	Camera camera;
 	unsigned int objectFocusIndex = 0;
 	void SwitchObjectFocus();
 

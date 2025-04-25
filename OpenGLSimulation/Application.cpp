@@ -38,7 +38,6 @@ void Application::Init(int argc, char* argv[])
 	glColor3f(1.0f, 1.0f, 1.0f);
 
 	// Set Light Data
-	Renderer::SetLight(&light);
 }
 
 void Application::LoadScene()
@@ -53,8 +52,6 @@ void Application::LoadScene()
 	PositionText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 45, GLUT_BITMAP_9_BY_15, "Position x, y, z", Vector3f(0, 1, 0));
 	ScaleText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 60, GLUT_BITMAP_9_BY_15, "Scale x, y, z", Vector3f(0, 1, 0));
 	RotationText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 75, GLUT_BITMAP_9_BY_15, "Rotation x, y, z", Vector3f(0, 1, 0));
-
-	light = { {1, 1, 1, 0}, {0.3, 0.3, 0.3, 1}, {0.7, 0.7, 0.7, 1}, {0.5, 0.5, 0.5, 1} };
 
 	ObjectNameText.text = scene.GetFocusObject()->name;
 	UpdateTransformationText();
@@ -160,9 +157,9 @@ void Application::HandleMouseButtonPressed(int button, int state, int x, int y)
 	if (button == MouseButton::RIGHT)
 	{
 		if (state == 0)
-			camera.RightMouseDown(x, y);
+			scene.GetCamera()->RightMouseDown(x, y);
 		else if(state == 1)
-			camera.RightMouseUp(x, y);
+			scene.GetCamera()->RightMouseUp(x, y);
 	}
 }
 void Application::HandleMouseMove(int x, int y)
