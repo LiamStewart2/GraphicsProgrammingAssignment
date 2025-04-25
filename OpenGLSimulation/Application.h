@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 #include <string>
+#include <iostream>
+#include <iomanip>
 
 #include <GL/GL.h>
 #include <GL/GLU.h>
@@ -34,8 +36,13 @@ public:
 
 private:
 	void Init(int argc, char* argv[]);
+
 	void LoadScene();
 	void MainLoop();
+
+	void UpdateTransformationText();
+	void UpdateTransformTexts();
+	std::string vectorToString(Vector3f vector);
 
 	Scene scene;
 
@@ -46,8 +53,15 @@ private:
 	std::vector<Object> objects;
 
 	TextObject FPSText;
+
 	TextObject ObjectNameText;
-	TextObject DebugText;
+	TextObject TransformText;
+
+	TextObject PositionText;
+	TextObject ScaleText;
+	TextObject RotationText;
+
+	TextObject TransformModeControls;
 
 	Texture penguinTexture;
 	Texture stoneTexture;

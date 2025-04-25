@@ -45,11 +45,19 @@ void Application::LoadScene()
 {
 	scene.InitScene();
 
-	FPSText = TextObject(10, SCREEN_HEIGHT - 25, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
-	ObjectNameText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, "", Vector3f(0, 1, 0));
-	DebugText = TextObject(10, 30, GLUT_BITMAP_9_BY_15, "x, y", Vector3f(0, 1, 0));
+	FPSText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
+
+	ObjectNameText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 15, GLUT_BITMAP_9_BY_15, "", Vector3f(0, 1, 0));
+	TransformText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 30, GLUT_BITMAP_9_BY_15, "Translate - X", Vector3f(0, 1, 0));
+	
+	PositionText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 45, GLUT_BITMAP_9_BY_15, "Position x, y, z", Vector3f(0, 1, 0));
+	ScaleText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 60, GLUT_BITMAP_9_BY_15, "Scale x, y, z", Vector3f(0, 1, 0));
+	RotationText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 75, GLUT_BITMAP_9_BY_15, "Rotation x, y, z", Vector3f(0, 1, 0));
 
 	light = { {1, 1, 1, 0}, {0.3, 0.3, 0.3, 1}, {0.7, 0.7, 0.7, 1}, {0.5, 0.5, 0.5, 1} };
+
+	ObjectNameText.text = scene.GetFocusObject()->name;
+	UpdateTransformationText();
 
 	//testImage = Object2D(nullptr, Transform2D({ 500, 500 }, { 100, 100 },45), Color(0, 0, 1, 0.5f));
 }
@@ -81,8 +89,13 @@ void Application::Display()
 	Renderer::ResetMaterial();
 
 	Renderer::RenderTextObject(FPSText);
+
 	Renderer::RenderTextObject(ObjectNameText);
-	//Renderer::RenderTextObject(DebugText);
+	Renderer::RenderTextObject(TransformText);
+
+	Renderer::RenderTextObject(PositionText);
+	Renderer::RenderTextObject(ScaleText);
+	Renderer::RenderTextObject(RotationText);
 
 	glFlush();
 	glutSwapBuffers();
@@ -92,10 +105,33 @@ void Application::Update()
 {
 	glutPostRedisplay();
 
-	FPSText.text = std::to_string((int)floor(1000 / (glutGet(GLUT_ELAPSED_TIME) - lastFrameTime)));
+	FPSText.text = std::to_string(floor(1000 / (glutGet(GLUT_ELAPSED_TIME) - lastFrameTime)));
 	lastFrameTime = glutGet(GLUT_ELAPSED_TIME);
+	UpdateTransformTexts();
 
 	scene.Update();
+}
+
+void Application::UpdateTransformationText()
+{
+	std::string transformMode = scene.getTransformationManager()->getTransformModeText();
+	std::string transformAxis = scene.getTransformationManager()->getTransformAxisText();
+
+	TransformText.text = transformMode + " - " + transformAxis;
+}
+
+void Application::UpdateTransformTexts()
+{
+	PositionText.text = "Position: " + vectorToString(scene.GetFocusObject()->transform.Position);
+	ScaleText.text = "Scale:    " + vectorToString(scene.GetFocusObject()->transform.Scale);
+	RotationText.text = "Rotation: " + vectorToString(scene.GetFocusObject()->transform.Rotation);
+}
+
+std::string Application::vectorToString(Vector3f vector)
+{
+	std::ostringstream stream;
+	stream << std::fixed << std::setprecision(2) << vector.x << ", " << vector.y << ", " << vector.z;
+	return stream.str();
 }
 
 void Application::SwitchObjectFocus()
@@ -115,9 +151,9 @@ void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 		scene.getTransformationManager()->RotateTransformAxis(-1);
 	else if(key == 'x')
 		scene.getTransformationManager()->RotateTransformAxis(1);
-
 	
 	scene.getTransformationManager()->SetTransformMode(key);
+	UpdateTransformationText();
 }
 void Application::HandleKeyboardUp(unsigned char key, int x, int y)
 {

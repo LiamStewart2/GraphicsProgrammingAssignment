@@ -16,6 +16,9 @@ public:
 	void SetTransformMode(const unsigned char mode);
 	void RotateTransformAxis(int direction);
 
+	const char* getTransformModeText();
+	const char* getTransformAxisText();
+
 private:
 	enum TransformMode
 	{

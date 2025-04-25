@@ -83,12 +83,40 @@ void TransformationManager::RotateTransformAxis(int direction)
 	}
 }
 
+const char* TransformationManager::getTransformModeText()
+{
+	switch (transformationMode)
+	{
+	case TransformMode::TRANSLATE:
+		return "Translate";
+	case TransformMode::SCALE:
+		return "Scale";
+	case TransformMode::ROTATE:
+		return "Rotate";
+	case TransformMode::TEXTURE:
+		return "Texture";
+	}
+	return "-";
+}
+
+const char* TransformationManager::getTransformAxisText()
+{
+	switch (transformationAxis)
+	{
+	case TransformAxis::X:
+		return "x";
+	case TransformAxis::Y:
+		return "y";
+	case TransformAxis::Z:
+		return "z";
+	}
+	return "-";
+}
+
 void TransformationManager::Translate(Object* object)
 {
-	std::cout << "fortnite1" << std::endl;
 	if(Keyboard::GetButtonState(increaseAxisKeybind))
 	{ 
-		std::cout << "fortnite";
 		switch (transformationAxis)
 		{
 		case TransformAxis::X:
