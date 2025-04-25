@@ -101,6 +101,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GLUTCallbacks.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Input.h" />

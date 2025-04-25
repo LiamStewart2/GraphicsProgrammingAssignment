@@ -24,10 +24,10 @@ void Scene::InitScene()
 	Object monkeyObject3 = Object(&monkeyMesh, &stoneMaterial, Transform({-2, 0, 0}, {0.3f, 0.3f, 0.3f}, {0, 0, 0}));
 	Object monkeyObject4 = Object(&monkeyMesh, &stoneMaterial, Transform({0, 2, 0}, {0.3f, 0.3f, 0.3f}, {0, 0, 0}));
 
-	objects.push_back(monkeyObject);
-	objects.push_back(monkeyObject2);
-	objects.push_back(monkeyObject3);
-	objects.push_back(monkeyObject4);
+	objects.Push(monkeyObject);
+	objects.Push(monkeyObject2);
+	objects.Push(monkeyObject3);
+	objects.Push(monkeyObject4);
 
 	sceneGraph.InsertRootNode(new SceneGraphNode(&objects[0]));
 	sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(&objects[1]));
@@ -62,8 +62,8 @@ void Scene::ToggleCameraObjectFocus()
 std::string Scene::ChangeFocusIndex()
 {
 	focusObjectIndex += 1;
-	if (focusObjectIndex >= objects.size())
-		focusObjectIndex -= objects.size();
+	if (focusObjectIndex >= objects.Size())
+		focusObjectIndex -= objects.Size();
 
 	if(camera.IsObjectTracking())
 		camera.TrackObject(&objects[focusObjectIndex]);

@@ -7,6 +7,7 @@
 #include "FileLoader.h"
 #include "Input.h"
 #include "Light.h"
+#include "LinkedList.h"
 
 class Scene
 {
@@ -29,7 +30,7 @@ public:
 
 private:
 	TransformationManager transformationManager;
-	std::vector<Object> objects;
+	LinkedList<Object> objects;
 	SceneGraph sceneGraph;
 	
 	Light light;
