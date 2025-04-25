@@ -35,6 +35,7 @@ public:
 
 private:
 	void Init(int argc, char* argv[]);
+	void DisableVSync();
 
 	void LoadScene();
 	void MainLoop();

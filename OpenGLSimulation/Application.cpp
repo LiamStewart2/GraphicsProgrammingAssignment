@@ -12,6 +12,16 @@ Application::~Application()
 
 }
 
+// Disable VSync, Windows specific
+void Application::DisableVSync() {
+	typedef BOOL(WINAPI* PFNWGLSWAPINTERVALEXTPROC)(int);
+	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT =
+		(PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+
+	if (wglSwapIntervalEXT)
+		wglSwapIntervalEXT(0);  // 0 = VSync off
+}
+
 void Application::Init(int argc, char* argv[])
 {
 	GLUTCallbacks::Init(this);
@@ -21,6 +31,8 @@ void Application::Init(int argc, char* argv[])
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	glutCreateWindow("Simple OpenGL Program");
+
+	DisableVSync();
 
 	//GL Settings
 	glEnable(GL_BLEND);
@@ -102,7 +114,13 @@ void Application::Update()
 {
 	glutPostRedisplay();
 
-	FPSText.text = std::to_string(floor(1000 / (glutGet(GLUT_ELAPSED_TIME) - lastFrameTime)));
+	int currentTime = glutGet(GLUT_ELAPSED_TIME);
+	int deltaTime = currentTime - lastFrameTime;
+	lastFrameTime = currentTime;
+
+	if (deltaTime > 0)
+		FPSText.text = std::to_string(1000 / deltaTime);
+
 	lastFrameTime = glutGet(GLUT_ELAPSED_TIME);
 	UpdateTransformTexts();
 

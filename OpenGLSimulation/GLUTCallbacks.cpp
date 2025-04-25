@@ -23,10 +23,8 @@ namespace GLUTCallbacks
 	}
 	void Timer(int preferredRefresh)
 	{
-		int deltaTime = glutGet(GLUT_ELAPSED_TIME);
+		glutTimerFunc(preferredRefresh, GLUTCallbacks::Timer, preferredRefresh);
 		app->Update();
-		deltaTime = glutGet(GLUT_ELAPSED_TIME) - deltaTime;
-		glutTimerFunc(preferredRefresh - deltaTime, GLUTCallbacks::Timer, preferredRefresh);
 	}
 
 	void KeyboardDown(unsigned char key, int x, int y)
