@@ -32,3 +32,5 @@ to select a transformation mode:<br>
 To modify the Axis:<br>
 * N increase selected axis
 * M decrease selected axis
+* Z cycle axis left (X, Y, Z)
+* X cycle axis right (Z, Y, X)
