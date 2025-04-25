@@ -1,5 +1,9 @@
 #pragma once
+
 #include <math.h>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 struct Vector3f
 {
@@ -60,6 +64,14 @@ struct Vector3f
 			-u.x * v.z + u.z * v.x,
 			u.x * v.y - u.y * v.x
 		);
+	}
+
+	std::string ToString()
+	{
+		// use a stream to set the decimal point precision
+		std::ostringstream stream;
+		stream << std::fixed << std::setprecision(2) << x << ", " << y << ", " << z;
+		return stream.str();
 	}
 };
 

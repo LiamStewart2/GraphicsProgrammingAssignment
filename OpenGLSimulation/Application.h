@@ -3,7 +3,6 @@
 #include <Windows.h>
 #include <string>
 #include <iostream>
-#include <iomanip>
 
 #include <GL/GL.h>
 #include <GL/GLU.h>
@@ -42,7 +41,6 @@ private:
 
 	void UpdateTransformationText();
 	void UpdateTransformTexts();
-	std::string vectorToString(Vector3f vector);
 
 	Scene scene;
 

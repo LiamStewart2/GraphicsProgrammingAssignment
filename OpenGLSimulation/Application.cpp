@@ -122,16 +122,9 @@ void Application::UpdateTransformationText()
 
 void Application::UpdateTransformTexts()
 {
-	PositionText.text = "Position: " + vectorToString(scene.GetFocusObject()->transform.Position);
-	ScaleText.text = "Scale:    " + vectorToString(scene.GetFocusObject()->transform.Scale);
-	RotationText.text = "Rotation: " + vectorToString(scene.GetFocusObject()->transform.Rotation);
-}
-
-std::string Application::vectorToString(Vector3f vector)
-{
-	std::ostringstream stream;
-	stream << std::fixed << std::setprecision(2) << vector.x << ", " << vector.y << ", " << vector.z;
-	return stream.str();
+	PositionText.text = "Position: " + scene.GetFocusObject()->transform.Position.ToString();
+	ScaleText.text =    "Scale:    " + scene.GetFocusObject()->transform.Scale.ToString();
+	RotationText.text = "Rotation: " + scene.GetFocusObject()->transform.Rotation.ToString();
 }
 
 void Application::SwitchObjectFocus()
