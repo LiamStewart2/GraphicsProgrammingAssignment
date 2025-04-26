@@ -48,6 +48,7 @@ private:
 	void UpdateTransformTexts();
 
 	void BuildHierarchy();
+	void BuildBranchOfHierarchy(SceneGraphNode* node, int level, int& screenHeight);
 
 	Mesh monkeyMesh;
 	Texture stoneTexture;

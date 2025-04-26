@@ -48,5 +48,5 @@ private:
 	const unsigned char scaleKeybind = 'o';
 	const unsigned char rotateKeybind = 'r';
 
-	const float transformationSpeed = 0.01;
+	const float transformationSpeed = 0.01f;
 };

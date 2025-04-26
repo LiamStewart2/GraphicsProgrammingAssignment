@@ -14,7 +14,7 @@
 #include "FileLoader.h"
 #include "Renderer.h"
 #include "TextObject.h"
-#include "Object2D.h";
+#include "Object2D.h"
 #include "Texture.h"
 #include "Light.h"
 #include "Scene.h"

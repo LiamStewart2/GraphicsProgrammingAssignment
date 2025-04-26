@@ -7,7 +7,7 @@
 struct TextObject
 {
 	TextObject(float x, float y, void* _font, const char* string, Vector3f textFillColor) : screenX(x), screenY(y), font(_font), text(string), color(textFillColor) {}
-	TextObject() {}
+	TextObject() {screenX = 0; screenY = 0;}
 	float screenX, screenY;
 	void* font = nullptr;
 	std::string text;

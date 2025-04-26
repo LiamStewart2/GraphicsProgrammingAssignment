@@ -198,9 +198,9 @@ void Renderer::SetMaterial(Material* material)
 
 void Renderer::ResetMaterial()
 {
-	float ambient[4] = { 0.2, 0.2, 0.2, 1.0 };
-	float diffuse[4] = { 0.8, 0.8, 0.8, 1.0 };
-	float specular[4] = { 0.0, 0.0, 0.0, 1.0 };
+	float ambient[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	float diffuse[4] = { 0.8f, 0.8f, 0.8f, 1.0f };
+	float specular[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
