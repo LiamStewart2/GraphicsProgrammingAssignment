@@ -47,9 +47,9 @@ void Application::Init(int argc, char* argv[])
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glColor3f(1.0f, 1.0f, 1.0f);
 
-	// Set Light Data
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glClearColor(0.2f, 0.5f, 1.0f, 1);
 }
 
 void Application::LoadScene()

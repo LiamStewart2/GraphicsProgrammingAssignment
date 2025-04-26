@@ -54,6 +54,10 @@ private:
 	Texture stoneTexture;
 	Material stoneMaterial;
 
+	Mesh groundMesh;
+	Texture grassTexture;
+	Material grassMaterial;
+
 	TextObject FPSText;
 	TextObject instructionsText;
 
