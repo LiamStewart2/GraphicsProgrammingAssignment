@@ -45,7 +45,7 @@ private:
 	const unsigned char decreaseAxisKeybind = 'm';
 
 	const unsigned char translateKeybind = 't';
-	const unsigned char scaleKeybind = 's';
+	const unsigned char scaleKeybind = 'o';
 	const unsigned char rotateKeybind = 'r';
 
 	const float transformationSpeed = 0.01;

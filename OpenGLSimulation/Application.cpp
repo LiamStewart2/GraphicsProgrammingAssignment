@@ -55,20 +55,6 @@ void Application::Init(int argc, char* argv[])
 void Application::LoadScene()
 {
 	scene.InitScene();
-
-	FPSText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
-
-	ObjectNameText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 15, GLUT_BITMAP_9_BY_15, "", Vector3f(0, 1, 0));
-	TransformText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 30, GLUT_BITMAP_9_BY_15, "Translate - X", Vector3f(0, 1, 0));
-	
-	PositionText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 45, GLUT_BITMAP_9_BY_15, "Position x, y, z", Vector3f(0, 1, 0));
-	ScaleText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 60, GLUT_BITMAP_9_BY_15, "Scale x, y, z", Vector3f(0, 1, 0));
-	RotationText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 75, GLUT_BITMAP_9_BY_15, "Rotation x, y, z", Vector3f(0, 1, 0));
-
-	ObjectNameText.text = scene.GetFocusObject()->name;
-	UpdateTransformationText();
-
-	//testImage = Object2D(nullptr, Transform2D({ 500, 500 }, { 100, 100 },45), Color(0, 0, 1, 0.5f));
 }
 
 void Application::MainLoop()
@@ -97,15 +83,6 @@ void Application::Display()
 
 	Renderer::ResetMaterial();
 
-	Renderer::RenderTextObject(FPSText);
-
-	Renderer::RenderTextObject(ObjectNameText);
-	Renderer::RenderTextObject(TransformText);
-
-	Renderer::RenderTextObject(PositionText);
-	Renderer::RenderTextObject(ScaleText);
-	Renderer::RenderTextObject(RotationText);
-
 	glFlush();
 	glutSwapBuffers();
 }
@@ -114,44 +91,14 @@ void Application::Update()
 {
 	glutPostRedisplay();
 
-	int currentTime = glutGet(GLUT_ELAPSED_TIME);
-	int deltaTime = currentTime - lastFrameTime;
-	lastFrameTime = currentTime;
-
-	if (deltaTime > 0)
-		FPSText.text = std::to_string(1000 / deltaTime);
-
-	lastFrameTime = glutGet(GLUT_ELAPSED_TIME);
-	UpdateTransformTexts();
-
 	scene.Update();
-}
-
-void Application::UpdateTransformationText()
-{
-	std::string transformMode = scene.getTransformationManager()->getTransformModeText();
-	std::string transformAxis = scene.getTransformationManager()->getTransformAxisText();
-
-	TransformText.text = transformMode + " - " + transformAxis;
-}
-
-void Application::UpdateTransformTexts()
-{
-	PositionText.text = "Position: " + scene.GetFocusObject()->transform.Position.ToString();
-	ScaleText.text =    "Scale:    " + scene.GetFocusObject()->transform.Scale.ToString();
-	RotationText.text = "Rotation: " + scene.GetFocusObject()->transform.Rotation.ToString();
-}
-
-void Application::SwitchObjectFocus()
-{
-	ObjectNameText.text = scene.ChangeFocusIndex();
 }
 
 void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 {
 	Keyboard::SetButtonPressedDown(key);
 	if(key == ' ')
-		SwitchObjectFocus();
+		scene.ChangeFocusIndex();
 	else if(key == 'e')
 		scene.ToggleCameraObjectFocus();
 
@@ -161,7 +108,7 @@ void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 		scene.getTransformationManager()->RotateTransformAxis(1);
 	
 	scene.getTransformationManager()->SetTransformMode(key);
-	UpdateTransformationText();
+	scene.UpdateTransformationText();
 }
 void Application::HandleKeyboardUp(unsigned char key, int x, int y)
 {

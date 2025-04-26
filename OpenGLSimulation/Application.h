@@ -40,26 +40,6 @@ private:
 	void LoadScene();
 	void MainLoop();
 
-	void UpdateTransformationText();
-	void UpdateTransformTexts();
-
 	Scene scene;
-
-	TextObject FPSText;
-
-	TextObject ObjectNameText;
-	TextObject TransformText;
-
-	TextObject PositionText;
-	TextObject ScaleText;
-	TextObject RotationText;
-
-	TextObject TransformModeControls;
-
-	unsigned int objectFocusIndex = 0;
-	void SwitchObjectFocus();
-
-	int lastFrameTime = 0;
-	
 };
 

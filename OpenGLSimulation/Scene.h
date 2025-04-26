@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Light.h"
 #include "LinkedList.h"
+#include "TextObject.h"
 
 class Scene
 {
@@ -21,10 +22,13 @@ public:
 	Camera* GetCamera() { return &camera; }
 	Light* GetLight() { return& light; }
 	Object* GetFocusObject() { return& objects[focusObjectIndex]; }
+	std::vector<TextObject*>* GetTextObjectBuffer() {return &textObjects;}
 
 	void Update();
 	void ToggleCameraObjectFocus();
-	std::string ChangeFocusIndex();
+	void ChangeFocusIndex();
+
+	void UpdateTransformationText();
 
 	TransformationManager* getTransformationManager() { return &transformationManager; }
 
@@ -32,14 +36,29 @@ private:
 	TransformationManager transformationManager;
 	LinkedList<Object> objects;
 	SceneGraph sceneGraph;
+
+	std::vector<TextObject*> textObjects;
 	
 	Light light;
 
 	Camera camera;
 	int focusObjectIndex;
 
+	int lastFrameTime = 0;
+	void UpdateTransformTexts();
+
+	void BuildHierarchy();
+
 	Mesh monkeyMesh;
 	Texture stoneTexture;
 	Material stoneMaterial;
 
+	TextObject FPSText;
+
+	TextObject ObjectNameText;
+	TextObject TransformText;
+
+	TextObject PositionText;
+	TextObject ScaleText;
+	TextObject RotationText;
 };

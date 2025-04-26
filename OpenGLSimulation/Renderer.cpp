@@ -23,8 +23,14 @@ void Renderer::RenderScene(Scene& scene)
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 
 	RenderSceneGraphNode(scene, scene.GetSceneGraph()->GetRootNode());
-
 	SetLight(scene.GetLight());
+
+	Renderer::ResetMaterial();
+
+	std::vector<TextObject*>* textObjects = scene.GetTextObjectBuffer();
+	for(int i = 0; i < textObjects->size(); i++)
+		RenderTextObject(textObjects->at(i));
+
 }
 
 // Use recursion to iterate through the SceneGraph
@@ -156,7 +162,7 @@ void Renderer::Render2DObject(Object2D& object)
 	glDisable(GL_COLOR_MATERIAL);
 }
 
-void Renderer::RenderTextObject(TextObject& textObject)
+void Renderer::RenderTextObject(TextObject* textObject)
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -170,11 +176,11 @@ void Renderer::RenderTextObject(TextObject& textObject)
 
 	const char* character;
 
-	glColor3f(textObject.color.x, textObject.color.y, textObject.color.z);
+	glColor3f(textObject->color.x, textObject->color.y, textObject->color.z);
 
-	glRasterPos2f(textObject.screenX, textObject.screenY);
-	for (character = textObject.text.c_str(); *character != '\0'; character++)
-		glutBitmapCharacter(textObject.font, *character);
+	glRasterPos2f(textObject->screenX, textObject->screenY);
+	for (character = textObject->text.c_str(); *character != '\0'; character++)
+		glutBitmapCharacter(textObject->font, *character);
 	glColor3f(1, 1, 1);
 
 	glEnable(GL_LIGHTING);

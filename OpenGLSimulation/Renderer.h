@@ -31,7 +31,7 @@ public:
 
 	static void RenderObject(Object* object, const Camera* camera, int flags);
 	static void Render2DObject(Object2D& object);
-	static void RenderTextObject(TextObject& textObject);
+	static void RenderTextObject(TextObject* textObject);
 
 	static void SetMaterial(Material* material);
 	static void SetLight(Light* light);
