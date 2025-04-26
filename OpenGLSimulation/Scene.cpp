@@ -29,6 +29,7 @@ void Scene::InitScene()
 	Object monkeyObject6 = Object(&monkeyMesh, &stoneMaterial, Transform({ 0, -3, 0 }, { 1, 1, 1 }, { 0, 0, 0 }), "same size left monkey");
 
 	FPSText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
+	instructionsText = TextObject(SCREEN_WIDTH - 250, 10, GLUT_BITMAP_9_BY_15, "Controls on the README.md", Vector3f(0, 1, 0));
 
 	ObjectNameText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 15, GLUT_BITMAP_9_BY_15, "", Vector3f(0, 1, 0));
 	TransformText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 30, GLUT_BITMAP_9_BY_15, "Translate - X", Vector3f(0, 1, 0));
@@ -52,7 +53,7 @@ void Scene::InitScene()
 	sceneGraph.InsertNode(node2, new SceneGraphNode(&objects[4]));
 	sceneGraph.InsertNode(node, new SceneGraphNode(&objects[5]));
 
-	textObjects = {&FPSText, &ObjectNameText, &TransformText, &PositionText, &ScaleText, &RotationText};
+	textObjects = {&FPSText, &ObjectNameText, &TransformText, &PositionText, &ScaleText, &RotationText, &instructionsText};
 
 	ObjectNameText.text = objects[focusObjectIndex].name;
 	UpdateTransformationText();

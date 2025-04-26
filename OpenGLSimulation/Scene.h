@@ -55,6 +55,7 @@ private:
 	Material stoneMaterial;
 
 	TextObject FPSText;
+	TextObject instructionsText;
 
 	TextObject ObjectNameText;
 	TextObject TransformText;
