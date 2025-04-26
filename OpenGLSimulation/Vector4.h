@@ -3,7 +3,7 @@
 struct Vector4f
 {
 	Vector4f(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(_z), w(_w) {}
-	Vector4f() { x = 0; y = 0; }
+	Vector4f() { x = 0; y = 0; z = 0;  w = 0;}
 
 	float x, y, z, w;
 

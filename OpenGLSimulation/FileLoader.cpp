@@ -169,9 +169,6 @@ struct BitmapColor
 {
     unsigned char b, g, r;
 };
-#define _CRT_SECURE_NO_DEPRECATE
-#include <stdio.h>
-#pragma warning (disable : 4996)
 
 int FileLoader::LoadTextureFromBMP(const char* filepath, Texture& texture)
 {
@@ -181,7 +178,7 @@ int FileLoader::LoadTextureFromBMP(const char* filepath, Texture& texture)
 
     unsigned char* textureImageBuffer;
 
-    FILE* file; file = fopen(filepath, "rb");
+    FILE* file; fopen_s(&file, filepath, "rb");
 
     if (file == NULL)
     {
@@ -189,8 +186,11 @@ int FileLoader::LoadTextureFromBMP(const char* filepath, Texture& texture)
         return -1;
     }
 
+    //reads in the bitmap file foot
     fread(&magic, sizeof(BitmapFileFt), 1, file);
+    //the bitmap file header
     fread(&head, sizeof(BitmapFileHeader), 1, file);
+    //the bitmap info header,  which contains information such as width and height
     fread(&bitmapInfo, sizeof(BitmapInfoHeader), 1, file);
 
     if (bitmapInfo.width != bitmapInfo.height)
@@ -199,13 +199,18 @@ int FileLoader::LoadTextureFromBMP(const char* filepath, Texture& texture)
         return -1;
     }
 
+    // allocate enough memory to load the entire colour buffer in
     textureImageBuffer = new unsigned char[bitmapInfo.width * bitmapInfo.height * 3];
 
     texture.width = bitmapInfo.width; texture.height = bitmapInfo.height;
 
     fread(textureImageBuffer, 1, bitmapInfo.width * bitmapInfo.height * 3, file);
 
+    // bind the data of the texture to the OpenGL instance of the texture
     texture.BindDataToTexture(textureImageBuffer);
 
+    delete[] textureImageBuffer;
     fclose(file);
+
+    return 0;
 }

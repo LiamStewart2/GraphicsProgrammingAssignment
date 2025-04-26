@@ -11,12 +11,7 @@
 #include "Input.h"
 #include "Globals.h"
 #include "GLUTCallbacks.h"
-#include "FileLoader.h"
 #include "Renderer.h"
-#include "TextObject.h"
-#include "Object2D.h"
-#include "Texture.h"
-#include "Light.h"
 #include "Scene.h"
 
 class Application
