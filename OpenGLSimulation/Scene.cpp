@@ -3,7 +3,7 @@
 Scene::Scene()
 {
 	focusObjectIndex = 0;
-	camera = Camera({ 0, 0, 8 }, { 0, 0, 0 }, { 0, 1, 0 });
+	camera = Camera({ 0, 2, 8 }, { 0, 0, 0 }, { 0, 1, 0 });
 }
 
 Scene::~Scene()
@@ -25,7 +25,7 @@ void Scene::InitScene()
 	stoneMaterial = Material(&stoneTexture, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, 64);
 	grassMaterial = Material(&grassTexture, { 0.2, 0.2, 0.2, 1 }, { 0.5, 1, 0.5, 1 }, { 1, 1, 1, 1 }, 64);
 
-	Object groundObject = Object(&groundMesh, &grassMaterial,  Transform({ 0, -2, 0 }, { 0.2f, 0.2f, 0.2f}, { 0, 0, 0 }), "ground");
+	Object groundObject = Object(&groundMesh, &grassMaterial,  Transform({ 0, 0, 0 }, { 0.2f, 0.2f, 0.2f}, { 0, 0, 0 }), "ground");
 	Object monkeyObject = Object(&monkeyMesh, &stoneMaterial, Transform({0, 0, 0}, {1, 1, 1}, {0, 0, 0}), "Big monkey");
 	Object monkeyObject2 = Object(&monkeyMesh, &stoneMaterial, Transform({4, 0, 0}, {1, 1, 1}, {0, 0, 0}), "Right monkey");
 	Object monkeyObject3 = Object(&monkeyMesh, &stoneMaterial, Transform({-2, 0, 0}, {0.5f, 0.5f, 0.5f}, {0, 0, 0}), "Left monkey");
@@ -91,9 +91,9 @@ void Scene::Update()
 	lastFrameTime = glutGet(GLUT_ELAPSED_TIME);
 	UpdateTransformTexts();
 
-	camera.Update();
-
 	sceneGraph.UpdateObjectWorldPositions();
+
+	camera.Update();
 }
 
 void Scene::UpdateTransformationText()
@@ -106,7 +106,7 @@ void Scene::UpdateTransformationText()
 
 void Scene::UpdateTransformTexts()
 {
-	PositionText.text = "Position: " + objects[focusObjectIndex].transform.Position.ToString();
+	PositionText.text = "Position: " + objects[focusObjectIndex].worldPosition.ToString();
 	ScaleText.text = "Scale:    " + objects[focusObjectIndex].transform.Scale.ToString();
 	RotationText.text = "Rotation: " + objects[focusObjectIndex].transform.Rotation.ToString();
 }

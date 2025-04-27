@@ -11,5 +11,4 @@ namespace GLUTCallbacks
 	void KeyboardUp(unsigned char key, int x, int y);
 	void HandleMouseButtonPressed(int button, int state, int x, int y);
 	void HandleMouseMove(int x, int y);
-
 }

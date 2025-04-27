@@ -47,6 +47,7 @@ public:
 		glGetFloatv(GL_MODELVIEW_MATRIX, model);
 		object->worldPosition = Vector3f({ model[12], model[13], model[14] });
 
+
 		for(SceneGraphNode* node : nodes)
 			node->UpdateObjectWorldPosition();
 

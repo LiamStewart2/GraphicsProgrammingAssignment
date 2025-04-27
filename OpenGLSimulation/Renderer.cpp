@@ -44,8 +44,6 @@ void Renderer::RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode
 	{
 		Renderer::RenderObject(sceneGraphNode->GetNodeObject(), scene.GetCamera(), RenderFlags::WIREFRAME);    
 	}
-	
-	glPushMatrix();
 
 	for (int i = 0; i < sceneGraphNode->GetNumberOfChildNodes(); i++)
 		RenderSceneGraphNode(scene, sceneGraphNode->GetChildNode(i));
