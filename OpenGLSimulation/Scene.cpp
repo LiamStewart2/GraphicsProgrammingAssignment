@@ -2,6 +2,7 @@
 
 Scene::Scene()
 {
+	focusObjectIndex = 0;
 	camera = Camera({ 0, 0, 8 }, { 0, 0, 0 }, { 0, 1, 0 });
 }
 
@@ -78,6 +79,7 @@ void Scene::Update()
 	transformationManager.Update(&objects[focusObjectIndex]);
 
 	objects[1].transform.Rotation.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 180;
+	objects[2].transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.0005);
 
 	int currentTime = glutGet(GLUT_ELAPSED_TIME);
 	int deltaTime = currentTime - lastFrameTime;
@@ -92,6 +94,8 @@ void Scene::Update()
 	camera.Update();
 
 	sceneGraph.UpdateObjectWorldPositions();
+
+	std::cout << "Object position: " << objects[2].worldPosition.x << ", " << objects[2].worldPosition.y << ", " << objects[2].worldPosition.z << std::endl;
 
 }
 

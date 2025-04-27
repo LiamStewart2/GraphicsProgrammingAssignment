@@ -118,7 +118,7 @@ void Application::HandleKeyboardUp(unsigned char key, int x, int y)
 void Application::HandleMouseButtonPressed(int button, int state, int x, int y)
 {
 	Mouse::SetMouseButtonState(button, state);
-
+	
 	if (button == MouseButton::RIGHT)
 	{
 		if (state == 0)
