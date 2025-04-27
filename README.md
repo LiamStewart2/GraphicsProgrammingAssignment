@@ -29,7 +29,8 @@ to select a transformation mode:<br>
 * O to scale
 * R to rotate
 * T to change the texture<br>
-To modify the Axis:<br>
+
+to modify the Axis:<br>
 * N increase selected axis
 * M decrease selected axis
 * Z cycle axis left (X, Y, Z)
