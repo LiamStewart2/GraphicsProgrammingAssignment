@@ -25,10 +25,10 @@ however additionality allows object tracking:<br>
 
 #### Transformations
 to select a transformation mode:<br>
-* T to translate
+* G to translate
 * O to scale
 * R to rotate
-* T to change the texture
+* T to change the texture<br>
 To modify the Axis:<br>
 * N increase selected axis
 * M decrease selected axis
