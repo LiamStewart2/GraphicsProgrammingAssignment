@@ -14,13 +14,6 @@ namespace GLUTCallbacks
 		app = application;
 	}
 
-	void Display()
-	{
-		if (app != nullptr)
-		{
-			app->Display();
-		}
-	}
 	void Timer(int preferredRefresh)
 	{
 		int deltaTime = glutGet(GLUT_ELAPSED_TIME);

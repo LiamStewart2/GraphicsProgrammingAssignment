@@ -94,9 +94,6 @@ void Scene::Update()
 	camera.Update();
 
 	sceneGraph.UpdateObjectWorldPositions();
-
-	std::cout << "Object position: " << objects[2].worldPosition.x << ", " << objects[2].worldPosition.y << ", " << objects[2].worldPosition.z << std::endl;
-
 }
 
 void Scene::UpdateTransformationText()
