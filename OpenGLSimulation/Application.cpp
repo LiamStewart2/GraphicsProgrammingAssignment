@@ -62,11 +62,12 @@ void Application::MainLoop()
 	//Callbacks
 	glutKeyboardFunc(GLUTCallbacks::KeyboardDown);
 	glutKeyboardUpFunc(GLUTCallbacks::KeyboardUp);
+
 	glutMouseFunc(GLUTCallbacks::HandleMouseButtonPressed);
 	glutPassiveMotionFunc(GLUTCallbacks::HandleMouseMove);
 	glutMotionFunc(GLUTCallbacks::HandleMouseMove);
 	
-	glutDisplayFunc(GLUTCallbacks::Display);
+	//glutDisplayFunc(GLUTCallbacks::Display);
 
 	glutTimerFunc(REFRESH_RATE_DELAY, GLUTCallbacks::Timer, REFRESH_RATE_DELAY);
 
