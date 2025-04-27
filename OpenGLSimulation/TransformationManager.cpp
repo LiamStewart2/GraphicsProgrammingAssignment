@@ -41,6 +41,8 @@ void TransformationManager::SetTransformMode(const unsigned char mode)
 		transformationMode = TransformMode::SCALE;
 	else if(mode == rotateKeybind)
 		transformationMode = TransformMode::ROTATE;
+	else if(mode == textureKeybind)
+		transformationMode = TransformMode::TEXTURE;
 }
 
 void TransformationManager::RotateTransformAxis(int direction)
@@ -217,5 +219,42 @@ void TransformationManager::Rotate(Object* object)
 
 void TransformationManager::Texture(Object* object)
 {
+	if(TextureKeybindhasBeenPressed == false)
+	{
+		if (Keyboard::GetButtonState(increaseAxisKeybind))
+		{
+			int materialIndex = FindMaterialIndex(object);
+			if (materialIndex == -1)
+				return;
 
+			materialIndex += 1; if (materialIndex >= materials->size()) materialIndex -= materials->size();
+			object->material = materials->at(materialIndex);
+
+			TextureKeybindhasBeenPressed = true;
+		}
+		else if (Keyboard::GetButtonState(decreaseAxisKeybind))
+		{
+			int materialIndex = FindMaterialIndex(object);
+			if (materialIndex == -1)
+				return;
+
+			materialIndex -= 1; if (materialIndex < 0) materialIndex += materials->size();
+			object->material = materials->at(materialIndex);
+			
+			TextureKeybindhasBeenPressed = true;
+		}
+	}
+	else
+	{
+		if (Keyboard::GetButtonState(increaseAxisKeybind) == false && Keyboard::GetButtonState(decreaseAxisKeybind) == false)
+			TextureKeybindhasBeenPressed = false;
+	}
+}
+
+int TransformationManager::FindMaterialIndex(Object* object)
+{
+	for(int i = 0; i < materials->size(); i++)
+		if(materials->at(i) == object->material)
+			return i;
+	return -1;
 }

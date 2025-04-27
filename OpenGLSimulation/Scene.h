@@ -38,7 +38,8 @@ private:
 	SceneGraph sceneGraph;
 
 	std::vector<TextObject*> textObjects;
-	
+	std::vector<Material*> materials;
+
 	Light light;
 
 	Camera camera;

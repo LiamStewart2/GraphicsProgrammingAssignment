@@ -11,7 +11,6 @@ void Camera::Update()
 	{
 		SmoothTurning();
 
-	
 		if (Mouse::GetMouseButtonState(MouseButton::RIGHT) == false)
 			FaceMouse();
 		else

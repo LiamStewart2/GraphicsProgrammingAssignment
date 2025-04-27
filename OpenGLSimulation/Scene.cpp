@@ -63,11 +63,14 @@ void Scene::InitScene()
 	sceneGraph.InsertNode(rootMonkey2, new SceneGraphNode(&objects[6]));
 
 	textObjects = {&FPSText, &ObjectNameText, &TransformText, &PositionText, &ScaleText, &RotationText, &instructionsText};
+	materials = {&stoneMaterial, &grassMaterial};
 
 	ObjectNameText.text = objects[focusObjectIndex].name;
 	UpdateTransformationText();
 
 	BuildHierarchy();
+
+	transformationManager.SetMaterials(&materials);
 }
 
 void Scene::Update()
