@@ -27,7 +27,7 @@ public:
 	void RenderScene(Scene& scene);
 private:
 	void RenderSceneGraphNode(Scene& scene, SceneGraphNode* sceneGraphNode);
-
+	
 	void RenderObject(Object* object, const Camera* camera, int flags);
 	void RenderTextObject(TextObject* textObject);
 
@@ -36,4 +36,3 @@ private:
 
 	void ResetMaterial();
 };
-

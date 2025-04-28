@@ -52,12 +52,17 @@ private:
 	void BuildBranchOfHierarchy(SceneGraphNode* node, int level, int& screenHeight);
 
 	Mesh monkeyMesh;
+	Mesh groundMesh;
+	Mesh donutMesh;
+
 	Texture stoneTexture;
 	Material stoneMaterial;
 
-	Mesh groundMesh;
 	Texture grassTexture;
 	Material grassMaterial;
+
+	Texture penguinTexture;
+	Material penguinMaterial;
 
 	TextObject FPSText;
 	TextObject instructionsText;

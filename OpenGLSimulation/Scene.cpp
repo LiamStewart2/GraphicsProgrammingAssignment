@@ -18,14 +18,18 @@ void Scene::InitScene()
 
 	FileLoader::LoadMeshFromOBJ("res/Mesh/monkey.obj", monkeyMesh);
 	FileLoader::LoadMeshFromOBJ("res/Mesh/ground.obj", groundMesh);
+	FileLoader::LoadMeshFromOBJ("res/Mesh/donut.obj", donutMesh);
 
 	FileLoader::LoadTextureFromBMP("res/Texture/stone.bmp", stoneTexture);
 	FileLoader::LoadTextureFromBMP("res/Texture/grass.bmp", grassTexture);
+	FileLoader::LoadTextureFromRAW("res/Texture/Penguins.raw", 512, 512, penguinTexture);
 
 	stoneMaterial = Material(&stoneTexture, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, 64);
 	grassMaterial = Material(&grassTexture, { 0.2, 0.2, 0.2, 1 }, { 0.5, 1, 0.5, 1 }, { 1, 1, 1, 1 }, 64);
+	penguinMaterial = Material(&penguinTexture, {0.4, 0.4, 0.4, 1}, {0.8, 0.8, 0.8, 1}, {1, 1, 1, 1}, 64);
 
 	Object groundObject = Object(&groundMesh, &grassMaterial,  Transform({ 0, 0, 0 }, { 0.2f, 0.2f, 0.2f}, { 0, 0, 0 }), "ground");
+	Object donut = Object(&donutMesh, &penguinMaterial,  Transform({ 0, 2, 4 }, { 1, 1, 1}, { 0, 0, 0 }), "donut");
 	Object monkeyObject = Object(&monkeyMesh, &stoneMaterial, Transform({0, 0, 0}, {1, 1, 1}, {0, 0, 0}), "Big monkey");
 	Object monkeyObject2 = Object(&monkeyMesh, &stoneMaterial, Transform({4, 0, 0}, {1, 1, 1}, {0, 0, 0}), "Right monkey");
 	Object monkeyObject3 = Object(&monkeyMesh, &stoneMaterial, Transform({-2, 0, 0}, {0.5f, 0.5f, 0.5f}, {0, 0, 0}), "Left monkey");
@@ -51,6 +55,7 @@ void Scene::InitScene()
 	objects.Push(monkeyObject4);
 	objects.Push(monkeyObject5);
 	objects.Push(monkeyObject6);
+	objects.Push(donut);
 
 	sceneGraph.InsertRootNode(new SceneGraphNode(&objects[0]));
 
@@ -62,9 +67,10 @@ void Scene::InitScene()
 	sceneGraph.InsertNode(secondRootMonkey2, new SceneGraphNode(&objects[4]));
 	sceneGraph.InsertNode(rootMonkey2, new SceneGraphNode(&objects[5]));
 	sceneGraph.InsertNode(rootMonkey2, new SceneGraphNode(&objects[6]));
+	sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(&objects[7]));
 
 	textObjects = {&FPSText, &ObjectNameText, &TransformText, &PositionText, &ScaleText, &RotationText, &instructionsText};
-	materials = {&stoneMaterial, &grassMaterial};
+	materials = {&stoneMaterial, &grassMaterial, &penguinMaterial};
 
 	ObjectNameText.text = objects[focusObjectIndex].name;
 	UpdateTransformationText();
