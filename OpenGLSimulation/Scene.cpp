@@ -87,6 +87,7 @@ void Scene::Update()
 	objects[1].transform.Rotation.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 180;
 	objects[2].transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.0005);
 
+	// calculate fps
 	int currentTime = glutGet(GLUT_ELAPSED_TIME);
 	int deltaTime = currentTime - lastFrameTime;
 	lastFrameTime = currentTime;

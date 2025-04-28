@@ -45,6 +45,7 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
     std::vector<Vector3f> vertexNormals;
     std::vector<Vector2f> vertexTextureCoordinates;
 
+    // use an unordered map to make sure vertexes arent duplicated
     std::unordered_map<Vertex, unsigned int> vertices;
 
     while (getline(meshFile, line))
@@ -72,7 +73,7 @@ int FileLoader::LoadMeshFromOBJ(const char* filepath, Mesh& mesh)
                     mesh.vertexPositions.push_back(vertex.position);
                     mesh.vertexNormals.push_back(vertex.normal);
                     mesh.vertexTextureCoordinates.push_back(vertex.texcoord);
-            }
+                }
 
                 mesh.faces.push_back(vertices[vertex]);
         }

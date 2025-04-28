@@ -13,6 +13,9 @@ struct Vertex {
         return (position == other.position) && (normal == other.normal) && (texcoord == other.texcoord);
     }
 };
+
+// We need a hash so that the unordered map in FileLoader::LoadMeshFromOBJ
+// can check if the current vertex already has an instance stored in the unordered map
 template<> struct std::hash<Vertex>
 {
     size_t operator()(const Vertex& v) const
