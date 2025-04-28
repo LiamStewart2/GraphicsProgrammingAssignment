@@ -106,11 +106,9 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Object2D.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGraph.h" />
-    <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />

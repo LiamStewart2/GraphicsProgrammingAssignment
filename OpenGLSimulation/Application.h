@@ -29,6 +29,8 @@ public:
 	void HandleMouseMove(int x, int y);
 
 private:
+	Renderer renderer;
+
 	void Init(int argc, char* argv[]);
 	void DisableVSync();
 

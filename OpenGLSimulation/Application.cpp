@@ -78,9 +78,7 @@ void Application::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Renderer::RenderScene(scene);
-
-	Renderer::ResetMaterial();
+	renderer.RenderScene(scene);
 
 	glFlush();
 	glutSwapBuffers();

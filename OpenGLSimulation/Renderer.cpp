@@ -114,51 +114,6 @@ void Renderer::RenderObject(Object* object, const Camera* camera, int flags)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-void Renderer::Render2DObject(Object2D& object)
-{
-	// Set the perspective
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(0, SCREEN_WIDTH, 0, SCREEN_HEIGHT);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	// Disable OpenGL functionality
-
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_LIGHTING);
-
-	// Enable OpenGL functionality
-
-	glEnable(GL_COLOR_MATERIAL);
-
-	// Transformations
-
-	glTranslatef(object.transform.Position.x, object.transform.Position.y, 0);
-
-	glRotatef(object.transform.Rotation, 0.0f, 0.0f, 1.0f);
-
-	glScalef(object.transform.Scale.x, object.transform.Scale.y, 1);
-
-	// Push the sprite data to the GPU
-	glColor4f(object.color.r, object.color.g, object.color.b, object.color.a);
-	glBegin(GL_QUADS);
-	glVertex3f(0, 0, 0); glVertex3f(0, 1, 0); glVertex3f(1, 1, 0); glVertex3f(1, 0, 0);
-	glEnd();
-	glColor4f(1, 1, 1, 1);
-
-	// Enable OpenGL functionality
-
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-
-	// Disable OpenGL functionality
-
-	glDisable(GL_COLOR_MATERIAL);
-}
 
 void Renderer::RenderTextObject(TextObject* textObject)
 {
