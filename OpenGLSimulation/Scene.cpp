@@ -28,14 +28,14 @@ void Scene::InitScene()
 	grassMaterial = Material(&grassTexture, { 0.2, 0.2, 0.2, 1 }, { 0.5, 1, 0.5, 1 }, { 1, 1, 1, 1 }, 64);
 	penguinMaterial = Material(&penguinTexture, {0.4, 0.4, 0.4, 1}, {0.8, 0.8, 0.8, 1}, {1, 1, 1, 1}, 64);
 
-	Object groundObject = Object(&groundMesh, &grassMaterial,  Transform({ 0, 0, 0 }, { 0.2f, 0.2f, 0.2f}, { 0, 0, 0 }), "ground");
-	Object donut = Object(&donutMesh, &penguinMaterial,  Transform({ 0, 2, 4 }, { 1, 1, 1}, { 0, 0, 0 }), "donut");
-	Object monkeyObject = Object(&monkeyMesh, &stoneMaterial, Transform({0, 0, 0}, {1, 1, 1}, {0, 0, 0}), "Big monkey");
-	Object monkeyObject2 = Object(&monkeyMesh, &stoneMaterial, Transform({4, 0, 0}, {1, 1, 1}, {0, 0, 0}), "Right monkey");
-	Object monkeyObject3 = Object(&monkeyMesh, &stoneMaterial, Transform({-2, 0, 0}, {0.5f, 0.5f, 0.5f}, {0, 0, 0}), "Left monkey");
-	Object monkeyObject4 = Object(&monkeyMesh, &stoneMaterial, Transform({0, 2, 0}, {0.5f, 0.5f, 0.5f}, {0, 0, 0}), "small left monkey : )");
-	Object monkeyObject5 = Object(&monkeyMesh, &stoneMaterial, Transform({ 0, 2, 0 }, { 0.35f, 0.35f, 0.35f }, { 0, 0, 0 }), "small right monkey");
-	Object monkeyObject6 = Object(&monkeyMesh, &stoneMaterial, Transform({ 4, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 }), "same size right monkey");
+	Object* groundObject =	new Object(&groundMesh, &grassMaterial,  Transform({ 0, 0, 0 }, { 0.2f, 0.2f, 0.2f}, { 0, 0, 0 }), "ground");
+	Object* donut =			new Object(&donutMesh, &penguinMaterial,  Transform({ 0, 2, 8 }, { 1, 1, 1}, { 0, 0, 0 }), "donut");
+	Object* monkeyObject =	new BouncingObject(&monkeyMesh, &stoneMaterial, Transform({0, 0, 0}, {1, 1, 1}, {0, 0, 0}), "Big monkey");
+	Object* monkeyObject2 = new SpinningObject(&monkeyMesh, &stoneMaterial, Transform({6, 0, 0}, {1, 1, 1}, {0, 0, 0}), "Right monkey");
+	Object* monkeyObject3 = new Object(&monkeyMesh, &stoneMaterial, Transform({-2, 0, 0}, {0.5f, 0.5f, 0.5f}, {0, 0, 0}), "Left monkey");
+	Object* monkeyObject4 = new Object(&monkeyMesh, &stoneMaterial, Transform({0, 2, 0}, {0.5f, 0.5f, 0.5f}, {0, 0, 0}), "small left monkey : )");
+	Object* monkeyObject5 = new Object(&monkeyMesh, &stoneMaterial, Transform({ 0, 2, 0 }, { 0.35f, 0.35f, 0.35f }, { 0, 0, 0 }), "small right monkey");
+	Object* monkeyObject6 = new Object(&monkeyMesh, &stoneMaterial, Transform({ 4, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 }), "same size right monkey");
 
 	FPSText = TextObject(10, 10, GLUT_BITMAP_9_BY_15, "0", Vector3f(0, 1, 0));
 	instructionsText = TextObject(SCREEN_WIDTH - 250, 10, GLUT_BITMAP_9_BY_15, "Controls on the README.md", Vector3f(0, 1, 0));
@@ -57,22 +57,22 @@ void Scene::InitScene()
 	objects.Push(monkeyObject6);
 	objects.Push(donut);
 
-	sceneGraph.InsertRootNode(new SceneGraphNode(&objects[0]));
+	sceneGraph.InsertRootNode(new SceneGraphNode(objects[0]));
 
-	SceneGraphNode* rootMonkey1 = sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(&objects[1]));
-	SceneGraphNode* rootMonkey2 = sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(&objects[2]));
+	SceneGraphNode* rootMonkey1 = sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[1]));
+	SceneGraphNode* rootMonkey2 = sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[2]));
 
-	SceneGraphNode* secondRootMonkey2 = sceneGraph.InsertNode(rootMonkey1, new SceneGraphNode(&objects[3]));
+	SceneGraphNode* secondRootMonkey2 = sceneGraph.InsertNode(rootMonkey1, new SceneGraphNode(objects[3]));
 
-	sceneGraph.InsertNode(secondRootMonkey2, new SceneGraphNode(&objects[4]));
-	sceneGraph.InsertNode(rootMonkey2, new SceneGraphNode(&objects[5]));
-	sceneGraph.InsertNode(rootMonkey2, new SceneGraphNode(&objects[6]));
-	sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(&objects[7]));
+	sceneGraph.InsertNode(secondRootMonkey2, new SceneGraphNode(objects[4]));
+	sceneGraph.InsertNode(rootMonkey2, new SceneGraphNode(objects[5]));
+	sceneGraph.InsertNode(rootMonkey2, new SceneGraphNode(objects[6]));
+	sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[7]));
 
 	textObjects = {&FPSText, &ObjectNameText, &TransformText, &PositionText, &ScaleText, &RotationText, &instructionsText};
 	materials = {&stoneMaterial, &grassMaterial, &penguinMaterial};
 
-	ObjectNameText.text = objects[focusObjectIndex].name;
+	ObjectNameText.text = objects[focusObjectIndex]->name;
 	UpdateTransformationText();
 
 	BuildHierarchy();
@@ -82,10 +82,8 @@ void Scene::InitScene()
 
 void Scene::Update()
 {
-	transformationManager.Update(&objects[focusObjectIndex]);
-
-	objects[1].transform.Rotation.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.001) * 180;
-	objects[2].transform.Position.y = sin(glutGet(GLUT_ELAPSED_TIME) * 0.0005);
+	transformationManager.Update(objects[focusObjectIndex]);
+	UpdateObjects();
 
 	// calculate fps
 	int currentTime = glutGet(GLUT_ELAPSED_TIME);
@@ -103,6 +101,12 @@ void Scene::Update()
 	camera.Update();
 }
 
+void Scene::UpdateObjects()
+{
+	for (int i = 0; i < objects.Size(); i++)
+		objects[i]->Update();
+}
+
 void Scene::UpdateTransformationText()
 {
 	std::string transformMode = transformationManager.getTransformModeText();
@@ -113,9 +117,9 @@ void Scene::UpdateTransformationText()
 
 void Scene::UpdateTransformTexts()
 {
-	PositionText.text = "Position: " + objects[focusObjectIndex].worldPosition.ToString();
-	ScaleText.text = "Scale:    " + objects[focusObjectIndex].transform.Scale.ToString();
-	RotationText.text = "Rotation: " + objects[focusObjectIndex].transform.Rotation.ToString();
+	PositionText.text = "Position: " + objects[focusObjectIndex]->worldPosition.ToString();
+	ScaleText.text = "Scale:    " + objects[focusObjectIndex]->transform.Scale.ToString();
+	RotationText.text = "Rotation: " + objects[focusObjectIndex]->transform.Rotation.ToString();
 }
 
 // Recursivly iterate through the tree and create the Hierarchy text objects
@@ -143,7 +147,7 @@ void Scene::BuildBranchOfHierarchy(SceneGraphNode* node, int level, int& screenH
 void Scene::ToggleCameraObjectFocus()
 {
 	if(camera.IsObjectTracking() == false)
-		camera.TrackObject(&objects[focusObjectIndex]);
+		camera.TrackObject(objects[focusObjectIndex]);
 	else
 		camera.TrackObject(nullptr);
 }
@@ -155,7 +159,7 @@ void Scene::ChangeFocusIndex()
 		focusObjectIndex -= objects.Size();
 
 	if(camera.IsObjectTracking())
-		camera.TrackObject(&objects[focusObjectIndex]);
+		camera.TrackObject(objects[focusObjectIndex]);
 
-	ObjectNameText.text = objects[focusObjectIndex].name;
+	ObjectNameText.text = objects[focusObjectIndex]->name;
 }

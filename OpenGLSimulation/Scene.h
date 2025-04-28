@@ -3,6 +3,8 @@
 #include "TransformationManager.h"
 #include "Camera.h"
 #include "Object.h"
+#include "SpinningObject.h"
+#include "BouncingObject.h"
 #include "SceneGraph.h"
 #include "FileLoader.h"
 #include "Input.h"
@@ -21,7 +23,7 @@ public:
 	SceneGraph* GetSceneGraph() { return &sceneGraph; }
 	Camera* GetCamera() { return &camera; }
 	Light* GetLight() { return& light; }
-	Object* GetFocusObject() { return& objects[focusObjectIndex]; }
+	Object* GetFocusObject() { return objects[focusObjectIndex]; }
 	std::vector<TextObject*>* GetTextObjectBuffer() {return &textObjects;}
 
 	void Update();
@@ -34,11 +36,13 @@ public:
 
 private:
 	TransformationManager transformationManager;
-	LinkedList<Object> objects;
+	LinkedList<Object*> objects;
 	SceneGraph sceneGraph;
 
 	std::vector<TextObject*> textObjects;
 	std::vector<Material*> materials;
+
+	void UpdateObjects();
 
 	Light light;
 

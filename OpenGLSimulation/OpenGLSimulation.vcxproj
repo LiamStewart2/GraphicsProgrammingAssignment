@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BouncingObject.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FileLoader.h" />
     <ClInclude Include="Globals.h" />
@@ -108,6 +109,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneGraph.h" />
+    <ClInclude Include="SpinningObject.h" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
