@@ -105,10 +105,7 @@ void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 		scene.getTransformationManager()->RotateTransformAxis(1);
 
 	else if (key == 'q')
-	{
 		glutLeaveMainLoop();
-
-	}
 	
 	scene.getTransformationManager()->SetTransformMode(key);
 	scene.UpdateTransformationText();
