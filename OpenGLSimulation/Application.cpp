@@ -31,8 +31,8 @@ void Application::Init(int argc, char* argv[])
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	glutCreateWindow("Simple OpenGL Program");
-
 	DisableVSync();
+	glutFullScreen();
 
 	//GL Settings
 	glEnable(GL_BLEND);
@@ -103,6 +103,12 @@ void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 		scene.getTransformationManager()->RotateTransformAxis(-1);
 	else if(key == 'x')
 		scene.getTransformationManager()->RotateTransformAxis(1);
+
+	else if (key == 'q')
+	{
+		glutLeaveMainLoop();
+
+	}
 	
 	scene.getTransformationManager()->SetTransformMode(key);
 	scene.UpdateTransformationText();
