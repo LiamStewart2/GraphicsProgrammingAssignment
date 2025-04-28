@@ -56,7 +56,7 @@ private:
 	const unsigned char rotateKeybind = 'r';
 	const unsigned char textureKeybind = 't';
 
-	const float transformationSpeed = 0.01f;
+	const float transformationSpeed = 0.05f;
 	
 	bool TextureKeybindhasBeenPressed = false;
 };
