@@ -22,6 +22,7 @@ the camera functions similarly to the unreal engine camera:<br>
 however additionality allows object tracking:<br>
 * E to toggle object tracking
 * Space to cycle tracked object
+* W/S to zoom in and out of the tracked object
 
 #### Transformations
 to select a transformation mode:<br>
