@@ -97,26 +97,29 @@ void Application::Update()
 
 void Application::HandleKeyboardDown(unsigned char key, int x, int y)
 {
-	Keyboard::SetButtonPressedDown(key);
-	if(key == ' ')
+	char lowercaseKey = static_cast<char>(std::tolower(key));
+
+	Keyboard::SetButtonPressedDown(lowercaseKey);
+	if(lowercaseKey == ' ')
 		scene.ChangeFocusIndex();
-	else if(key == 'e')
+	else if(lowercaseKey == 'e')
 		scene.ToggleCameraObjectFocus();
 
-	else if(key == 'z')
+	else if(lowercaseKey == 'z')
 		scene.getTransformationManager()->RotateTransformAxis(-1);
-	else if(key == 'x')
+	else if(lowercaseKey == 'x')
 		scene.getTransformationManager()->RotateTransformAxis(1);
 
-	else if (key == 'q')
+	else if (lowercaseKey == 'q')
 		glutLeaveMainLoop();
 	
-	scene.getTransformationManager()->SetTransformMode(key);
+	scene.getTransformationManager()->SetTransformMode(lowercaseKey);
 	scene.UpdateTransformationText();
 }
 void Application::HandleKeyboardUp(unsigned char key, int x, int y)
 {
-	Keyboard::SetButtonReleased(key);
+	char lowercaseKey = static_cast<char>(std::tolower(key));
+	Keyboard::SetButtonReleased(lowercaseKey);
 }
 
 void Application::HandleMouseButtonPressed(int button, int state, int x, int y)
