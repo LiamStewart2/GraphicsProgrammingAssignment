@@ -32,7 +32,11 @@ void Application::Init(int argc, char* argv[])
 	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	glutCreateWindow("Simple OpenGL Program");
 	DisableVSync();
+
+//full screen toggle in Globals.h
+#ifdef FULLSCREEN
 	glutFullScreen();
+#endif
 
 	//GL Settings
 	glEnable(GL_BLEND);
