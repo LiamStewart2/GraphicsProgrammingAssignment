@@ -9,14 +9,13 @@ void Camera::Update()
 	}
 	else
 	{
-		SmoothTurning();
-
 		if (Mouse::GetMouseButtonState(MouseButton::RIGHT) == false)
 			FaceMouse();
 		else
 			SavedMousePosition = Mouse::GetMousePosition();
 
 		HandleMovement();
+		SmoothTurning();
 	}
 }
 
