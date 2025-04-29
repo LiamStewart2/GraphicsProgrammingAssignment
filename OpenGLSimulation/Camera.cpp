@@ -27,11 +27,18 @@ void Camera::TrackObject(Object* object)
 	{
 		Vector3f direction = (eye - object->worldPosition).Normalized();
 		angleFromObject = atan2(direction.z, direction.x);
+		// avoid camera flipping when using a negative distance from object focus
+		distanceFromObjectFocus = abs(distanceFromObjectFocus);
 	}
 }
 
 void Camera::HandleObjectFocus()
 {
+	if (Keyboard::GetButtonState('s') == false)
+		distanceFromObjectFocus -= 0.03f; 
+	if (Keyboard::GetButtonState('w') == false)
+		distanceFromObjectFocus += 0.03f;
+
 	angleFromObject += 0.01f;
 	center = center + (trackedObject->worldPosition - center) * movementSpeed;
 
