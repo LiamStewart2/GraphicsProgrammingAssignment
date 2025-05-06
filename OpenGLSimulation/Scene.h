@@ -33,6 +33,8 @@ public:
 
 	void UpdateTransformationText();
 
+	void LeftClickPressed(int screenX, int screenY);
+
 	TransformationManager* getTransformationManager() { return &transformationManager; }
 
 private:

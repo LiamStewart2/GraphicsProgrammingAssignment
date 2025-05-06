@@ -128,6 +128,183 @@ void Scene::UpdateTransformationText()
 	TransformText.text = transformMode + " - " + transformAxis;
 }
 
+int InvertMatrix(const float m[16], float invOut[16]) {
+	float inv[16], det;
+	int i;
+
+	inv[0] = m[5] * m[10] * m[15] -
+		m[5] * m[11] * m[14] -
+		m[9] * m[6] * m[15] +
+		m[9] * m[7] * m[14] +
+		m[13] * m[6] * m[11] -
+		m[13] * m[7] * m[10];
+
+	inv[4] = -m[4] * m[10] * m[15] +
+		m[4] * m[11] * m[14] +
+		m[8] * m[6] * m[15] -
+		m[8] * m[7] * m[14] -
+		m[12] * m[6] * m[11] +
+		m[12] * m[7] * m[10];
+
+	inv[8] = m[4] * m[9] * m[15] -
+		m[4] * m[11] * m[13] -
+		m[8] * m[5] * m[15] +
+		m[8] * m[7] * m[13] +
+		m[12] * m[5] * m[11] -
+		m[12] * m[7] * m[9];
+
+	inv[12] = -m[4] * m[9] * m[14] +
+		m[4] * m[10] * m[13] +
+		m[8] * m[5] * m[14] -
+		m[8] * m[6] * m[13] -
+		m[12] * m[5] * m[10] +
+		m[12] * m[6] * m[9];
+
+	inv[1] = -m[1] * m[10] * m[15] +
+		m[1] * m[11] * m[14] +
+		m[9] * m[2] * m[15] -
+		m[9] * m[3] * m[14] -
+		m[13] * m[2] * m[11] +
+		m[13] * m[3] * m[10];
+
+	inv[5] = m[0] * m[10] * m[15] -
+		m[0] * m[11] * m[14] -
+		m[8] * m[2] * m[15] +
+		m[8] * m[3] * m[14] +
+		m[12] * m[2] * m[11] -
+		m[12] * m[3] * m[10];
+
+	inv[9] = -m[0] * m[9] * m[15] +
+		m[0] * m[11] * m[13] +
+		m[8] * m[1] * m[15] -
+		m[8] * m[3] * m[13] -
+		m[12] * m[1] * m[11] +
+		m[12] * m[3] * m[9];
+
+	inv[13] = m[0] * m[9] * m[14] -
+		m[0] * m[10] * m[13] -
+		m[8] * m[1] * m[14] +
+		m[8] * m[2] * m[13] +
+		m[12] * m[1] * m[10] -
+		m[12] * m[2] * m[9];
+
+	inv[2] = m[1] * m[6] * m[15] -
+		m[1] * m[7] * m[14] -
+		m[5] * m[2] * m[15] +
+		m[5] * m[3] * m[14] +
+		m[13] * m[2] * m[7] -
+		m[13] * m[3] * m[6];
+
+	inv[6] = -m[0] * m[6] * m[15] +
+		m[0] * m[7] * m[14] +
+		m[4] * m[2] * m[15] -
+		m[4] * m[3] * m[14] -
+		m[12] * m[2] * m[7] +
+		m[12] * m[3] * m[6];
+
+	inv[10] = m[0] * m[5] * m[15] -
+		m[0] * m[7] * m[13] -
+		m[4] * m[1] * m[15] +
+		m[4] * m[3] * m[13] +
+		m[12] * m[1] * m[7] -
+		m[12] * m[3] * m[5];
+
+	inv[14] = -m[0] * m[5] * m[14] +
+		m[0] * m[6] * m[13] +
+		m[4] * m[1] * m[14] -
+		m[4] * m[2] * m[13] -
+		m[12] * m[1] * m[6] +
+		m[12] * m[2] * m[5];
+
+	inv[3] = -m[1] * m[6] * m[11] +
+		m[1] * m[7] * m[10] +
+		m[5] * m[2] * m[11] -
+		m[5] * m[3] * m[10] -
+		m[9] * m[2] * m[7] +
+		m[9] * m[3] * m[6];
+
+	inv[7] = m[0] * m[6] * m[11] -
+		m[0] * m[7] * m[10] -
+		m[4] * m[2] * m[11] +
+		m[4] * m[3] * m[10] +
+		m[8] * m[2] * m[7] -
+		m[8] * m[3] * m[6];
+
+	inv[11] = -m[0] * m[5] * m[11] +
+		m[0] * m[7] * m[9] +
+		m[4] * m[1] * m[11] -
+		m[4] * m[3] * m[9] -
+		m[8] * m[1] * m[7] +
+		m[8] * m[3] * m[5];
+
+	inv[15] = m[0] * m[5] * m[10] -
+		m[0] * m[6] * m[9] -
+		m[4] * m[1] * m[10] +
+		m[4] * m[2] * m[9] +
+		m[8] * m[1] * m[6] -
+		m[8] * m[2] * m[5];
+
+	det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+
+	if (det == 0)
+		return 0;
+
+	det = 1.0f / det;
+
+	for (i = 0; i < 16; i++)
+		invOut[i] = inv[i] * det;
+
+	return 1;
+}
+
+void Scene::LeftClickPressed(int screenMouseX, int screenMouseY)
+{
+	Vector3f screenSpaceMouseCoordinates = Vector3f((float)screenMouseX / SCREEN_WIDTH * 2 - 1, 1 - (screenMouseY / (float)SCREEN_HEIGHT * 2), 1);
+	Vector4f clipCoords = Vector4f(screenSpaceMouseCoordinates.x, screenSpaceMouseCoordinates.y, -1.0f, 1.0f);
+
+	GLfloat projectionMatrix[16];
+	glGetFloatv(GL_PROJECTION_MATRIX, projectionMatrix);
+	GLfloat projectionInverse[16];
+	InvertMatrix(projectionMatrix, projectionInverse);
+
+	float rayEye[4];
+	for (int i = 0; i < 4; i++) 
+	{
+		rayEye[i] = projectionInverse[i * 4 + 0] * clipCoords.x +
+			projectionInverse[i * 4 + 1] * clipCoords.y +
+			projectionInverse[i * 4 + 2] * clipCoords.z +
+			projectionInverse[i * 4 + 3] * clipCoords.w;
+	}
+
+	GLfloat modelViewMatrix[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, modelViewMatrix);
+	GLfloat modelViewInverse[16];
+	InvertMatrix(modelViewMatrix, modelViewInverse);
+
+	float rayWorld[4];
+	for (int i = 0; i < 4; i++) {
+		rayWorld[i] = modelViewInverse[i * 4 + 0] * rayEye[0] +
+			modelViewInverse[i * 4 + 1] * rayEye[1] +
+			modelViewInverse[i * 4 + 2] * rayEye[2] +
+			modelViewInverse[i * 4 + 3] * rayEye[3];
+	}
+
+	float rayDirX = rayWorld[0];
+	float rayDirY = rayWorld[1];
+	float rayDirZ = rayWorld[2];
+	float length = sqrt(rayDirX * rayDirX + rayDirY * rayDirY + rayDirZ * rayDirZ);
+
+	rayDirX /= length;
+	rayDirY /= length;
+	rayDirZ /= length;
+	
+	float rayOrigin[3] = { camera.eye.x, camera.eye.y, camera.eye.z };
+	float rayDirection[3] = { rayDirX, rayDirY, rayDirZ };
+
+	std::cout << rayOrigin[0] << ", " << rayOrigin[1] << ", " << rayOrigin[2] << std::endl;
+	std::cout << rayDirection[0] << ", " << rayDirection[1] << ", " << rayDirection[2] << std::endl;
+}
+
 void Scene::UpdateTransformTexts()
 {
 	PositionText.text = "Position: " + objects[focusObjectIndex]->worldPosition.ToString();
