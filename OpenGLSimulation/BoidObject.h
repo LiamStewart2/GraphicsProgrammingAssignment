@@ -27,9 +27,9 @@ public:
 		if (transform.Position.x > boundingDistance)
 			velocity.x -= turnFactor;
 
-		if (transform.Position.y < 0)
+		if (transform.Position.y < 5)
 			velocity.y += turnFactor;
-		if (transform.Position.y > boundingDistance)
+		if (transform.Position.y > boundingDistance + 5)
 			velocity.y -= turnFactor;
 
 		if (transform.Position.z < -boundingDistance)
@@ -112,11 +112,11 @@ private:
 
 	float eyesightRange = 12;
 	float turnFactor = 0.01f;
-	float boundingDistance = 30;
+	float boundingDistance = 20;
 	
-	float coherence = 0.0005f;
+	float coherence = 0.0008f;
 	float seperation = 0.00025f;
-	float alighnment = 0.045f;
+	float alighnment = 0.06f;
 
 	double speed = 0.0f;
 	double minSpeed = 0.4f;

@@ -47,8 +47,6 @@ void Scene::InitScene()
 	ScaleText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 60, GLUT_BITMAP_9_BY_15, "Scale x, y, z", Vector3f(0, 1, 0));
 	RotationText = TextObject(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 75, GLUT_BITMAP_9_BY_15, "Rotation x, y, z", Vector3f(0, 1, 0));
 
-	
-
 	objects.Push(groundObject);
 	objects.Push(monkeyObject);
 	objects.Push(monkeyObject2);
@@ -57,8 +55,6 @@ void Scene::InitScene()
 	objects.Push(monkeyObject5);
 	objects.Push(monkeyObject6);
 	objects.Push(donut);
-
-
 
 	sceneGraph.InsertRootNode(new SceneGraphNode(objects[0]));
 
@@ -73,8 +69,8 @@ void Scene::InitScene()
 	sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[7]));
 
 	boids = std::vector<BoidObject*>();
-	boids.resize(200);
-	for (int i = 0; i < 200; i++)
+	boids.resize(100);
+	for (int i = 0; i < 100; i++)
 	{
 		BoidObject* boid = new BoidObject(&monkeyMesh, &stoneMaterial, Transform({ float(rand() % 50), float(rand() % 50), float(rand() % 50) }, {0.6f, 0.6f, 0.6f}, {0, 0, 0}));
 		objects.Push(boid); boids[i] = boid;
