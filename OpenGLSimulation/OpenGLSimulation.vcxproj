@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BoidObject.h" />
     <ClInclude Include="BouncingObject.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FileLoader.h" />
