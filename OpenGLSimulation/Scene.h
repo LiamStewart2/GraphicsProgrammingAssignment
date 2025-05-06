@@ -5,6 +5,7 @@
 #include "Object.h"
 #include "SpinningObject.h"
 #include "BouncingObject.h"
+#include "BoidObject.h"
 #include "SceneGraph.h"
 #include "FileLoader.h"
 #include "Input.h"
@@ -38,6 +39,8 @@ private:
 	TransformationManager transformationManager;
 	LinkedList<Object*> objects;
 	SceneGraph sceneGraph;
+
+	std::vector<BoidObject*> boids;
 
 	std::vector<TextObject*> textObjects;
 	std::vector<Material*> materials;
