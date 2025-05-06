@@ -68,14 +68,17 @@ void Scene::InitScene()
 	sceneGraph.InsertNode(rootMonkey2, new SceneGraphNode(objects[6]));
 	sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[7]));
 
-	boids = std::vector<BoidObject*>();
-	boids.resize(100);
-	for (int i = 0; i < 100; i++)
+	if(BOIDS)
 	{
-		BoidObject* boid = new BoidObject(&monkeyMesh, &stoneMaterial, Transform({ float(rand() % 50), float(rand() % 50), float(rand() % 50) }, {0.6f, 0.6f, 0.6f}, {0, 0, 0}));
-		objects.Push(boid); boids[i] = boid;
-		boid->SetReferenceToBoids(&boids);
-		sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[objects.Size() - 1]));
+		boids = std::vector<BoidObject*>();
+		boids.resize(100);
+		for (int i = 0; i < 100; i++)
+		{
+			BoidObject* boid = new BoidObject(&monkeyMesh, &stoneMaterial, Transform({ float(rand() % 50), float(rand() % 50), float(rand() % 50) }, { 0.6f, 0.6f, 0.6f }, { 0, 0, 0 }));
+			objects.Push(boid); boids[i] = boid;
+			boid->SetReferenceToBoids(&boids);
+			sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[objects.Size() - 1]));
+		}
 	}
 
 
