@@ -2,6 +2,7 @@
 
 #define FULLSCREEN
 
+// if FULLSCREEN defined use full monitor resolutions
 #ifdef FULLSCREEN
 
 #define SCREEN_WIDTH 1920

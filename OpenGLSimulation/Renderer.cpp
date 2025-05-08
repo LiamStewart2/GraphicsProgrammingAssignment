@@ -114,7 +114,7 @@ void Renderer::RenderObject(Object* object, const Camera* camera, int flags)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
-
+// Renders text to the screen
 void Renderer::RenderTextObject(TextObject* textObject)
 {
 	glMatrixMode(GL_PROJECTION);

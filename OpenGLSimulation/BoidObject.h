@@ -58,6 +58,7 @@ public:
 private:
 	std::vector<BoidObject*>* boids = nullptr;
 
+	// Boids avoid eachother to not overlap
 	void Seperation(std::vector<BoidObject*>* boidsInRange)
 	{
 		close = Vector3f(0, 0, 0);
@@ -67,6 +68,7 @@ private:
 		velocity.y += close.y * seperation;
 		velocity.z += close.z * seperation;
 	}
+	// Boids align with one another to form groups
 	void Alignment(std::vector<BoidObject*>* boidsInRange)
 	{
 		velocityAverage = Vector3f(0, 0, 0);
@@ -80,6 +82,7 @@ private:
 		velocity.y += (velocityAverage.y - velocity.y) * alighnment;
 		velocity.z += (velocityAverage.z - velocity.z) * alighnment;
 	}
+	// Boids steer towards each other smoothly
 	void Coherence(std::vector<BoidObject*>* boidsInRange)
 	{
 		positionAverage = Vector3f(0, 0, 0);
