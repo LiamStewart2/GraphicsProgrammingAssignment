@@ -22,14 +22,14 @@ public:
 		Coherence(&boidsInRange);
 
 
-		if (transform.Position.x < -boundingDistance)
+		if (transform.Position.x < boundingDistance)
 			velocity.x += turnFactor;
 		if (transform.Position.x > boundingDistance)
 			velocity.x -= turnFactor;
 
-		if (transform.Position.y < 5)
+		if (transform.Position.y < 10)
 			velocity.y += turnFactor;
-		if (transform.Position.y > boundingDistance + 5)
+		if (transform.Position.y > boundingDistance + 10)
 			velocity.y -= turnFactor;
 
 		if (transform.Position.z < -boundingDistance)

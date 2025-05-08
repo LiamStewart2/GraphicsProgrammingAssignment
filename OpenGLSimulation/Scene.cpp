@@ -72,7 +72,7 @@ void Scene::InitScene()
 	boids.resize(100);
 	for (int i = 0; i < 100; i++)
 	{
-		BoidObject* boid = new BoidObject(&monkeyMesh, &stoneMaterial, Transform({ float(rand() % 50), float(rand() % 50), float(rand() % 50) }, {0.6f, 0.6f, 0.6f}, {0, 0, 0}));
+		BoidObject* boid = new BoidObject(&monkeyMesh, &stoneMaterial, Transform({ 30 + float(rand() % 50), float(rand() % 50), float(rand() % 50) }, {0.6f, 0.6f, 0.6f}, {0, 0, 0}));
 		objects.Push(boid); boids[i] = boid;
 		boid->SetReferenceToBoids(&boids);
 		sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[objects.Size() - 1]));
