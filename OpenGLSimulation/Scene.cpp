@@ -298,16 +298,21 @@ void Scene::LeftClickPressed(int screenMouseX, int screenMouseY)
 	rayDirY /= length;
 	rayDirZ /= length;
 	
-	float rayOrigin[3] = { camera.eye.x, camera.eye.y, camera.eye.z };
-	float rayDirection[3] = { rayDirX, rayDirY, rayDirZ };
+	Vector3f rayOrigin = { camera.eye.x, camera.eye.y, camera.eye.z };
+	Vector3f rayDirection = { rayDirX, rayDirY, rayDirZ };
+	
+	Ray ray = {rayOrigin, rayDirection};
 
-	std::cout << rayOrigin[0] << ", " << rayOrigin[1] << ", " << rayOrigin[2] << std::endl;
-	std::cout << rayDirection[0] << ", " << rayDirection[1] << ", " << rayDirection[2] << std::endl;
+	std::cout << rayOrigin.x << ", " << rayOrigin.y << ", " << rayOrigin.z << std::endl;
+	std::cout << rayDirection.x << ", " << rayDirection.y << ", " << rayDirection.z << std::endl;
+
+	std::cout << checkRayCollision(ray)->name << std::endl;
+	
 }
 
 void Scene::UpdateTransformTexts()
 {
-	PositionText.text = "Position: " + objects[focusObjectIndex]->worldPosition.ToString();
+	PositionText.text = "Position: " + objects[focusObjectIndex]->transform.Position.ToString();
 	ScaleText.text = "Scale:    " + objects[focusObjectIndex]->transform.Scale.ToString();
 	RotationText.text = "Rotation: " + objects[focusObjectIndex]->transform.Rotation.ToString();
 }
@@ -331,6 +336,29 @@ void Scene::BuildBranchOfHierarchy(SceneGraphNode* node, int level, int& screenH
 			screenHeight += 15;
 			BuildBranchOfHierarchy(node->GetChildNode(i), level + 1, screenHeight);
 		}
+	}
+}
+
+bool Scene::checkRayCollision(const Ray& ray, Object* object)
+{
+	//solve for tc
+	Vector3f L = object->worldTransform.Position - ray.rayOrigin;
+	float tc = Vector3f::dot(L, ray.rayDirection);
+	if (tc < 0.0) return false;
+
+	float d2 = Vector3f::dot(L, L) - tc * tc;
+	float radius2 = object->worldTransform.Scale.x * object->worldTransform.Scale.x;
+	if(d2 > radius2) return false;
+
+	return true;
+}
+
+Object* Scene::checkRayCollision(const Ray& ray)
+{
+	for (int i = 0; i < objects.Size(); i++)
+	{
+		if (checkRayCollision(ray, objects[i]))
+			return objects[i];
 	}
 }
 

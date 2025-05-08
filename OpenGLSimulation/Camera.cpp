@@ -25,7 +25,7 @@ void Camera::TrackObject(Object* object)
 
 	if (trackedObject != nullptr)
 	{
-		Vector3f direction = (eye - object->worldPosition).Normalized();
+		Vector3f direction = (eye - object->worldTransform.Position).Normalized();
 		angleFromObject = atan2(direction.z, direction.x);
 		// avoid camera flipping when using a negative distance from object focus
 		distanceFromObjectFocus = abs(distanceFromObjectFocus);
@@ -40,7 +40,7 @@ void Camera::HandleObjectFocus()
 		distanceFromObjectFocus += 0.03f;
 
 	angleFromObject += 0.01f;
-	center = center + (trackedObject->worldPosition - center) * movementSpeed;
+	center = center + (trackedObject->worldTransform.Position - center) * movementSpeed;
 
 	targetPosition.x = center.x + (cos(angleFromObject) * distanceFromObjectFocus);
 	targetPosition.z = center.z + (sin(angleFromObject) * distanceFromObjectFocus);

@@ -12,6 +12,7 @@
 #include "Light.h"
 #include "LinkedList.h"
 #include "TextObject.h"
+#include "Ray.h"
 
 class Scene
 {
@@ -59,6 +60,9 @@ private:
 
 	void BuildHierarchy();
 	void BuildBranchOfHierarchy(SceneGraphNode* node, int level, int& screenHeight);
+
+	bool checkRayCollision(const Ray& ray, Object* object);
+	Object* checkRayCollision(const Ray& ray);
 
 	Mesh monkeyMesh;
 	Mesh groundMesh;

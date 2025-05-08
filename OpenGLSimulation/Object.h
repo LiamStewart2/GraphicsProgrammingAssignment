@@ -15,7 +15,7 @@ public:
 
 	const char* name = nullptr;
 	Transform transform;
-	Vector3f worldPosition = {0, 0, 0};
+	Transform worldTransform;
 	Mesh* mesh = nullptr;
 	Material* material = nullptr;
 };

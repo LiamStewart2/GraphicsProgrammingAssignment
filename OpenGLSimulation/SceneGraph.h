@@ -45,8 +45,18 @@ public:
 
 		GLfloat model[16];
 		glGetFloatv(GL_MODELVIEW_MATRIX, model);
-		object->worldPosition = Vector3f({ model[12], model[13], model[14] });
 
+		// Find the world Position
+		object->worldTransform.Position = Vector3f({ model[12], model[13], model[14] });
+
+		// Find the world Scale
+		Vector3f scale = {
+			sqrt(model[0] * model[0] + model[1] * model[1] + model[2] * model[2]),   // X scale
+			sqrt(model[4] * model[4] + model[5] * model[5] + model[6] * model[6]),   // Y scale
+			sqrt(model[8] * model[8] + model[9] * model[9] + model[10] * model[10])  // Z scale
+		};
+
+		object->worldTransform.Scale = scale;
 
 		for(SceneGraphNode* node : nodes)
 			node->UpdateObjectWorldPosition();
