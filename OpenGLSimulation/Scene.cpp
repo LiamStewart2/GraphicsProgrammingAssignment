@@ -74,6 +74,9 @@ void Scene::InitScene()
 	sceneGraph.InsertNode(rootMonkey2, new SceneGraphNode(objects[6]));
 	sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[7]));
 
+	// compile a list of text objects to make iteration easier
+	// doing it here so that it doesnt override the heiarchy
+	textObjects = {&FPSText, &ObjectNameText, &TransformText, &PositionText, &ScaleText, &RotationText, &instructionsText};
 	// build the text for the heirachy before loading the boids to reduce the text clutter on the screen
 	BuildHierarchy();
 
@@ -88,8 +91,7 @@ void Scene::InitScene()
 		sceneGraph.InsertNode(sceneGraph.GetRootNode(), new SceneGraphNode(objects[objects.Size() - 1]));
 	}
 
-	// compile a list of text objects and materials to make iteration easier
-	textObjects = {&FPSText, &ObjectNameText, &TransformText, &PositionText, &ScaleText, &RotationText, &instructionsText};
+	// compile a list of materials to make iteration easier
 	materials = {&stoneMaterial, &grassMaterial, &penguinMaterial};
 
 	// misc
